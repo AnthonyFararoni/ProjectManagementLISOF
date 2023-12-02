@@ -1,0 +1,97 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 27 nov. 2023, 22:46:33
+    Author     : nando
+*/
+
+.button {
+  -fx-background-color: #484848;
+  -fx-text-fill: white;
+  -fx-cursor: hand;
+
+}
+
+.button:hover {
+  -fx-background-color: #666666;
+  /*Color morado : #9200D7*/
+}
+
+/*.button:pressed  {
+    -fx-background-color: #9200D7;
+}*/
+
+.button:armed{
+    -fx-background-color: #9200D7;
+}
+
+.table-view {
+    -fx-background-color:#A9A9A3;
+    -fx-background-radius:14 14 0 0;
+    -fx-background-radius:5;
+    -fx-border-radius: 5;
+    -fx-alignment: CENTER;
+}
+    
+.table-view .column-header-background{
+    -fx-background-color: #343536;
+    -fx-background-insets: 0 0 10 0;    
+    -fx-border-radius: 5;
+}
+    
+.table-view .column-header, .table-view .filler{
+    -fx-size:50px;
+    -fx-border-width: 0 0 10 0;
+    -fx-background-color:transparent;        
+}
+    
+.table-view .column-header .label {
+    -fx-text-fill: white ;
+    -fx-padding: center;
+        
+}
+     
+.search-text-field {
+    -fx-background-color: #9B9B94; 
+    -fx-text-fill: #313131; 
+    -fx-padding: 8;
+    -fx-background-radius: 30; 
+    -fx-border-radius: 30; 
+    -fx-border-color: #464646;
+}
+
+.gray-text-field {
+    -fx-background-color: #9B9B94;
+    -fx-text-fill: #313131;
+    -fx-background-radius: 5; 
+    -fx-border-radius: 5; 
+    -fx-padding: 5;
+}
+
+.lower-gray-text-field {
+    -fx-background-color: #dedede;
+    -fx-text-fill: #000000;
+    -fx-background-radius: 10; 
+    -fx-border-radius: 10; 
+    -fx-padding: 5;
+}
+
+
+.white-title-text{
+    -fx-text-fill: #FCFCFC;     
+}
+
+.window-header{
+    -fx-background-color: #343536;
+    -fx-background-radius: 0 0 0 0;
+    -fx-border-radius: 5;
+    -fx-border-width: 0 0 0 0;
+}
+
+.window-title{
+    -fx-text-fill: #FCFCFC;
+    -fx-font-size: 27px;
+    -fx-font-weight: bold;
+}
