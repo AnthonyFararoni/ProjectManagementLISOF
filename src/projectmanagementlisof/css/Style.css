@@ -95,3 +95,12 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     -fx-font-size: 27px;
     -fx-font-weight: bold;
 }
+
+.button-rounded{
+    -fx-background-color: #343536;
+    -fx-background-radius: 10;
+    -fx-border-radius: 10;
+    -fx-border-width: 0 0 0 0;
+    -fx-text-fill: #FCFCFC;
+    -fx-padding: 10;
+}
