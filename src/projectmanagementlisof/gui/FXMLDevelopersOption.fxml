@@ -9,41 +9,32 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/19"
-   xmlns:fx="http://javafx.com/fxml/1"
-   fx:controller="projectmanagementlisof.controller.FXMLDeveloperOptionController">
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLDeveloperOptionController">
    <children>
-      <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0" pickOnBounds="true"
-         preserveRatio="true" style="-fx-cursor: hand;">
+      <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0" onMouseClicked="#btnSearchDeveloper" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
             <Image url="@../images/SearchIcon.png" />
          </image>
       </ImageView>
-      <TextField alignment="CENTER" layoutX="109.0" layoutY="41.0" prefHeight="34.0"
-         prefWidth="366.0" promptText="Matricula / Nombre" styleClass="search-text-field"
-         stylesheets="@../css/Style.css">
+      <TextField fx:id="tfSearchDeveloper" alignment="CENTER" layoutX="109.0" layoutY="41.0" prefHeight="34.0" prefWidth="366.0" promptText="Matricula / Nombre" styleClass="search-text-field" stylesheets="@../css/Style.css">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </TextField>
-      <TableView layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0"
-         stylesheets="@../css/Style.css">
+      <TableView layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0" stylesheets="@../css/Style.css">
          <columns>
             <TableColumn maxWidth="80.0" text="Matricula" />
             <TableColumn maxWidth="265.9999694824219" prefWidth="265.9999694824219" text="Nombre" />
-            <TableColumn maxWidth="258.88885498046875" prefWidth="227.33331298828125"
-               text="Correo electrónico" />
+            <TableColumn maxWidth="258.88885498046875" prefWidth="227.33331298828125" text="Correo electrónico" />
             <TableColumn maxWidth="97.77783203125" prefWidth="97.77783203125" text="Opciones" />
          </columns>
       </TableView>
-      <Button layoutX="202.0" layoutY="547.0" mnemonicParsing="false"
-         stylesheets="@../css/Style.css" text="Ver detalles">
+      <Button layoutX="202.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowDeveloperDetails" stylesheets="@../css/Style.css" text="Ver detalles">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Button>
-      <Button layoutX="439.0" layoutY="547.0" mnemonicParsing="false"
-         stylesheets="@../css/Style.css" text="Ver actividades">
+      <Button layoutX="439.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowAssignedActivities" stylesheets="@../css/Style.css" text="Ver actividades">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
