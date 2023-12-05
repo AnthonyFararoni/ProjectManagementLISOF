@@ -32,7 +32,7 @@
                         <Font name="System Bold" size="35.0" />
                      </font>
                   </Label>
-                  <ImageView fitHeight="61.0" fitWidth="53.0" layoutX="14.0" layoutY="15.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="imgBackButton" fitHeight="61.0" fitWidth="53.0" layoutX="14.0" layoutY="15.0" onMouseClicked="#goBackToLanding" onMouseEntered="#changeToHandCursor" onMouseExited="#changeToDefaultCursor" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/ReturnIcon.png" />
                      </image>
@@ -44,7 +44,7 @@
             </AnchorPane>
             <AnchorPane prefHeight="212.0" prefWidth="959.0" GridPane.rowIndex="1">
                <children>
-                  <TextField fx:id="tfJustification" layoutX="54.0" layoutY="59.0" prefHeight="35.0" prefWidth="426.0" promptText="Nombre del Desarrollador" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css">
+                  <TextField fx:id="tfDeveloperName" editable="false" focusTraversable="false" layoutX="54.0" layoutY="59.0" prefHeight="35.0" prefWidth="426.0" promptText="Nombre del Desarrollador" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>
@@ -54,7 +54,7 @@
                         <Font name="System Bold" size="30.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tfJustification1" layoutX="578.0" layoutY="59.0" prefHeight="40.0" prefWidth="315.0" promptText="Matrícula del desarrollador" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" AnchorPane.rightAnchor="66.0">
+                  <TextField fx:id="tfDeveloperID" editable="false" focusTraversable="false" layoutX="578.0" layoutY="59.0" prefHeight="40.0" prefWidth="315.0" promptText="Matrícula del desarrollador" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" AnchorPane.rightAnchor="66.0">
                      <font>
                         <Font name="System Bold" size="20.0" />
                      </font>

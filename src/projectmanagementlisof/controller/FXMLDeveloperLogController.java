@@ -11,8 +11,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -23,11 +27,13 @@ import projectmanagementlisof.utils.Utilities;
 public class FXMLDeveloperLogController implements Initializable {
     private Utilities utilities = new Utilities();
     @FXML
-    private TextField tfJustification;
-    @FXML
-    private TextField tfJustification1;
-    @FXML
     private AnchorPane apDeveloperlog;
+    @FXML
+    private ImageView imgBackButton;
+    @FXML
+    private TextField tfDeveloperName;
+    @FXML
+    private TextField tfDeveloperID;
 
     /**
      * Initializes the controller class.
@@ -50,6 +56,22 @@ public class FXMLDeveloperLogController implements Initializable {
     @FXML
     private void btnShowChangesInLog(ActionEvent event) {
          utilities.loadFXML( "/projectmanagementlisof/gui/FXMLChangesInLog.fxml",apDeveloperlog);
+    }
+
+    @FXML
+    private void changeToDefaultCursor(MouseEvent event) {
+        imgBackButton.setCursor(Cursor.DEFAULT);
+    }
+
+    @FXML
+    private void changeToHandCursor(MouseEvent event) {
+        imgBackButton.setCursor(Cursor.HAND);
+    }
+
+    @FXML
+    private void goBackToLanding(MouseEvent event) {
+        Stage currentStage = (Stage) tfDeveloperName.getScene().getWindow();
+        utilities.cerrarVentana(currentStage);
     }
     
     
