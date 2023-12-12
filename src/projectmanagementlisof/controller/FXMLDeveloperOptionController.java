@@ -40,10 +40,10 @@ public class FXMLDeveloperOptionController implements Initializable
     private void goAssignedActivities(/*String idDeveloper, String developerName*/)
       {
         try {
-            FXMLLoader loader = Utilities.loadView("gui/FXMLViewAssignedActivities.fxml");
+            FXMLLoader loader = Utilities.loadView("");
             Parent view = loader.load();
             Scene scene = new Scene(view);
-            FXMLViewAssignedActivitiesController controller = loader.getController();
+            
             
             Stage currentStage = new Stage();
             currentStage.setScene(scene);
