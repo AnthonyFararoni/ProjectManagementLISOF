@@ -14,24 +14,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<<<<<<< HEAD
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLDeveloperOptionController">
-   <children>
-      <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0" onMouseClicked="#btnSearchDeveloper" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
-=======
 <AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLDeveloperOptionController">
    <children>
       <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
->>>>>>> Edmundo
          <image>
             <Image url="@../images/SearchIcon.png" />
          </image>
       </ImageView>
-<<<<<<< HEAD
       <TextField fx:id="tfSearchDeveloper" alignment="CENTER" layoutX="109.0" layoutY="41.0" prefHeight="34.0" prefWidth="366.0" promptText="Matricula / Nombre" styleClass="search-text-field" stylesheets="@../css/Style.css">
-=======
-      <TextField alignment="CENTER" layoutX="109.0" layoutY="41.0" prefHeight="34.0" prefWidth="366.0" promptText="Matricula / Nombre" styleClass="search-text-field" stylesheets="@../css/Style.css">
->>>>>>> Edmundo
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
@@ -44,20 +34,14 @@
             <TableColumn maxWidth="97.77783203125" prefWidth="97.77783203125" text="Opciones" />
          </columns>
       </TableView>
-<<<<<<< HEAD
-      <Button layoutX="202.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowDeveloperDetails" stylesheets="@../css/Style.css" text="Ver detalles">
-=======
+      <Button layoutX="202.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowDeveloperDetails" stylesheets="@../css/Style.css" text="Ver detalles" />
       <Button layoutX="202.0" layoutY="547.0" mnemonicParsing="false" stylesheets="@../css/Style.css" text="Ver detalles">
->>>>>>> Edmundo
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Button>
-<<<<<<< HEAD
-      <Button layoutX="439.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowAssignedActivities" stylesheets="@../css/Style.css" text="Ver actividades">
-=======
-      <Button layoutX="439.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowDeveloperLog" stylesheets="@../css/Style.css" text="Ver bitácora">
->>>>>>> Edmundo
+      <Button layoutX="439.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowAssignedActivities" stylesheets="@../css/Style.css" text="Ver actividades" />
+      <Button layoutX="439.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowDevelopersLog" stylesheets="@../css/Style.css" text="Ver bitácora">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
