@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -27,15 +28,15 @@ public class FXMLProjectManagerLandingController implements Initializable
       {
             try
             {
-                  Stage currentStage = (Stage) apBackground.getScene().getWindow();
-                  Parent newView =
-                      FXMLLoader.load(FXMLProjectManagerLandingController.class.getResource(
-                          "/projectmanagementlisof/gui/FXMLLogIn.fxml"));
-                  Scene scene = new Scene(newView);
-                  currentStage.setScene(scene);
-                  currentStage.setTitle("Iniciar sesión");
-                  currentStage.show();
-                  Utilities.centerStage(currentStage);
+                Stage currentStage = (Stage) apBackground.getScene().getWindow();
+                Parent newView =
+                    FXMLLoader.load(FXMLProjectManagerLandingController.class.getResource(
+                        "/projectmanagementlisof/gui/FXMLLogIn.fxml"));
+                Scene scene = new Scene(newView);
+                currentStage.setScene(scene);
+                currentStage.setTitle("Iniciar sesión");
+                currentStage.show();
+                Utilities.centerStage(currentStage);
             }
             catch (IOException ex)
             {
@@ -72,9 +73,10 @@ public class FXMLProjectManagerLandingController implements Initializable
       {
             try
             {
-                  AnchorPane FXMLFile = FXMLLoader.load(
-                      FXMLProjectManagerLandingController.class.getResource(fxmlFile));
-                  apBackground.getChildren().setAll(FXMLFile);
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+                Node newNode = loader.load();
+                apBackground.getChildren().clear();
+                apBackground.getChildren().add(newNode);
             }
             catch (IOException ex)
             {
