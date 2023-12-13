@@ -36,16 +36,16 @@ public class ActivityDAO {
                 connectionBD.close();
                 if(affectedRows > 0){
                     answer.put("error", false);
-                    answer.put("mensaje", "Actividad Guardada.");
+                    answer.put("message", "Actividad Guardada.");
                 }else{
-                    answer.put("mensaje", "Error en la base de datos.");
+                    answer.put("message", "Error en la base de datos.");
                 }
                 
             }catch(SQLException e){
-                answer.put("mensaje", "Error: "+ e.getMessage());
+                answer.put("message", "Error: "+ e.getMessage());
             }          
         }else{
-            answer.put("mensaje", "Error en la conexion a la base de datos.");
+            answer.put("message", "Error en la conexion a la base de datos.");
         }
         return answer;
     }
