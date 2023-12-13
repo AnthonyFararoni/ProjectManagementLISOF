@@ -9,7 +9,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
@@ -18,18 +18,18 @@ import javafx.scene.control.TextField;
  *
  * @author ferdy
  */
-public class FXMLCreateActivityController implements Initializable {
+public class FXMLModifyRequestStatusController implements Initializable {
 
     @FXML
-    private TextField tfActivityName;
+    private TextField tfJustification;
     @FXML
-    private TextField tfAssignDeveloper;
+    private TextField tfDeveloper;
     @FXML
-    private DatePicker dpStartDate;
+    private TextField tfDateRequested;
     @FXML
-    private DatePicker dpEndDate;
+    private TextArea taChangeDescription;
     @FXML
-    private TextArea taActivityDescription;
+    private ComboBox<?> cbStatus;
 
     /**
      * Initializes the controller class.
@@ -40,11 +40,7 @@ public class FXMLCreateActivityController implements Initializable {
     }    
 
     @FXML
-    private void btnSelectDeveloper(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnCreateActivity(ActionEvent event) {
+    private void btnSaveChange(ActionEvent event) {
     }
     
 }
