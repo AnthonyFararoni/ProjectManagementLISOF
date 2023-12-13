@@ -71,7 +71,7 @@ public class FXMLDeveloperLogController implements Initializable {
     @FXML
     private void goBackToLanding(MouseEvent event) {
         Stage currentStage = (Stage) tfDeveloperName.getScene().getWindow();
-        utilities.cerrarVentana(currentStage);
+        utilities.closeWindow(currentStage);
     }
     
     

@@ -93,7 +93,7 @@ public class Utilities
         }
     }
     
-    public static void cerrarVentana(Stage currentStage) {
+    public static void closeWindow(Stage currentStage) {
         currentStage.close();
     }
 }

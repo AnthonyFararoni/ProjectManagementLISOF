@@ -10,11 +10,16 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.observer.DeveloperObserver;
@@ -28,6 +33,7 @@ import projectmanagementlisof.utils.Utilities;
 public class FXMLCreateActivityController implements DeveloperObserver, Initializable {
     
     private Integer idDeveloper;
+    private String developerName;
 
     @FXML
     private TextField tfActivityName;
@@ -45,16 +51,43 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        
     }    
 
+    public void loadDeveloperName(){
+        
+    }
+    
     @FXML
     private void btnSelectDeveloper(ActionEvent event) {
+        try
+        {
+            FXMLLoader loader = Utilities.loadView("gui/FXMLChooseDeveloper.fxml");
+            Parent view = loader.load();
+            Scene scene = new Scene(view);
+            FXMLChooseDeveloperController controller = loader.getController();
+            controller.setObserver(this);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setTitle("Asignar desarrollador");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();           
+        } 
+        catch (IOException ex)
+        {   
+            ex.printStackTrace();
+        }
     }
 
     @FXML
     private void btnCreateActivity(ActionEvent event) {
         registerActivity();
+    }
+    
+    private void loadDeveloper(Integer idDeveloper, String developerName){
+        this.idDeveloper = idDeveloper;
+        tfAssignDeveloper.setText(developerName);
     }
     
     private void registerActivity(){
@@ -77,8 +110,11 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
     }   
 
     @Override
-    public void developerSelected(Integer idDeveloper) {
-        this.idDeveloper = idDeveloper;
+    public void developerSelected(Integer idDeveloper, String developerName) {
+        loadDeveloper(idDeveloper, developerName);
+        System.out.println(idDeveloper);
     }
+
+    
     
 }

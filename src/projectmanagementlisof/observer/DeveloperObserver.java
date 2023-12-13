@@ -9,5 +9,5 @@ package projectmanagementlisof.observer;
  * @author ferdy
  */
 public interface DeveloperObserver {
-    public void developerSelected(Integer idDeveloper);
+    public void developerSelected(Integer idDeveloper, String developerName);
 }
