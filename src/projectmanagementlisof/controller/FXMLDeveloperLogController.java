@@ -25,12 +25,7 @@ import projectmanagementlisof.utils.Utilities;
  * @author edmun
  */
 public class FXMLDeveloperLogController implements Initializable {
-    
-    private int idDeveloper;
-    private String developerName;
-    private String developerLogin;
     private Utilities utilities = new Utilities();
-    
     @FXML
     private AnchorPane apDeveloperlog;
     @FXML
@@ -45,19 +40,8 @@ public class FXMLDeveloperLogController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        // TODO
     }    
-    
-    public void inicializarInformación(int idDeveloper, String developerName, String developerLogin)
-    {
-        this.idDeveloper = idDeveloper;
-        this.developerName = developerName;
-        this.developerLogin = developerLogin;
-        tfDeveloperName.setText(this.developerName);
-        tfDeveloperID.setText(this.developerLogin);
-        
-        
-    }
 
     @FXML
     private void btnShowActivitiesInLog(ActionEvent event) {
