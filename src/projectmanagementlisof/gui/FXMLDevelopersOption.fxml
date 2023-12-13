@@ -9,44 +9,39 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/19"
-   xmlns:fx="http://javafx.com/fxml/1"
-   fx:controller="projectmanagementlisof.controller.FXMLDeveloperOptionController">
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLDeveloperOptionController">
    <children>
-      <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0" pickOnBounds="true"
-         preserveRatio="true" style="-fx-cursor: hand;">
+      <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0" onMouseClicked="#btnSearchDeveloper" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
             <Image url="@../images/SearchIcon.png" />
          </image>
       </ImageView>
-      <TextField alignment="CENTER" layoutX="109.0" layoutY="41.0" prefHeight="34.0"
-         prefWidth="366.0" promptText="Matricula / Nombre" styleClass="search-text-field"
-         stylesheets="@../css/Style.css">
+      <TextField fx:id="tfSearchDeveloper" alignment="CENTER" layoutX="109.0" layoutY="41.0" prefHeight="34.0" prefWidth="366.0" promptText="Matricula / Nombre" styleClass="search-text-field" stylesheets="@../css/Style.css">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </TextField>
-      <TableView layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0"
-         stylesheets="@../css/Style.css">
+      <TableView fx:id="tvDevelopers" layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0" stylesheets="@../css/Style.css">
          <columns>
-            <TableColumn maxWidth="80.0" text="Matricula" />
-            <TableColumn maxWidth="265.9999694824219" prefWidth="265.9999694824219" text="Nombre" />
-            <TableColumn maxWidth="258.88885498046875" prefWidth="227.33331298828125"
-               text="Correo electrónico" />
-            <TableColumn maxWidth="97.77783203125" prefWidth="97.77783203125" text="Opciones" />
+            <TableColumn fx:id="colDeveloperLogin" maxWidth="80.0" text="Matricula" />
+            <TableColumn fx:id="colDeveloperName" maxWidth="332.66663360595703" prefWidth="332.66663360595703" text="Nombre" />
+            <TableColumn fx:id="colDeveloperEmail" maxWidth="323.999989827474" prefWidth="257.3333435058594" text="Correo electrónico" />
          </columns>
       </TableView>
-      <Button layoutX="202.0" layoutY="547.0" mnemonicParsing="false"
-         stylesheets="@../css/Style.css" text="Ver detalles">
+      <Button fx:id="btnDisableDeveloper" disable="true" layoutX="202.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnDisableDeveloper" stylesheets="@../css/Style.css" text="Desactivar">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Button>
-      <Button layoutX="439.0" layoutY="547.0" mnemonicParsing="false"
-         stylesheets="@../css/Style.css" text="Ver actividades">
+      <Button fx:id="btnShowDevelopersLog" disable="true" layoutX="439.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowDevelopersLog" stylesheets="@../css/Style.css" text="Ver bitácora">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Button>
+      <ImageView fitHeight="27.0" fitWidth="33.0" layoutX="486.0" layoutY="50.0" onMouseClicked="#btnRefreshTableDevelopers" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../images/RefreshIcon.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
