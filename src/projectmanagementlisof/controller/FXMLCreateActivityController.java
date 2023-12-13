@@ -6,12 +6,7 @@ package projectmanagementlisof.controller;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -20,17 +15,6 @@ import javafx.scene.control.TextField;
  */
 public class FXMLCreateActivityController implements Initializable {
 
-    @FXML
-    private TextField tfActivityName;
-    @FXML
-    private TextField tfAssignDeveloper;
-    @FXML
-    private DatePicker dpStartDate;
-    @FXML
-    private DatePicker dpEndDate;
-    @FXML
-    private TextArea taActivityDescription;
-
     /**
      * Initializes the controller class.
      */
@@ -38,13 +22,5 @@ public class FXMLCreateActivityController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
-
-    @FXML
-    private void btnSelectDeveloper(ActionEvent event) {
-    }
-
-    @FXML
-    private void btnCreateActivity(ActionEvent event) {
-    }
     
 }

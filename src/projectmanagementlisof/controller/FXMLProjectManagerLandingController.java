@@ -46,40 +46,37 @@ public class FXMLProjectManagerLandingController implements Initializable
 
       @FXML private void btnShowDevelopers(ActionEvent event)
       {
-            loadFXML("FXMLDevelopersOption");
+            loadFXML("/projectmanagementlisof/gui/FXMLDevelopersOption.fxml");
       }
 
       @FXML private void btnShowActivities(ActionEvent event)
       {
-            loadFXML("FXMLActivitiesOption");
+            loadFXML("/projectmanagementlisof/gui/FXMLActivitiesOption.fxml");
       }
 
       @FXML private void btnShowChanges(ActionEvent event)
       {
-            loadFXML("FXMLChangesOption");
+            loadFXML("/projectmanagementlisof/gui/FXMLChangesOption.fxml");
       }
 
       @FXML private void btnShowChangeRequests(ActionEvent event)
       {
-            loadFXML("FXMLChangeRequestsOption");
+            loadFXML("/projectmanagementlisof/gui/FXMLChangeRequestsOption.fxml");
       }
 
       @FXML private void btnShowDefects(ActionEvent event)
       {
-            loadFXML("FXMLDefectsOption");
+            loadFXML("/projectmanagementlisof/gui/FXMLDefectsOption.fxml");
       }
 
-      private void loadFXML(String fxmlName)
+      private void loadFXML(String fxmlFile)
       {
             try
             {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                        "/projectmanagementlisof/gui/" + fxmlName +".fxml"));
+                FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
                 Node newNode = loader.load();
                 apBackground.getChildren().clear();
                 apBackground.getChildren().add(newNode);
-                Object controller = loader.getController();
-                     
             }
             catch (IOException ex)
             {
