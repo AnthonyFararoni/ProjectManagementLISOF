@@ -85,10 +85,6 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
         }
     }
 
-    @Override
-    public void developerSelected(Integer idDeveloper) {
-        this.idDeveloper = idDeveloper;
-    }
     
     public void initializeInformation(Activity updateActivity, DeveloperObserver observer){
         this.updateActivity = updateActivity;
@@ -105,6 +101,11 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
         dpStartDate.setValue(LocalDate.parse(this.updateActivity.getEndDate(),
                 DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         taActivityDescription.setText(this.updateActivity.getDescription());
+    }
+
+    @Override
+    public void developerSelected(Integer idDeveloper, String developerName) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
 }
