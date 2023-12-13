@@ -109,7 +109,7 @@ public class FXMLDevelopersOptionController implements Initializable
             developers.addAll(list);
             tvDevelopers.setItems(developers);           
         }else{
-            Utilities.showSimpleAlert("Error de carga", (String)answer.get("mensaje"), 
+            Utilities.showSimpleAlert("Error de carga", (String)answer.get("message"), 
                     Alert.AlertType.ERROR);
         }        
     }
