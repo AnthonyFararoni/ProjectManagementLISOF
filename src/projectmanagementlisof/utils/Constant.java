@@ -6,6 +6,6 @@ public class Constant
       public static final String NAME_DB = "?";
       public static final String HOSTNAME = "localhost";
       public static final String PORT = "3306";
-      public static final String USER = "?";
-      public static final String PASSWORD = "?";
+      public static final String USER = "userdbPCS";
+      public static final String PASSWORD = "gomez2003+";
 }
