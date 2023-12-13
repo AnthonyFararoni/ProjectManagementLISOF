@@ -48,15 +48,13 @@ public class FXMLDeveloperLogController implements Initializable {
         
     }    
     
-    public void inicializarInformación(int idDeveloper, String developerName, String developerLogin)
+    public void initializeInformation(int idDeveloper, String developerName, String developerLogin)
     {
         this.idDeveloper = idDeveloper;
         this.developerName = developerName;
         this.developerLogin = developerLogin;
         tfDeveloperName.setText(this.developerName);
-        tfDeveloperID.setText(this.developerLogin);
-        
-        
+        tfDeveloperID.setText(this.developerLogin);   
     }
 
     @FXML

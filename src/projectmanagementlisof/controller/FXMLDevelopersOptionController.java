@@ -120,7 +120,7 @@ public class FXMLDevelopersOptionController implements Initializable
             Parent view = loader.load();
             Scene scene = new Scene(view);
             FXMLDeveloperLogController controller = loader.getController();
-            controller.inicializarInformación(idDeveloper, developerName, developerLogin);
+            controller.initializeInformation(idDeveloper, developerName, developerLogin);
             Stage stage = new Stage();
 
             stage.setScene(scene);
