@@ -30,7 +30,7 @@ import projectmanagementlisof.utils.Utilities;
 
 public class FXMLDevelopersOptionController implements Initializable
 {
-    public int idDeveloper;
+    public Integer idDeveloper;
     public String developerName;
     public String developerLogin;
     private ObservableList<Developer> developers;
@@ -63,8 +63,7 @@ public class FXMLDevelopersOptionController implements Initializable
                     + " de eliminar al desarrollador seleccionado?");
             if(confirmation){
                 disableDeveloper(idDeveloper);
-            }
-    
+            }   
     }
     
     @FXML
@@ -92,9 +91,7 @@ public class FXMLDevelopersOptionController implements Initializable
                     int selectedPosition = tvDevelopers.getSelectionModel().getSelectedIndex();
                     Developer selectedDeveloper = developers.get(selectedPosition);
                     idDeveloper = newValue.getIdDeveloper();
-                    developerName = selectedDeveloper.getFullName();
-                    developerLogin = newValue.getDeveloperLogin();   
-                    
+                    developerName = selectedDeveloper.getFullName();                  
                 }
             }
         });

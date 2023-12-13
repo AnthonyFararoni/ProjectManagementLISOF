@@ -31,7 +31,7 @@
 
                   </columns>
             </TableView>
-            <Button layoutX="202.0" layoutY="547.0" mnemonicParsing="false" stylesheets="@../css/Style.css" text="Crear actividad">
+            <Button layoutX="202.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowCreateActivity" stylesheets="@../css/Style.css" text="Crear actividad">
                   <font>
                         <Font name="System Bold" size="17.0" />
                   </font>
