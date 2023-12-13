@@ -8,6 +8,10 @@ import java.util.regex.Pattern;
 import com.sun.javafx.scene.SceneUtils;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
@@ -95,5 +99,12 @@ public class Utilities
     
     public static void cerrarVentana(Stage currentStage) {
         currentStage.close();
+    }
+    
+    public String parseDateToString(LocalDate date)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String parsedDate = date.format(formatter);
+        return parsedDate;
     }
 }
