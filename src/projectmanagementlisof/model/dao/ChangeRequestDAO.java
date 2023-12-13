@@ -2,51 +2,179 @@ package projectmanagementlisof.model.dao;
 
 import java.lang.reflect.Array;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import projectmanagementlisof.model.ConnectionDB;
+import projectmanagementlisof.model.pojo.ChangeRequest;
 
 public class ChangeRequestDAO
 {
       public static HashMap<String, Object> getChangeRequests(Integer idDeveloper)
       {
-            HashMap<String, Object> response = new LinkedHashMap<>();
-            response.put("error", true);
-            Connection connection = ConnectionDB.getConnection();
+            HashMap<String, Object> answer = new LinkedHashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
 
-            if (connection != null)
+            if (connectionBD != null)
             {
                   try
                   {
-                        String query = "SELECT * FROM ChangeRequest WHERE idDeveloper = ?";
-                        PreparedStatement statement = connection.prepareStatement(query);
-                        prepareStatement.setInt(1, idDeveloper);
-                        ResultSet resultSet = statement.executeQuery();
+                        String query = "SELECT c.idChangeRequest, c.justification, c.description, "
+                            + "c.status, c.creationDate, c.reviewDate, FROM ChangeRequest c, "
+                            + "INNER JOIN Developer d ON c.idDeveloper = d.idDeveloper "
+                            + "WHERE c.idDeveloper = " + idDeveloper + ";";
+
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        ResultSet changeRequestList = preparedStatement.executeQuery();
                         ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
 
-                        while (resultSet.next())
+                        while (changeRequestList.next())
                         {
                               ChangeRequest changeRequest = new ChangeRequest();
-                              changeRequest.setIdChangeRequest(resultSet.getInt("idChangeRequest"));
-                              changeRequest.setIdDeveloper(resultSet.getInt("idDeveloper"));
-                              changeRequest.setChangeRequest(resultSet.getString("changeRequest"));
-                              changeRequest.setChangeRequestDate(
-                                  resultSet.getDate("changeRequestDate"));
-                              changeRequest.setChangeRequestStatus(
-                                  resultSet.getString("changeRequestStatus"));
+                              changeRequest.setIdChangeRequest(
+                                  changeRequestList.getInt("idChangeRequest"));
+                              changeRequest.setJustification(
+                                  changeRequestList.getString("justification"));
+                              changeRequest.setDescription(
+                                  changeRequestList.getString("description"));
+                              changeRequest.setStatus(changeRequestList.getString("status"));
+                              changeRequest.setCreationDate(
+                                  changeRequestList.getString("creationDate"));
+                              changeRequest.setReviewDate(
+                                  changeRequestList.getString("reviewDate"));
                               changeRequests.add(changeRequest);
                         }
-
-                        ConnectionDB.closeConnection();
-                        response.put("message", "ChangeRequests obtenidos correctamente");
-                        response.put("error", false);
+                        connectionBD.close();
+                        answer.put("error", false);
+                        answer.put("changeRequests", changeRequests);
                   }
-                  catch (SQLException e)
+                  catch (SQLException ex)
                   {
-                        response.put("message", "Error al obtener los ChangeRequests");
-                        response.put("error", false);
-                        response.put("errorDetail", e.getMessage());
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message",
+                      "Hubo un error al intentar conectar con la base de datos. Intente "
+                          + "de nuevo más tarde");
+            }
+
+            return answer;
+      }
+
+      public static HashMap<String, Object> getChangeRequestsById(Integer idChangeRequest)
+      {
+            HashMap<String, Object> answer = new LinkedHashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query = "SELECT c.idChangeRequest, c.justification, c.description, "
+                            + "c.status, c.creationDate, c.reviewDate, FROM ChangeRequest c, "
+                            + "INNER JOIN Developer d ON c.idDeveloper = d.idDeveloper "
+                            + "WHERE c.idChangeRequest = " + idChangeRequest + ";";
+
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        ResultSet changeRequestList = preparedStatement.executeQuery();
+                        ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
+
+                        while (changeRequestList.next())
+                        {
+                              ChangeRequest changeRequest = new ChangeRequest();
+                              changeRequest.setIdChangeRequest(
+                                  changeRequestList.getInt("idChangeRequest"));
+                              changeRequest.setJustification(
+                                  changeRequestList.getString("justification"));
+                              changeRequest.setDescription(
+                                  changeRequestList.getString("description"));
+                              changeRequest.setStatus(changeRequestList.getString("status"));
+                              changeRequest.setCreationDate(
+                                  changeRequestList.getString("creationDate"));
+                              changeRequest.setReviewDate(
+                                  changeRequestList.getString("reviewDate"));
+                              changeRequests.add(changeRequest);
+                        }
+                        connectionBD.close();
+                        answer.put("error", false);
+                        answer.put("changeRequests", changeRequests);
+                  }
+                  catch (SQLException ex)
+                  {
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message",
+                      "Hubo un error al intentar conectar con la base de datos. Intente "
+                          + "de nuevo más tarde");
+            }
+
+            return answer;
+      }
+
+      public static void createChangeRequest(ChangeRequest changeRequest)
+      {
+            Connection connectionBD = ConnectionDB.getConnection();
+
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query = "INSERT INTO ChangeRequest (justification, description, "
+                            + "status, creationDate, reviewDate, idDeveloper) VALUES (?,?,?,?,?,?);";
+
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setString(1, changeRequest.getJustification());
+                        preparedStatement.setString(2, changeRequest.getDescription());
+                        preparedStatement.setString(3, changeRequest.getStatus());
+                        preparedStatement.setString(4, changeRequest.getCreationDate());
+                        preparedStatement.setString(5, changeRequest.getReviewDate());
+                        preparedStatement.setInt(6, changeRequest.getIdDeveloper());
+                        preparedStatement.executeUpdate();
+                        connectionBD.close();
+                  }
+                  catch (SQLException ex)
+                  {
+                        System.out.println("Error: " + ex.getMessage());
+                  }
+            }
+      }
+
+      public static void editChangeRequest(ChangeRequest changeRequest)
+      {
+            Connection connectionBD = ConnectionDB.getConnection();
+
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query =
+                            "UPDATE ChangeRequest SET justification = ?, description = ?, "
+                            + "status = ?, creationDate = ?, reviewDate = ?, idDeveloper = ? "
+                            + "WHERE idChangeRequest = ?;";
+
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setString(1, changeRequest.getJustification());
+                        preparedStatement.setString(2, changeRequest.getDescription());
+                        preparedStatement.setString(3, changeRequest.getStatus());
+                        preparedStatement.setString(4, changeRequest.getCreationDate());
+                        preparedStatement.setString(5, changeRequest.getReviewDate());
+                        preparedStatement.setInt(6, changeRequest.getIdDeveloper());
+                        preparedStatement.setInt(7, changeRequest.getIdChangeRequest());
+                        preparedStatement.executeUpdate();
+                        connectionBD.close();
+                  }
+                  catch (SQLException ex)
+                  {
+                        System.out.println("Error: " + ex.getMessage());
                   }
             }
       }
