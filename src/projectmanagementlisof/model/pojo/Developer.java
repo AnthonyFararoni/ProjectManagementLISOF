@@ -147,4 +147,10 @@ public class Developer {
         this.endDateSchoolPeriod = endDateSchoolPeriod;
     }
     
+    public String getFullName()
+    {
+        String fullName = name + " " + lastName + " " + secondLastName;
+        return fullName;
+    }
+    
 }

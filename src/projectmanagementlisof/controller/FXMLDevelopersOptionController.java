@@ -5,6 +5,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -24,6 +27,7 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.utils.Utilities;
+
 
 public class FXMLDevelopersOptionController implements Initializable
 {
@@ -42,12 +46,15 @@ public class FXMLDevelopersOptionController implements Initializable
     private TableColumn colDeveloperName;
     @FXML
     private TableColumn colDeveloperEmail;
+    @FXML
+    private Button btnDisableDeveloper;
+    @FXML
+    private Button btnShowDevelopersLog;
     
     @Override public void initialize(URL url, ResourceBundle rb)
     {
-          // TODO
-        //configureDevelopersTable();
-        
+        configureDevelopersTable();
+        getDevelopersForTable();
         
     }
     
@@ -60,7 +67,6 @@ public class FXMLDevelopersOptionController implements Initializable
             }   
     }
     
-    @FXML
     private void btnRefreshTableDevelopers(MouseEvent event) {
         getDevelopersForTable();
         tfSearchDeveloper.setText("");
@@ -71,6 +77,7 @@ public class FXMLDevelopersOptionController implements Initializable
         this.colDeveloperLogin.setCellValueFactory(new PropertyValueFactory("developerLogin"));
         this.colDeveloperName.setCellValueFactory(new PropertyValueFactory("name"));
         this.colDeveloperEmail.setCellValueFactory(new PropertyValueFactory("email"));
+        showDeveloperSelected();
     }
     
     private void showDeveloperSelected(){
@@ -113,7 +120,7 @@ public class FXMLDevelopersOptionController implements Initializable
             Parent view = loader.load();
             Scene scene = new Scene(view);
             FXMLDeveloperLogController controller = loader.getController();
-            controller.inicializarInformación(idDeveloper, developerName, developerLogin);
+            controller.initializeInformation(idDeveloper, developerName, developerLogin);
             Stage stage = new Stage();
 
             stage.setScene(scene);
@@ -169,9 +176,12 @@ public class FXMLDevelopersOptionController implements Initializable
         }
     }
 
-    @FXML
     private void btnSearchDeveloper(MouseEvent event) {
         searchDeveloper();
+    }
+
+    @FXML
+    private void btnDisableDeveloper(ActionEvent event) {
     }
 
    

@@ -26,6 +26,9 @@ import projectmanagementlisof.utils.Utilities;
  */
 public class FXMLDeveloperLogController implements Initializable {
     private Utilities utilities = new Utilities();
+    private int idDeveloper;
+    private String developerName;
+    private String developerLogin;
     @FXML
     private AnchorPane apDeveloperlog;
     @FXML
@@ -41,7 +44,16 @@ public class FXMLDeveloperLogController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
+    }  
+    
+    public void initializeInformation(int idDeveloper, String developerName, String developerLogin)
+    {
+        this.idDeveloper = idDeveloper;
+        this.developerName = developerName;
+        this.developerLogin = developerLogin;
+        tfDeveloperName.setText(this.developerName);
+        tfDeveloperID.setText(this.developerLogin);
+    }
 
     @FXML
     private void btnShowActivitiesInLog(ActionEvent event) {
@@ -73,6 +85,7 @@ public class FXMLDeveloperLogController implements Initializable {
         Stage currentStage = (Stage) tfDeveloperName.getScene().getWindow();
         utilities.closeWindow(currentStage);
     }
+    
     
     
 }
