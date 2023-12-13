@@ -12,13 +12,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 
 /**
  * FXML Controller class
  *
  * @author ferdy
  */
-public class FXMLCreateActivityController implements Initializable {
+public class FXMLUpdateActivityController implements Initializable {
 
     @FXML
     private TextField tfActivityName;
@@ -29,7 +30,7 @@ public class FXMLCreateActivityController implements Initializable {
     @FXML
     private DatePicker dpEndDate;
     @FXML
-    private TextArea taActivityDescription;
+    private TextArea taActivityDescripcion;
 
     /**
      * Initializes the controller class.
@@ -40,11 +41,15 @@ public class FXMLCreateActivityController implements Initializable {
     }    
 
     @FXML
+    private void btnReturn(MouseEvent event) {
+    }
+
+    @FXML
     private void btnSelectDeveloper(ActionEvent event) {
     }
 
     @FXML
-    private void btnCreateActivity(ActionEvent event) {
+    private void btnUpdateActivity(ActionEvent event) {
     }
     
 }
