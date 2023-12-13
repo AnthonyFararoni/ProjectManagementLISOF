@@ -35,7 +35,7 @@ public class Utilities
       
       public static boolean validateIdDeveloper(String idDeveloper) 
       {
-        String rightPattern = "^(zs|zS|ZS)\\d{0,8}$";
+        String rightPattern = "^(zs|zS|ZS)\\d{8}$";
         Pattern pattern = Pattern.compile(rightPattern);
         Matcher matcher = pattern.matcher(idDeveloper);
         return matcher.matches() && !idDeveloper.trim().isEmpty();
@@ -68,6 +68,11 @@ public class Utilities
         return (buttonClic.get() == ButtonType.OK);
     }
     
+    public static String getFullName(String name, String lastName, String secondLastName)
+    {
+        String fullName = name + " " + lastName + " " + secondLastName;
+        return fullName;
+    }
     public static void loadFXML(String fxmlFile, AnchorPane anchorPane) {
         try {
             AnchorPane FXMLFile = FXMLLoader.load(Utilities.class.getResource(fxmlFile));

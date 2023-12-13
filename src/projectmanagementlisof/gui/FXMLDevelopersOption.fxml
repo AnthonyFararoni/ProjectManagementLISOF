@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLDevelopersOptionController">
    <children>
-      <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0" onMouseClicked="#btnSearchDeveloper" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+      <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
          <image>
             <Image url="@../images/SearchIcon.png" />
          </image>
@@ -38,10 +38,5 @@
             <Font name="System Bold" size="17.0" />
          </font>
       </Button>
-      <ImageView fitHeight="27.0" fitWidth="33.0" layoutX="486.0" layoutY="50.0" onMouseClicked="#btnRefreshTableDevelopers" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../images/RefreshIcon.png" />
-         </image>
-      </ImageView>
    </children>
 </AnchorPane>

@@ -28,6 +28,7 @@ import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.utils.Utilities;
 
+
 public class FXMLDevelopersOptionController implements Initializable
 {
     public Integer idDeveloper;
@@ -52,12 +53,12 @@ public class FXMLDevelopersOptionController implements Initializable
     
     @Override public void initialize(URL url, ResourceBundle rb)
     {
-        configureDevelopersTable(); 
-        getDevelopersForTable();   
+        configureDevelopersTable();
+        getDevelopersForTable();
+        
     }
     
-    @FXML
-    private void btnDisableDeveloper(ActionEvent event) 
+    private void initializeInformation()
     {
             boolean confirmation = Utilities.showConfirmationAlert("¿Eliminar desarrollador?", "¿Esta seguro"
                     + " de eliminar al desarrollador seleccionado?");
@@ -66,7 +67,6 @@ public class FXMLDevelopersOptionController implements Initializable
             }   
     }
     
-    @FXML
     private void btnRefreshTableDevelopers(MouseEvent event) {
         getDevelopersForTable();
         tfSearchDeveloper.setText("");
@@ -75,7 +75,7 @@ public class FXMLDevelopersOptionController implements Initializable
     private void configureDevelopersTable()
     {
         this.colDeveloperLogin.setCellValueFactory(new PropertyValueFactory("developerLogin"));
-        this.colDeveloperName.setCellValueFactory(new PropertyValueFactory("fullName"));
+        this.colDeveloperName.setCellValueFactory(new PropertyValueFactory("name"));
         this.colDeveloperEmail.setCellValueFactory(new PropertyValueFactory("email"));
         showDeveloperSelected();
     }
@@ -176,9 +176,12 @@ public class FXMLDevelopersOptionController implements Initializable
         }
     }
 
-    @FXML
     private void btnSearchDeveloper(MouseEvent event) {
         searchDeveloper();
+    }
+
+    @FXML
+    private void btnDisableDeveloper(ActionEvent event) {
     }
 
    
