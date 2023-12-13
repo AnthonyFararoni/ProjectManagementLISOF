@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import projectmanagementlisof.utils.Utilities;
 
 public class ProjectManagementLISOF extends Application
 {
@@ -16,7 +17,9 @@ public class ProjectManagementLISOF extends Application
             Scene scene = new Scene(root);
 
             stage.setScene(scene);
+            stage.setTitle("Iniciar sesión");
             stage.show();
+            Utilities.centerStage(stage);
       }
 
       public static void main(String[] args)
