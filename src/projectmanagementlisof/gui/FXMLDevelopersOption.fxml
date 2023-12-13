@@ -28,13 +28,11 @@
             <TableColumn fx:id="colDeveloperEmail" maxWidth="323.999989827474" prefWidth="257.3333435058594" text="Correo electrónico" />
          </columns>
       </TableView>
-      <Button layoutX="202.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowDeveloperDetails" stylesheets="@../css/Style.css" text="Ver detalles" />
       <Button layoutX="202.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnDisableDeveloper" stylesheets="@../css/Style.css" text="Desactivar">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Button>
-      <Button layoutX="439.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowAssignedActivities" stylesheets="@../css/Style.css" text="Ver actividades" />
       <Button layoutX="439.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowDevelopersLog" stylesheets="@../css/Style.css" text="Ver bitácora">
          <font>
             <Font name="System Bold" size="17.0" />

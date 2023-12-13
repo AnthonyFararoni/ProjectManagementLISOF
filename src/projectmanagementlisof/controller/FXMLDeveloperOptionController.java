@@ -45,8 +45,14 @@ public class FXMLDeveloperOptionController implements Initializable
     @Override public void initialize(URL url, ResourceBundle rb)
     {
           // TODO
-        configureDevelopersTable();
+        //configureDevelopersTable();
         
+        
+    }
+    
+    private void initializeInformation()
+    {
+        getDevelopersTable();
     }
     
     private void configureDevelopersTable()
@@ -56,7 +62,7 @@ public class FXMLDeveloperOptionController implements Initializable
         this.colDeveloperEmail.setCellValueFactory(new PropertyValueFactory("email"));
     }
     
-    private void getDevelopers()
+    private void getDevelopersTable()
     {
         HashMap<String, Object> answer = DeveloperDAO.getDevelopers();
         if(!(boolean)answer.get("error")){
