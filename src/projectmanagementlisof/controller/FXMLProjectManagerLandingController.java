@@ -21,7 +21,7 @@ public class FXMLProjectManagerLandingController implements Initializable
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-            // TODO
+            
       }
 
       @FXML private void btnLogOut(MouseEvent event)
@@ -78,7 +78,7 @@ public class FXMLProjectManagerLandingController implements Initializable
                 Node newNode = loader.load();
                 apBackground.getChildren().clear();
                 apBackground.getChildren().add(newNode);
-                Object controller = loader.getController();
+                //Object controller = loader.getController();
                      
             }
             catch (IOException ex)

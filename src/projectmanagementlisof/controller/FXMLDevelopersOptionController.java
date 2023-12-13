@@ -28,7 +28,7 @@ import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.utils.Utilities;
 
-public class FXMLDeveloperOptionController implements Initializable
+public class FXMLDevelopersOptionController implements Initializable
 {
     public int idDeveloper;
     public String developerName;
@@ -64,11 +64,7 @@ public class FXMLDeveloperOptionController implements Initializable
             if(confirmation){
                 disableDeveloper(idDeveloper);
             }
-    }
     
-    @FXML
-    private void btnSearchDeveloper(MouseEvent event) {
-        searchDeveloper();
     }
     
     @FXML
@@ -107,8 +103,15 @@ public class FXMLDeveloperOptionController implements Initializable
     private void getDevelopersForTable()
     {
         HashMap<String, Object> answer = DeveloperDAO.getDevelopers();
-        showDevelopers(answer);
-        
+        if(!(boolean)answer.get("error")){
+            developers = FXCollections.observableArrayList();
+            ArrayList<Developer> list = (ArrayList<Developer>) answer.get("developers");
+            developers.addAll(list);
+            tvDevelopers.setItems(developers);           
+        }else{
+            Utilities.showSimpleAlert("Error de carga", (String)answer.get("message"), 
+                    Alert.AlertType.ERROR);
+        }        
     }
 
     @FXML
@@ -149,19 +152,19 @@ public class FXMLDeveloperOptionController implements Initializable
         btnShowDevelopersLog.setDisable(true);
     }
     
-    private void searchDeveloper(){
-        HashMap<String, Object> answer = null;
+    private void searchDeveloper()
+    {
         String searchDeveloper = tfSearchDeveloper.getText();
         if(Utilities.validateIdDeveloper(searchDeveloper)){
-            answer = DeveloperDAO.searchDeveloperByDeveloperLogin(searchDeveloper);
+            HashMap<String, Object> answer = DeveloperDAO.searchDeveloperByDeveloperLogin(searchDeveloper);
+            showDevelopers(answer);
         }else if(Utilities.validateStringsFields(searchDeveloper)){
-            answer = DeveloperDAO.searchDeveloperByName(searchDeveloper);
+            HashMap<String, Object> answer = DeveloperDAO.searchDeveloperByName(searchDeveloper);
+            showDevelopers(answer);
         }else{
             Utilities.showSimpleAlert("Busqueda incorrecta", "La estructura de los criterios de "
                     + "busqueda es incorrecta. Intente de nuevo", Alert.AlertType.ERROR);
-        }
-        showDevelopers(answer);
-        
+        } 
     }
     
     private void showDevelopers(HashMap<String, Object> answer){
@@ -174,6 +177,11 @@ public class FXMLDeveloperOptionController implements Initializable
             Utilities.showSimpleAlert("Error de carga", (String)answer.get("mensaje"), 
                     Alert.AlertType.ERROR);
         }
+    }
+
+    @FXML
+    private void btnSearchDeveloper(MouseEvent event) {
+        searchDeveloper();
     }
 
    
