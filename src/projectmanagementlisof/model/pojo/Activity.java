@@ -11,14 +11,14 @@ import java.util.Date;
  * @author ferdy
  */
 public class Activity {
-    Integer idActivity;
-    String name;
-    String description;
-    Integer Status;
-    String startDate;
-    String endDate;
-    Integer idDeveloper;
-    Integer idProjectManager;
+    private Integer idActivity;
+    private String name;
+    private String description;
+    private Integer Status;
+    private String startDate;
+    private String endDate;
+    private Integer idDeveloper;
+    private Integer idProjectManager;
 
     public Activity() {}
 
