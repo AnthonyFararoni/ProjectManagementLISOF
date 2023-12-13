@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -28,15 +27,15 @@ public class FXMLProjectManagerLandingController implements Initializable
       {
             try
             {
-                Stage currentStage = (Stage) apBackground.getScene().getWindow();
-                Parent newView =
-                    FXMLLoader.load(FXMLProjectManagerLandingController.class.getResource(
-                        "/projectmanagementlisof/gui/FXMLLogIn.fxml"));
-                Scene scene = new Scene(newView);
-                currentStage.setScene(scene);
-                currentStage.setTitle("Iniciar sesión");
-                currentStage.show();
-                Utilities.centerStage(currentStage);
+                  Stage currentStage = (Stage) apBackground.getScene().getWindow();
+                  Parent newView =
+                      FXMLLoader.load(FXMLProjectManagerLandingController.class.getResource(
+                          "/projectmanagementlisof/gui/FXMLLogIn.fxml"));
+                  Scene scene = new Scene(newView);
+                  currentStage.setScene(scene);
+                  currentStage.setTitle("Iniciar sesión");
+                  currentStage.show();
+                  Utilities.centerStage(currentStage);
             }
             catch (IOException ex)
             {
@@ -46,40 +45,36 @@ public class FXMLProjectManagerLandingController implements Initializable
 
       @FXML private void btnShowDevelopers(ActionEvent event)
       {
-            loadFXML("FXMLDevelopersOption");
+            loadFXML("/projectmanagementlisof/gui/FXMLDevelopersOption.fxml");
       }
 
       @FXML private void btnShowActivities(ActionEvent event)
       {
-            loadFXML("FXMLActivitiesOption");
+            loadFXML("/projectmanagementlisof/gui/FXMLActivitiesOption.fxml");
       }
 
       @FXML private void btnShowChanges(ActionEvent event)
       {
-            loadFXML("FXMLChangesOption");
+            loadFXML("/projectmanagementlisof/gui/FXMLChangesOption.fxml");
       }
 
       @FXML private void btnShowChangeRequests(ActionEvent event)
       {
-            loadFXML("FXMLChangeRequestsOption");
+            loadFXML("/projectmanagementlisof/gui/FXMLChangeRequestsOption.fxml");
       }
 
       @FXML private void btnShowDefects(ActionEvent event)
       {
-            loadFXML("FXMLDefectsOption");
+            loadFXML("/projectmanagementlisof/gui/FXMLDefectsOption.fxml");
       }
 
-      private void loadFXML(String fxmlName)
+      private void loadFXML(String fxmlFile)
       {
             try
             {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                        "/projectmanagementlisof/gui/" + fxmlName +".fxml"));
-                Node newNode = loader.load();
-                apBackground.getChildren().clear();
-                apBackground.getChildren().add(newNode);
-                Object controller = loader.getController();
-                     
+                  AnchorPane FXMLFile = FXMLLoader.load(
+                      FXMLProjectManagerLandingController.class.getResource(fxmlFile));
+                  apBackground.getChildren().setAll(FXMLFile);
             }
             catch (IOException ex)
             {
