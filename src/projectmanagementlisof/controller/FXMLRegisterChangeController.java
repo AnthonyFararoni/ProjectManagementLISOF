@@ -23,7 +23,7 @@ public class FXMLRegisterChangeController implements Initializable {
     @FXML
     private TextArea taDescription;
     @FXML
-    private ComboBox<?> cbChangeType;
+    private ComboBox cbChangeType;
 
     /**
      * Initializes the controller class.
@@ -39,6 +39,7 @@ public class FXMLRegisterChangeController implements Initializable {
 
     @FXML
     private void btnRegisterChange(ActionEvent event) {
+        
     }
     
 }
