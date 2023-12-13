@@ -73,13 +73,13 @@ public class FXMLProjectManagerLandingController implements Initializable
       {
             try
             {
-                
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(
                         "/projectmanagementlisof/gui/" + fxmlName +".fxml"));
                 Node newNode = loader.load();
                 apBackground.getChildren().clear();
                 apBackground.getChildren().add(newNode);
-                
+                Object controller = loader.getController();
+                     
             }
             catch (IOException ex)
             {
