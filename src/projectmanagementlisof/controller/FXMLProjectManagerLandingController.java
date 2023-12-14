@@ -21,7 +21,7 @@ public class FXMLProjectManagerLandingController implements Initializable
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-            // TODO
+            
       }
 
       @FXML private void btnLogOut(MouseEvent event)
@@ -68,18 +68,15 @@ public class FXMLProjectManagerLandingController implements Initializable
       {
             loadFXML("FXMLDefectsOption");
       }
-
       private void loadFXML(String fxmlName)
       {
             try
             {
-                
                 FXMLLoader loader = new FXMLLoader(getClass().getResource(
                         "/projectmanagementlisof/gui/" + fxmlName +".fxml"));
                 Node newNode = loader.load();
                 apBackground.getChildren().clear();
                 apBackground.getChildren().add(newNode);
-                
             }
             catch (IOException ex)
             {

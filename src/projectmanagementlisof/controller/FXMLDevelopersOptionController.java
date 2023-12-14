@@ -1,5 +1,6 @@
 package projectmanagementlisof.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,7 +11,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -18,20 +22,24 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Developer;
-import projectmanagementlisof.observer.DeveloperObserver;
 import projectmanagementlisof.utils.Utilities;
 
-public class FXMLChooseDeveloperController implements Initializable
-{
 
+public class FXMLDevelopersOptionController implements Initializable
+{
+    public Integer idDeveloper;
+    public String developerName;
+    public String developerLogin;
     private ObservableList<Developer> developers;
-    private Integer idDeveloper;
-    private String developerName;
-    private DeveloperObserver observer;
     
+    @FXML
+    private TextField tfSearchDeveloper;
+    @FXML
+    private TableView<Developer> tvDevelopers;
     @FXML
     private TableColumn colDeveloperLogin;
     @FXML
@@ -39,63 +47,50 @@ public class FXMLChooseDeveloperController implements Initializable
     @FXML
     private TableColumn colDeveloperEmail;
     @FXML
-    private TableView<Developer> tvDevelopers;
+    private Button btnDisableDeveloper;
     @FXML
-    private TextField tfSearchDeveloper;
-    @FXML
-    private Button btnAssignDeveloperToActivity;
-    
-    public void setObserver(DeveloperObserver observer) {
-        this.observer = observer;
-    }
+    private Button btnShowDevelopersLog;
     
     @Override public void initialize(URL url, ResourceBundle rb)
     {
-      configureDevelopersTable();
-      getDevelopersForTable();
-    }
-
-    @FXML 
-    private void btnReturn(MouseEvent event) 
-    {   
+        configureDevelopersTable();
+        getDevelopersForTable();
         
-        Stage currentStage = (Stage) tfSearchDeveloper.getScene().getWindow();
-        Utilities.closeWindow(currentStage);
-    }
-
-    @FXML 
-    private void btnAssignDeveloperToActivity(ActionEvent event) 
-    {        
-        if (idDeveloper != null && observer != null) {
-            observer.developerSelected(idDeveloper, developerName);
-            Stage currentStage = (Stage) btnAssignDeveloperToActivity.getScene().getWindow();
-            currentStage.close();
-        }
     }
     
-    @FXML
-    private void btnSearchDeveloper(MouseEvent event) {
-        searchDeveloper();
+    private void initializeInformation()
+    {
+            boolean confirmation = Utilities.showConfirmationAlert("¿Eliminar desarrollador?", "¿Esta seguro"
+                    + " de eliminar al desarrollador seleccionado?");
+            if(confirmation){
+                disableDeveloper(idDeveloper);
+            }   
     }
-      
+    
+    private void btnRefreshTableDevelopers(MouseEvent event) {
+        getDevelopersForTable();
+        tfSearchDeveloper.setText("");
+    }
+    
     private void configureDevelopersTable()
     {
         this.colDeveloperLogin.setCellValueFactory(new PropertyValueFactory("developerLogin"));
-        this.colDeveloperName.setCellValueFactory(new PropertyValueFactory("fullName"));
+        this.colDeveloperName.setCellValueFactory(new PropertyValueFactory("name"));
         this.colDeveloperEmail.setCellValueFactory(new PropertyValueFactory("email"));
         showDeveloperSelected();
     }
-       
+    
     private void showDeveloperSelected(){
         tvDevelopers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Developer>() {
             @Override
             public void changed(ObservableValue<? extends Developer> observable, Developer oldValue, 
                     Developer newValue) {
                 if(newValue != null){
-                    btnAssignDeveloperToActivity.setDisable(false);
+                    btnDisableDeveloper.setDisable(false);
+                    btnShowDevelopersLog.setDisable(false);
                     int selectedPosition = tvDevelopers.getSelectionModel().getSelectedIndex();
                     Developer selectedDeveloper = developers.get(selectedPosition);
-                    idDeveloper = selectedDeveloper.getIdDeveloper();   
+                    idDeveloper = newValue.getIdDeveloper();
                     developerName = selectedDeveloper.getFullName();                  
                 }
             }
@@ -114,6 +109,44 @@ public class FXMLChooseDeveloperController implements Initializable
             Utilities.showSimpleAlert("Error de carga", (String)answer.get("message"), 
                     Alert.AlertType.ERROR);
         }        
+    }
+
+    @FXML
+    private void btnShowDevelopersLog(ActionEvent event) 
+    {
+        try
+        {
+            FXMLLoader loader = Utilities.loadView("gui/FXMLDeveloperLog.fxml");
+            Parent view = loader.load();
+            Scene scene = new Scene(view);
+            FXMLDeveloperLogController controller = loader.getController();
+            controller.initializeInformation(idDeveloper, developerName, developerLogin);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setTitle("Bitacora del desarrollador");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();           
+        } 
+        catch (IOException ex)
+        {
+            ex.printStackTrace();
+        }
+    }
+
+    private void disableDeveloper(int idDeveloper)
+    {
+        HashMap<String, Object> answer = DeveloperDAO.disableDeveloper(idDeveloper);
+        if(!(boolean) answer.get("error")){
+            Utilities.showSimpleAlert("Eliminacion exitosa", (String)answer.get("mensaje"),
+                    Alert.AlertType.INFORMATION);
+            getDevelopersForTable();
+        }else{
+            Utilities.showSimpleAlert("Eliminacion fallida", (String)answer.get("mensaje"),
+                    Alert.AlertType.ERROR);
+        }
+        btnDisableDeveloper.setDisable(true);
+        btnShowDevelopersLog.setDisable(true);
     }
     
     private void searchDeveloper()
@@ -142,5 +175,14 @@ public class FXMLChooseDeveloperController implements Initializable
                     Alert.AlertType.ERROR);
         }
     }
-    
+
+    private void btnSearchDeveloper(MouseEvent event) {
+        searchDeveloper();
+    }
+
+    @FXML
+    private void btnDisableDeveloper(ActionEvent event) {
+    }
+
+   
 }

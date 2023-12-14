@@ -26,8 +26,7 @@ import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLDeveloperOptionController implements Initializable
-{
-    
+{   
     private Utilities utilities = new Utilities();
     private ObservableList<Developer> developers;
     
@@ -42,12 +41,42 @@ public class FXMLDeveloperOptionController implements Initializable
     @FXML
     private TableColumn colDeveloperEmail;
     
-    @Override public void initialize(URL url, ResourceBundle rb)
+      @Override public void initialize(URL url, ResourceBundle rb)
+      {
+            // TODO
+      }
+
+    @FXML
+    private void btnShowDeveloperDetails(ActionEvent event) 
     {
-          // TODO
-        //configureDevelopersTable();
-        
-        
+    }
+
+    @FXML
+    private void btnShowAssignedActivities(ActionEvent event) 
+    {
+        goAssignedActivities();
+    }
+    
+    private void goAssignedActivities(/*String idDeveloper, String developerName*/)
+      {
+        try 
+        {
+            FXMLLoader loader = Utilities.loadView("");
+            Parent view = loader.load();
+            Scene scene = new Scene(view);
+            
+            
+            Stage currentStage = new Stage();
+            currentStage.setScene(scene);
+            currentStage.setTitle("Actividades asignadas");
+            currentStage.initModality(Modality.APPLICATION_MODAL);
+            currentStage.showAndWait();
+            Utilities.centerStage(currentStage);
+        } 
+        catch (IOException ex) 
+        {
+            ex.printStackTrace();
+        }
     }
     
     private void initializeInformation()

@@ -9,34 +9,31 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import projectmanagementlisof.model.ConnectionDB;
-import projectmanagementlisof.model.pojo.Activity;
+import projectmanagementlisof.model.pojo.Change;
 
 /**
  *
  * @author ferdy
  */
-public class ActivityDAO {
-    public static HashMap<String, Object> registerActivity(Activity activity){
+public class ChangeDAO {
+    public static HashMap<String, Object> registerActivity(Change change){
         HashMap<String, Object> answer = new HashMap();
         answer.put("error",true);
         Connection connectionBD = ConnectionDB.getConnection();
         if(connectionBD != null){
             try{
-                String statement = "insert into activity (name, description, status, startDate, "+
-                    "endDate, idDeveloper, idProjectManager) " + "values(?, ?, ?, ?, ?, ?, ?)";
+                String statement = "insert into change (type, description, dateCreated, ideDeveloper" + 
+                        "values(?, ?, ?, ?)";
                 PreparedStatement prepareStatement = connectionBD.prepareStatement(statement);
-                prepareStatement.setString(1, activity.getName());
-                prepareStatement.setString(2, activity.getDescription());
-                prepareStatement.setInt(3, activity.getStatus());
-                prepareStatement.setString(4, activity.getStartDate());
-                prepareStatement.setString(5, activity.getEndDate());
-                prepareStatement.setInt(6, activity.getIdDeveloper());
-                prepareStatement.setInt(7, activity.getIdProjectManager());
+                prepareStatement.setInt(1, change.getType());
+                prepareStatement.setString(2, change.getDescription());
+                prepareStatement.setString(3, change.getDateCreated());
+                prepareStatement.setInt(4, change.getIdDeveloper());
                 int  affectedRows = prepareStatement.executeUpdate();
                 connectionBD.close();
                 if(affectedRows > 0){
                     answer.put("error", false);
-                    answer.put("message", "Actividad Guardada.");
+                    answer.put("message", "Cambio Registrado.");
                 }else{
                     answer.put("message", "Error en la base de datos.");
                 }
@@ -49,6 +46,4 @@ public class ActivityDAO {
         }
         return answer;
     }
-    
-    
 }
