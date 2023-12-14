@@ -5,6 +5,7 @@ public class ChangeRequest
       private Integer idChangeRequest;
       private String justification;
       private String description;
+      private Integer idStatus;
       private String status;
       private String creationDate;
       private String reviewDate;
@@ -17,13 +18,14 @@ public class ChangeRequest
 
       public ChangeRequest() {}
 
-      public ChangeRequest(Integer idChangeRequest, String justification, String description,
+      public ChangeRequest(Integer idChangeRequest, String justification, String description,Integer idStatus,
           String status, String creationDate, String reviewDate, Integer idDeveloper, String developerName,
-          Integer idProjectManager, String projectManagerName, Integer idDefect, Integer idStatus)
+          Integer idProjectManager, String projectManagerName, Integer idDefect)
       {
             this.idChangeRequest = idChangeRequest;
             this.justification = justification;
             this.description = description;
+            this.idStatus = idStatus;
             this.status = status;
             this.creationDate = creationDate;
             this.reviewDate = reviewDate;
@@ -74,6 +76,35 @@ public class ChangeRequest
       {
             this.status = status;
       }
+
+    public void setStatus(Integer status) {
+        this.idStatus = status;
+        
+    }
+
+    public Integer getIdStatus() {
+        return idStatus;
+    }
+
+    public void setIdStatus(Integer idStatus) {
+        this.idStatus = idStatus;
+    }
+
+    public String getDeveloperName() {
+        return developerName;
+    }
+
+    public String getProjectManagerName() {
+        return projectManagerName;
+    }
+
+    public void setDeveloperName(String developerName) {
+        this.developerName = developerName;
+    }
+
+    public void setProjectManagerName(String projectManagerName) {
+        this.projectManagerName = projectManagerName;
+    }
 
       public String getCreationDate()
       {
@@ -156,7 +187,7 @@ public class ChangeRequest
       {
             return "ChangeRequest{"
                 + "idChangeRequest=" + idChangeRequest + ", justification=" + justification
-                + ", description=" + description + ", status=" + status + ", creationDate="
+                + ", description=" + description + ", status=" + idStatus + ", creationDate="
                 + creationDate + ", reviewDate=" + reviewDate + ", idDeveloper=" + idDeveloper
                 + ", idProjectManager=" + idProjectManager + ", idDefect=" + idDefect + '}';
       }

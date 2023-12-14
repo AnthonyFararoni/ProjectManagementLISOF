@@ -66,7 +66,7 @@ public class DeveloperDAO {
     }
     
     
-    public static boolean validateProfessor(Integer idDeveloper)  {
+    public static boolean validateDeveloper(Integer idDeveloper)  {
         boolean resultValidation = false;
         try {        
             String query = "select * from activity where idDeveloper = ?;";
