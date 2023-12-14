@@ -15,12 +15,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Activity;
@@ -39,6 +44,7 @@ public class FXMLActivitiesInLogController implements Initializable {
     private ObservableList<Activity> activities;
     private int idDeveloper;
     private int idActivity;
+    private Utilities utilities = new Utilities();
     
     @FXML
     private TableView<Activity> tvAssignedActivities;
@@ -74,9 +80,6 @@ public class FXMLActivitiesInLogController implements Initializable {
         idDeveloper = instance.getIdSelected();
     }
 
-    @FXML
-    private void btnShowAssignedActivityDetails(ActionEvent event) {
-    }
 
     @FXML
     private void btnEditAssignedActivity(ActionEvent event) {
@@ -142,6 +145,29 @@ public class FXMLActivitiesInLogController implements Initializable {
         }
         btnDeleteAssignedActivity.setDisable(true);
         btnEditAssignedActivity.setDisable(true);
+    }
+
+    @FXML
+    private void btnShowAssignedActivityDetailsclick(ActionEvent event) {
+        Activity selectedActivity = tvAssignedActivities.getSelectionModel().getSelectedItem();
+        if (selectedActivity != null) {
+            int idActivity = selectedActivity.getIdActivity();
+            UserSingleton instance = UserSingleton.getInstace();
+            instance.setIdSelected(idActivity);
+            try {
+                FXMLLoader loader = utilities.loadView("gui/FXMLActivityDetails.fxml");
+                Parent view = loader.load();
+                Scene scene = new Scene(view);
+                Stage stage = new Stage();
+
+                stage.setScene(scene);
+                stage.setTitle("Detalles del defecto");
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.showAndWait();
+            } catch (java.io.IOException ex) {
+                ex.printStackTrace();
+            }
+        }
     }
     
 }

@@ -74,12 +74,50 @@ public class ChangeDAO {
                 answer.put("error", false);
                 answer.put("changes", changes);
             } catch (SQLException ex) {
-                answer.put("message","Error: " + ex.getMessage());
-            }     
-        }else{
-            answer.put("message", "Hubo un error al intentar conectar con la base de datos. Intente "
-                    + "de nuevo más tarde");
+                answer.put("message", "Error: " + ex.getMessage());
+            }
+        } else {
+            answer.put("message", "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde");
         }
         return answer;
     }
+     
+    public static HashMap<String, Object> getChangeDetails(int idChange) {
+    HashMap<String, Object> answer = new HashMap<>();
+    answer.put("error", true);
+    Connection connectionBD = ConnectionDB.getConnection();
+    if (connectionBD != null) {
+        try {
+            String query = "SELECT * FROM `change` WHERE idChange = ?";
+            PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+            preparedStatement.setInt(1, idChange);
+            ResultSet changeResult = preparedStatement.executeQuery();
+
+            if (changeResult.next()) {
+                Change change = new Change();
+                change.setIdChange(changeResult.getInt("idChange"));
+                change.setType(changeResult.getInt("type"));
+                change.setDescription(changeResult.getString("description"));
+                change.setDateCreated(changeResult.getString("dateCreated"));
+                change.setIdDeveloper(changeResult.getInt("idDeveloper"));
+
+                connectionBD.close();
+                answer.put("error", false);
+                answer.put("change", change);
+            } else {
+                answer.put("message", "No se encontró el cambio con el ID proporcionado.");
+            }
+        } catch (SQLException ex) {
+            answer.put("message", "Error: " + ex.getMessage());
+        }
+    } else {
+        answer.put("message", "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde");
+    }
+    return answer;
+    }
+
+    public static HashMap<String, Object> getDeveloperChanges(int idDeveloper) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
 }
