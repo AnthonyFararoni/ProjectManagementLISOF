@@ -43,7 +43,6 @@ public class FXMLNewChangeRequestFormController implements Initializable
             changeRequest.setDescription(tfChangeDescription.getText());
             changeRequest.setStatus("1");
             changeRequest.setCreationDate(LocalDate.now().toString());
-            changeRequest.setReviewDate(dpDate.getValue().toString());
             changeRequest.setIdDeveloper(1);
             changeRequest.setIdProjectManager(1);
             changeRequest.setIdDefect(1);

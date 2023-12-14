@@ -132,15 +132,14 @@ public class ChangeRequestDAO
                   {
                         String query =
                             "INSERT INTO ChangeRequest (justification, description, status, "
-                            + "creationDate, reviewDate, idDeveloper) VALUES (?, ?, ?, ?, ?, ?);";
+                            + "creationDate, idDeveloper) VALUES (?, ?, ?, ?, ?);";
 
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setString(1, changeRequest.getJustification());
                         preparedStatement.setString(2, changeRequest.getDescription());
                         preparedStatement.setString(3, changeRequest.getStatus());
                         preparedStatement.setString(4, changeRequest.getCreationDate());
-                        preparedStatement.setString(5, changeRequest.getReviewDate());
-                        preparedStatement.setInt(6, changeRequest.getIdDeveloper());
+                        preparedStatement.setInt(5, changeRequest.getIdDeveloper());
                         preparedStatement.executeUpdate();
                         connectionBD.close();
                         answer.put("error", false);
