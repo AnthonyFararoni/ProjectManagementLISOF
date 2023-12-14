@@ -21,15 +21,15 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </TextField>
-      <TableView layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0" stylesheets="@../css/Style.css">
+      <TableView fx:id="tvDeveloperDefects" layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0" stylesheets="@../css/Style.css">
          <columns>
-            <TableColumn maxWidth="199.59994888305664" prefWidth="99.19998550415039" text="No. Defecto" />
-            <TableColumn maxWidth="265.9999694824219" prefWidth="157.6000213623047" text="Esfuerzo (minutos)" />
-            <TableColumn maxWidth="341.5999755859375" prefWidth="118.0" text="Fecha de Hallazgo" />
-            <TableColumn maxWidth="311.20001220703125" prefWidth="296.800048828125" text="Descripción" />
+            <TableColumn fx:id="colDefectID" maxWidth="199.59994888305664" prefWidth="99.19998550415039" text="No. Defecto" />
+            <TableColumn fx:id="colTimeCost" maxWidth="265.9999694824219" prefWidth="157.6000213623047" text="Esfuerzo (minutos)" />
+            <TableColumn fx:id="colFoundDate" maxWidth="341.5999755859375" prefWidth="118.0" text="Fecha de Hallazgo" />
+            <TableColumn fx:id="colDescription" maxWidth="311.20001220703125" prefWidth="296.800048828125" text="Descripción" />
          </columns>
       </TableView>
-      <Button layoutX="426.0" layoutY="548.0" mnemonicParsing="false" onAction="#btnViewDetails" stylesheets="@../css/Style.css" text="Ver detalles">
+      <Button fx:id="btnViewDetails" layoutX="426.0" layoutY="548.0" mnemonicParsing="false" onAction="#btnViewDetailsclick" stylesheets="@../css/Style.css" text="Ver detalles">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>

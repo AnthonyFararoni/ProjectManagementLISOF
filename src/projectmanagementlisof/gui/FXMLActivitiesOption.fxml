@@ -11,7 +11,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLActivitiesOptionController">
       <children>
-            <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+            <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0" onMouseClicked="#btnSearchActivity" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                   <image>
                         <Image url="@../images/SearchIcon.png" />
                   </image>
@@ -21,25 +21,29 @@
                         <Font name="System Bold" size="16.0" />
                   </font>
             </TextField>
-            <TableView layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0" stylesheets="@../css/Style.css">
+            <TableView fx:id="tvUnassignedActivities" layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0" stylesheets="@../css/Style.css">
                   <columns>
-                        <TableColumn maxWidth="142.0000343322754" prefWidth="142.0000343322754" text="Actividad" />
-                        <TableColumn maxWidth="265.9999694824219" prefWidth="129.59996032714844" text="Fecha inicio" />
-                        <TableColumn maxWidth="341.5999755859375" prefWidth="135.199951171875" text="Fecha fin" />
-                        <TableColumn maxWidth="292.0" prefWidth="136.4000244140625" text="Estado" />
-                        <TableColumn maxWidth="319.60002441406255" prefWidth="128.39996337890625" text="Opciones" />
+                        <TableColumn fx:id="colActivityName" maxWidth="313.9999809265137" prefWidth="313.9999809265137" text="Actividad" />
+                        <TableColumn fx:id="colStartDate" maxWidth="292.0000457763672" prefWidth="121.33334350585938" text="Fecha inicio" />
+                        <TableColumn fx:id="colEndDate" maxWidth="341.5999755859375" prefWidth="130.66659545898438" text="Fecha fin" />
+                        <TableColumn fx:id="colStatus" maxWidth="292.0" prefWidth="104.6666259765625" text="Estado" />
 
                   </columns>
             </TableView>
-            <Button layoutX="202.0" layoutY="547.0" mnemonicParsing="false" onAction="#btnShowCreateActivity" stylesheets="@../css/Style.css" text="Crear actividad">
+            <Button fx:id="btnShowCreateActivity" layoutX="93.0" layoutY="559.0" mnemonicParsing="false" onAction="#btnShowCreateActivity" stylesheets="@../css/Style.css" text="Crear actividad">
                   <font>
                         <Font name="System Bold" size="17.0" />
                   </font>
             </Button>
-            <Button layoutX="439.0" layoutY="547.0" mnemonicParsing="false" stylesheets="@../css/Style.css" text="Ver detalles">
+            <Button fx:id="btnEditActivity" disable="true" layoutX="513.0" layoutY="559.0" mnemonicParsing="false" onAction="#btnEditActivity" stylesheets="@../css/Style.css" text="Editar actividad">
                   <font>
                         <Font name="System Bold" size="17.0" />
                   </font>
             </Button>
+      <Button fx:id="btnDeleteActivity" disable="true" layoutX="299.0" layoutY="559.0" mnemonicParsing="false" onAction="#btnDeleteActivity" stylesheets="@../css/Style.css" text="Eliminar actividad">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
       </children>
 </AnchorPane>

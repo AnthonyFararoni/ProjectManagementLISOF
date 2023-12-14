@@ -3,10 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/antho/OneDrive%20-%20Universidad%20Veracruzana/ProjectManagementLISOF/src/projectmanagementlisof/controller/FXMLDeveloperLandingController.java</file>
-            <file>file:/C:/Users/antho/OneDrive%20-%20Universidad%20Veracruzana/ProjectManagementLISOF/src/projectmanagementlisof/controller/FXMLProjectManagerLandingController.java</file>
-            <file>file:/C:/Users/antho/OneDrive%20-%20Universidad%20Veracruzana/ProjectManagementLISOF/src/projectmanagementlisof/controller/FXMLNewChangeRequestFormController.java</file>
-            <file>file:/C:/Users/antho/OneDrive%20-%20Universidad%20Veracruzana/ProjectManagementLISOF/src/projectmanagementlisof/gui/FXMLNewChangeRequestForm.fxml</file>
+            <file>file:/C:/UV_5to_Semestre/principios_de_construccion/NetbeansProjects/Repositorios/ProjectManagementLISOF/src/projectmanagementlisof/controller/FXMLDefectsInLogController.java</file>
+            <file>file:/C:/UV_5to_Semestre/principios_de_construccion/NetbeansProjects/Repositorios/ProjectManagementLISOF/src/projectmanagementlisof/model/dao/ChangeDAO.java</file>
+            <file>file:/C:/UV_5to_Semestre/principios_de_construccion/NetbeansProjects/Repositorios/ProjectManagementLISOF/src/projectmanagementlisof/controller/FXMLChangesDetailsController.java</file>
+            <file>file:/C:/UV_5to_Semestre/principios_de_construccion/NetbeansProjects/Repositorios/ProjectManagementLISOF/src/projectmanagementlisof/model/pojo/Change.java</file>
+            <file>file:/C:/UV_5to_Semestre/principios_de_construccion/NetbeansProjects/Repositorios/ProjectManagementLISOF/src/projectmanagementlisof/model/dao/ActivityDAO.java</file>
+            <file>file:/C:/UV_5to_Semestre/principios_de_construccion/NetbeansProjects/Repositorios/ProjectManagementLISOF/src/projectmanagementlisof/controller/FXMLActivityDetailsController.java</file>
+            <file>file:/C:/UV_5to_Semestre/principios_de_construccion/NetbeansProjects/Repositorios/ProjectManagementLISOF/src/projectmanagementlisof/controller/FXMLChangesInLogController.java</file>
+            <file>file:/C:/UV_5to_Semestre/principios_de_construccion/NetbeansProjects/Repositorios/ProjectManagementLISOF/src/projectmanagementlisof/controller/FXMLActivitiesInLogController.java</file>
         </group>
     </open-files>
 </project-private>

@@ -28,7 +28,7 @@ public class FXMLDeveloperLandingController implements Initializable
       @FXML private void btnShowActivies(ActionEvent event)
       {
             utilities.loadFXML(
-                "/projectmanagementlisof/gui/FXMLDeveloperActivitiesOption.fxml", apBackground);
+                "/projectmanagementlisof/gui/FXMLDeveloperActivities.fxml", apBackground);
       }
 
       @FXML private void btnShowChanges(ActionEvent event)

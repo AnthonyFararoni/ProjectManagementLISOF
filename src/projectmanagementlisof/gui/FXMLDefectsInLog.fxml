@@ -8,20 +8,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="367.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="projectmanagementlisof.controller.FXMLDefectsInLogController">
+<AnchorPane id="AnchorPane" prefHeight="367.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLDefectsInLogController">
     <stylesheets>
         <URL value="@/projectmanagementlisof/css/Style.css" />
     </stylesheets>
    <children>
-      <TableView layoutX="97.0" layoutY="24.0" prefHeight="275.0" prefWidth="758.0" stylesheets="@../css/Style.css">
+      <TableView fx:id="tvLogDefects" layoutX="97.0" layoutY="24.0" prefHeight="275.0" prefWidth="758.0" stylesheets="@../css/Style.css">
          <columns>
-            <TableColumn prefWidth="109.0" text="No. Defecto" />
-            <TableColumn prefWidth="146.0" text="Esfuerzo (minutos)" />
-            <TableColumn prefWidth="138.0" text="Fecha de hallazgo" />
-            <TableColumn prefWidth="367.0" text="Descripción" />
+            <TableColumn fx:id="colDefectID" prefWidth="109.0" text="No. Defecto" />
+            <TableColumn fx:id="colTimeCost" prefWidth="146.0" text="Esfuerzo (minutos)" />
+            <TableColumn fx:id="colDateFound" prefWidth="138.0" text="Fecha de hallazgo" />
+            <TableColumn fx:id="colDescription" prefWidth="367.0" text="Descripción" />
          </columns>
       </TableView>
-      <Button layoutX="417.0" layoutY="315.0" mnemonicParsing="false" stylesheets="@../css/Style.css" text="Ver detalles">
+      <Button fx:id="btnViewDetails" layoutX="417.0" layoutY="315.0" mnemonicParsing="false" onAction="#btnViewDetailsClick" stylesheets="@../css/Style.css" text="Ver detalles">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
