@@ -26,6 +26,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Developer;
+import projectmanagementlisof.utils.UserSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 
@@ -60,11 +61,7 @@ public class FXMLDevelopersOptionController implements Initializable
     
     private void initializeInformation()
     {
-            boolean confirmation = Utilities.showConfirmationAlert("¿Eliminar desarrollador?", "¿Esta seguro"
-                    + " de eliminar al desarrollador seleccionado?");
-            if(confirmation){
-                disableDeveloper(idDeveloper);
-            }   
+            
     }
     
     private void btnRefreshTableDevelopers(MouseEvent event) {
@@ -75,7 +72,7 @@ public class FXMLDevelopersOptionController implements Initializable
     private void configureDevelopersTable()
     {
         this.colDeveloperLogin.setCellValueFactory(new PropertyValueFactory("developerLogin"));
-        this.colDeveloperName.setCellValueFactory(new PropertyValueFactory("name"));
+        this.colDeveloperName.setCellValueFactory(new PropertyValueFactory("fullName"));
         this.colDeveloperEmail.setCellValueFactory(new PropertyValueFactory("email"));
         showDeveloperSelected();
     }
@@ -90,8 +87,11 @@ public class FXMLDevelopersOptionController implements Initializable
                     btnShowDevelopersLog.setDisable(false);
                     int selectedPosition = tvDevelopers.getSelectionModel().getSelectedIndex();
                     Developer selectedDeveloper = developers.get(selectedPosition);
-                    idDeveloper = newValue.getIdDeveloper();
-                    developerName = selectedDeveloper.getFullName();                  
+                    idDeveloper = selectedDeveloper.getIdDeveloper();
+                    UserSingleton instance = UserSingleton.getInstace();
+                    instance.setIdSelected(idDeveloper);
+                    developerName = selectedDeveloper.getFullName(); 
+                    developerLogin = selectedDeveloper.getDeveloperLogin();
                 }
             }
         });
@@ -120,6 +120,7 @@ public class FXMLDevelopersOptionController implements Initializable
             Parent view = loader.load();
             Scene scene = new Scene(view);
             FXMLDeveloperLogController controller = loader.getController();
+            
             controller.initializeInformation(idDeveloper, developerName, developerLogin);
             Stage stage = new Stage();
 
@@ -134,19 +135,34 @@ public class FXMLDevelopersOptionController implements Initializable
         }
     }
 
+    @FXML
+    private void btnDisableDeveloper(ActionEvent event) {
+        boolean confirmation = Utilities.showConfirmationAlert("¿Eliminar desarrollador?", "¿Esta seguro"
+                    + " de eliminar al desarrollador seleccionado?");
+            if(confirmation){
+                disableDeveloper(idDeveloper);
+            }   
+    }
+    
     private void disableDeveloper(int idDeveloper)
     {
-        HashMap<String, Object> answer = DeveloperDAO.disableDeveloper(idDeveloper);
-        if(!(boolean) answer.get("error")){
-            Utilities.showSimpleAlert("Eliminacion exitosa", (String)answer.get("mensaje"),
-                    Alert.AlertType.INFORMATION);
-            getDevelopersForTable();
+        if(DeveloperDAO.validateProfessor(idDeveloper)){
+            HashMap<String, Object> answer = DeveloperDAO.disableDeveloper(idDeveloper);
+            if(!(boolean) answer.get("error")){
+                Utilities.showSimpleAlert("Eliminacion exitosa", (String)answer.get("mensaje"),
+                        Alert.AlertType.INFORMATION);
+                getDevelopersForTable();
+            }else{
+                Utilities.showSimpleAlert("Eliminacion fallida", (String)answer.get("mensaje"),
+                        Alert.AlertType.ERROR);
+            }
+            btnDisableDeveloper.setDisable(true);
+            btnShowDevelopersLog.setDisable(true);
         }else{
-            Utilities.showSimpleAlert("Eliminacion fallida", (String)answer.get("mensaje"),
-                    Alert.AlertType.ERROR);
+            Utilities.showSimpleAlert("Actividades pendientes", "El desarrollador que intena eliminar"
+                    + " tiene actividades asignadas. Por favor desasigne primero dichas actividades y vuelva a "
+                    + "intentarlo", Alert.AlertType.WARNING);
         }
-        btnDisableDeveloper.setDisable(true);
-        btnShowDevelopersLog.setDisable(true);
     }
     
     private void searchDeveloper()
@@ -180,9 +196,7 @@ public class FXMLDevelopersOptionController implements Initializable
         searchDeveloper();
     }
 
-    @FXML
-    private void btnDisableDeveloper(ActionEvent event) {
-    }
+    
 
    
 }
