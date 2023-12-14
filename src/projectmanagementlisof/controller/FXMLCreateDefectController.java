@@ -5,6 +5,7 @@
  */
 package projectmanagementlisof.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -23,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
+import projectmanagementlisof.ProjectManagementLISOF;
 import projectmanagementlisof.model.dao.CatalogDAO;
 import projectmanagementlisof.model.dao.DefectDAO;
 import projectmanagementlisof.model.pojo.CorrectionType;
@@ -48,7 +50,8 @@ public class FXMLCreateDefectController implements Initializable
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-            setTypesInComboBox();
+        setTypesInComboBox();
+        Utilities.onlyNumbers(tfTimeCost);
       }
 
       @FXML private void changeToDefaultCursor(MouseEvent event)
@@ -61,64 +64,76 @@ public class FXMLCreateDefectController implements Initializable
             imgBackButton.setCursor(Cursor.HAND);
       }
 
-      @FXML private void goBackToLanding(MouseEvent event)
-      {
+    @FXML
+    private void changeToHandCursor(MouseEvent event) {
+        imgBackButton.setCursor(Cursor.HAND);
+    }
+
+    @FXML
+    private void goBackToLanding(MouseEvent event) throws IOException {
+        ProjectManagementLISOF.setRoot("/projectmanagementlisof/gui/FXMLDeveloperLanding");
+    }
+
+    @FXML
+    private void createDefect(ActionEvent event) {
+        if(validarCampos())
+        {
+            int saved = registerNewDefect();
+            if(saved > 0)
+            {
+                utilities.showSimpleAlert("Nuevo Defecto Creado", "El Defecto a sido creado y almacenado con éxito", Alert.AlertType.INFORMATION);
+            } 
+            else
+            {
+                  utilities.showSimpleAlert("Error", "Ocurrió un error al Crear el defecto", Alert.AlertType.WARNING);
+            }
             Stage currentStage = (Stage) tfTimeCost.getScene().getWindow();
             utilities.closeWindow(currentStage);
-      }
-
-      @FXML private void createDefect(ActionEvent event)
-      {
-            if (validarCampos())
-            {
-                  int saved = registerNewDefect();
-                  utilities.showSimpleAlert("Nuevo Defecto Creado",
-                      "El defecto a sido creado y almacenado con éxito",
-                      Alert.AlertType.CONFIRMATION);
-                  Stage currentStage = (Stage) tfTimeCost.getScene().getWindow();
-                  utilities.closeWindow(currentStage);
-            }
-      }
-
-      private void setTypesInComboBox()
-      {
-            List<CorrectionType> result = CatalogDAO.getTypes();
-            types.addAll(result);
-            cbType.setItems(types);
-      }
-
-      public boolean validarCampos()
-      {
-            boolean CamposValidos = true;
-            if (tfTimeCost.getText().isEmpty())
-            {
-                  CamposValidos = false;
-            }
-            if (taDescription.getText().isEmpty())
-            {
-                  CamposValidos = false;
-            }
-            if (cbType.getSelectionModel().isEmpty())
-            {
-                  CamposValidos = false;
-            }
-            return CamposValidos;
-      }
-
-      private int registerNewDefect()
-      {
-            Defect defect = new Defect();
-            LocalDate date = LocalDate.now();
-            defect.setTimeCost(Integer.parseInt(tfTimeCost.getText()));
-            System.out.println(utilities.parseDateToString(date));
-            defect.setDate(utilities.parseDateToString(date));
-            defect.setDescription(taDescription.getText());
-            CorrectionType selectedType = cbType.getSelectionModel().getSelectedItem();
-            defect.setType(selectedType.getIdType());
-            defect.setIdDeveloper(1);
-            DefectDAO dao = new DefectDAO();
-            int result = dao.registerDefect(defect);
-            System.out.println(result);
-            return result;
-      }
+        }
+        else
+        {
+            utilities.showSimpleAlert("Nuevo Defecto Creado", "Por favor llena los campos marcados con información válida", Alert.AlertType.WARNING);
+        }
+    }
+    
+    private void setTypesInComboBox()
+    {
+        List<CorrectionType> result = CatalogDAO.getTypes();
+        types.addAll(result);
+        cbType.setItems(types);
+    } 
+    
+    
+    public boolean validarCampos() {
+        boolean CamposValidos = true;
+        if (tfTimeCost.getText().isEmpty()) {
+            tfTimeCost.setStyle("-fx-border-color: red;");
+            CamposValidos = false;
+        }
+        if (taDescription.getText().isEmpty()) {
+            cbType.setStyle("-fx-border-color: red;");
+            CamposValidos = false;
+        }
+        if (cbType.getSelectionModel().isEmpty()) {
+            taDescription.setStyle("-fx-border-color: red;");
+            CamposValidos = false;
+        }
+        return CamposValidos;
+    }
+    
+    private int registerNewDefect()
+    {
+        Defect defect = new Defect();
+        LocalDate date = LocalDate.now();
+        defect.setTimeCost(Integer.parseInt(tfTimeCost.getText()));
+        System.out.println(utilities.parseDateToString(date));
+        defect.setDate(utilities.parseDateToString(date));
+        defect.setDescription(taDescription.getText());
+        CorrectionType selectedType = cbType.getSelectionModel().getSelectedItem();
+        defect.setType(selectedType.getIdType());
+        defect.setIdDeveloper(1);
+        DefectDAO dao = new DefectDAO();
+        int result = dao.registerDefect(defect);
+        return result;
+    }
 }

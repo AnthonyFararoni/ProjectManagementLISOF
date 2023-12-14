@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="projectmanagementlisof.controller.FXMLCreateDefectController">
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLCreateDefectController">
     <stylesheets>
         <URL value="@/projectmanagementlisof/css/Style.css" />
     </stylesheets>
@@ -45,13 +45,13 @@
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
-            <TextField fx:id="tfTimeCost" layoutX="128.0" layoutY="96.0" prefHeight="44.0" prefWidth="254.0" promptText="Esfuerzo en minutos" styleClass="lower-gray-text-area" stylesheets="@../css/Style.css">
+            <TextField fx:id="tfTimeCost" focusTraversable="false" layoutX="128.0" layoutY="96.0" prefHeight="44.0" prefWidth="254.0" promptText="Esfuerzo en minutos" styleClass="lower-gray-text-area" stylesheets="@../css/Style.css">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
             <ComboBox fx:id="cbType" layoutX="601.0" layoutY="96.0" prefHeight="44.0" prefWidth="223.0" promptText="Tipo De Defecto" />
-            <TextArea fx:id="taDescription" layoutX="128.0" layoutY="197.0" prefHeight="200.0" prefWidth="696.0" promptText="Escribe tu descripción aquí" styleClass="lower-gray-text-area" stylesheets="@../css/Style.css" />
+            <TextArea fx:id="taDescription" focusTraversable="false" layoutX="128.0" layoutY="197.0" prefHeight="200.0" prefWidth="696.0" promptText="Escribe tu descripción aquí" styleClass="lower-gray-text-area" stylesheets="@../css/Style.css" />
             <Button layoutX="411.0" layoutY="434.0" mnemonicParsing="false" onAction="#createDefect" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Guardar Defecto" />
          </children>
       </Pane>

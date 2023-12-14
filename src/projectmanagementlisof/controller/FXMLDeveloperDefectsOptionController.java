@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import projectmanagementlisof.ProjectManagementLISOF;
 import projectmanagementlisof.utils.Utilities;
 /**
  * FXML Controller class
@@ -37,25 +38,9 @@ public class FXMLDeveloperDefectsOptionController implements Initializable {
     }
 
     @FXML
-    private void btnRegisterDefect(ActionEvent event) 
+    private void btnRegisterDefect(ActionEvent event) throws IOException 
     {
-         try
-        {
-            FXMLLoader loader = utilities.loadView("gui/FXMLCreateDefect.fxml");
-            Parent view = loader.load();
-            Scene scene = new Scene(view);
-            FXMLCreateDefectController controller = loader.getController();
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.setTitle("Crear defecto");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();            
-        } 
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
+         ProjectManagementLISOF.setRoot("/projectmanagementlisof/gui/FXMLCreateDefect");
     }
     
 }

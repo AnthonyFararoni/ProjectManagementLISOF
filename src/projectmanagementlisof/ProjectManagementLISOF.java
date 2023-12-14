@@ -5,25 +5,40 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import projectmanagementlisof.utils.Utilities;
+import java.io.IOException;
 
-public class ProjectManagementLISOF extends Application
-{
-      @Override public void start(Stage stage) throws Exception
-      {
-            Parent root =
-                FXMLLoader.load(getClass().getResource("gui/FXMLProjectManagerLanding.fxml"));
+public class ProjectManagementLISOF extends Application {
 
-            Scene scene = new Scene(root);
+    private static Scene scene;
+    private static Stage primaryStage;
 
-            stage.setScene(scene);
-            stage.setTitle("Iniciar sesión");
-            stage.show();
-            Utilities.centerStage(stage);
-      }
+    @Override
+    public void start(Stage stage) throws Exception {
+        primaryStage = stage;
+        scene = new Scene(loadFXML("gui/FXMLDeveloperLanding"));
+        stage.setScene(scene);
+        stage.setTitle("Iniciar sesión");
+        stage.show();
+    }
 
-      public static void main(String[] args)
-      {
-            launch(args);
-      }
+    public static void setRoot(String fxml) throws IOException {
+        scene.setRoot(loadFXML(fxml));
+    }
+
+    private static Parent loadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(ProjectManagementLISOF.class.getResource(fxml + ".fxml"));
+        return fxmlLoader.load();
+    }
+
+    public static void changeScene(String fxml) throws IOException {
+        setRoot(fxml);
+    }
+
+    public static Stage getPrimaryStage() {
+        return primaryStage;
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
 }
