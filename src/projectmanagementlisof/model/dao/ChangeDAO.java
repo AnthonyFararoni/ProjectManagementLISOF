@@ -6,7 +6,9 @@ package projectmanagementlisof.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import projectmanagementlisof.model.ConnectionDB;
 import projectmanagementlisof.model.pojo.Change;
@@ -28,7 +30,6 @@ public class ChangeDAO {
                 prepareStatement.setString(2, change.getDescription());
                 prepareStatement.setString(3, change.getDateCreated());
                 prepareStatement.setInt(4, change.getIdDeveloper());
-                System.out.println(change.getIdDeveloper());
                 int  affectedRows = prepareStatement.executeUpdate();
                 connectionBD.close();
                 if(affectedRows > 0){
@@ -44,6 +45,40 @@ public class ChangeDAO {
             }          
         }else{
             answer.put("message", "Error en la conexion a la base de datos.");
+        }
+        return answer;
+    }
+
+    public static HashMap<String, Object> getChangesByDeveloperId(int idDeveloper) {
+        HashMap<String, Object> answer = new HashMap<>();
+        answer.put("error", true);
+        Connection connectionBD = ConnectionDB.getConnection();
+        if(connectionBD != null){
+            try{
+                String query = "select idChange, type, description, dateCreated from change "
+                        + "where idDeveloper = ?";
+                PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                preparedStatement.setInt(1, idDeveloper);   
+                ResultSet activitiesList = preparedStatement.executeQuery();
+                ArrayList<Change> changes = new ArrayList<>();                
+                while(activitiesList.next()){
+                    Change change = new Change();
+                    change.setIdChange(activitiesList.getInt("idChange"));
+                    change.setType(activitiesList.getInt("type"));
+                    change.setDescription(activitiesList.getString("description"));
+                    change.setDateCreated(activitiesList.getString("dateCreated"));
+                    
+                    changes.add(change);
+                }
+                connectionBD.close();
+                answer.put("error", false);
+                answer.put("changes", changes);
+            } catch (SQLException ex) {
+                answer.put("message","Error: " + ex.getMessage());
+            }     
+        }else{
+            answer.put("message", "Hubo un error al intentar conectar con la base de datos. Intente "
+                    + "de nuevo más tarde");
         }
         return answer;
     }

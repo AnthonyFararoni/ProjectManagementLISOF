@@ -21,7 +21,7 @@
             <Font name="System Bold" size="16.0" />
          </font>
       </TextField>
-      <TableView layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0" stylesheets="@../css/Style.css">
+      <TableView fx:id="tvDeveloperChanges" layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0" stylesheets="@../css/Style.css">
          <columns>
             <TableColumn fx:id="colType" maxWidth="265.9999694824219" prefWidth="157.6000213623047" text="Tipo" />
             <TableColumn fx:id="colDescription" maxWidth="338.0" prefWidth="338.0" text="Descripción" />
