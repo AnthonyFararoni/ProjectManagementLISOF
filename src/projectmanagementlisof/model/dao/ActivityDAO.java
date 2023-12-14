@@ -20,14 +20,14 @@ import projectmanagementlisof.model.pojo.Developer;
  */
 public class ActivityDAO {
     
-    public static HashMap<String, Object> registerActivity(Activity activity){
+    public static HashMap<String, Object> registerAssignedActivity(Activity activity){
         HashMap<String, Object> answer = new HashMap();
         answer.put("error",true);
         Connection connectionBD = ConnectionDB.getConnection();
         if(connectionBD != null){
             try{
                 String statement = "insert into activity (name, description, status, startDate, "+
-                    "endDate, idDeveloper, idProjectManager) " + "values(?, ?, ?, ?, ?, ?, ?)";
+                    "endDate, idDeveloper) " + "values(?, ?, ?, ?, ?, ?)";
                 PreparedStatement prepareStatement = connectionBD.prepareStatement(statement);
                 prepareStatement.setString(1, activity.getName());
                 prepareStatement.setString(2, activity.getDescription());
@@ -35,7 +35,38 @@ public class ActivityDAO {
                 prepareStatement.setString(4, activity.getStartDate());
                 prepareStatement.setString(5, activity.getEndDate());
                 prepareStatement.setInt(6, activity.getIdDeveloper());
-                prepareStatement.setInt(7, activity.getIdProjectManager());
+                int  affectedRows = prepareStatement.executeUpdate();
+                connectionBD.close();
+                if(affectedRows > 0){
+                    answer.put("error", false);
+                    answer.put("message", "Actividad Guardada.");
+                }else{
+                    answer.put("message", "Error en la base de datos.");
+                }
+                
+            }catch(SQLException e){
+                answer.put("message", "Error: "+ e.getMessage());
+            }          
+        }else{
+            answer.put("message", "Error en la conexion a la base de datos.");
+        }
+        return answer;
+    }
+    
+    public static HashMap<String, Object> registerUnassignedActivity(Activity activity){
+        HashMap<String, Object> answer = new HashMap();
+        answer.put("error",true);
+        Connection connectionBD = ConnectionDB.getConnection();
+        if(connectionBD != null){
+            try{
+                String statement = "insert into activity (name, description, status, startDate, endDate) " + 
+                        "values(?, ?, ?, ?, ?)";
+                PreparedStatement prepareStatement = connectionBD.prepareStatement(statement);
+                prepareStatement.setString(1, activity.getName());
+                prepareStatement.setString(2, activity.getDescription());
+                prepareStatement.setInt(3, activity.getStatus());
+                prepareStatement.setString(4, activity.getStartDate());
+                prepareStatement.setString(5, activity.getEndDate());
                 int  affectedRows = prepareStatement.executeUpdate();
                 connectionBD.close();
                 if(affectedRows > 0){
@@ -274,4 +305,69 @@ public class ActivityDAO {
     }
 
     
+    public static HashMap<String, Object> updateUnassignedActivity(Activity activity){
+        HashMap<String, Object> answer = new HashMap();
+        answer.put("error",true);
+        Connection connectionBD = ConnectionDB.getConnection();
+        if(connectionBD != null){
+            try{
+                String statement = "update activity set name = ?, description = ?, startDate = ?, " + 
+                        "endDate = ? where idActivity = ?";
+                PreparedStatement prepareStatement = connectionBD.prepareStatement(statement);
+                prepareStatement.setString(1, activity.getName());
+                prepareStatement.setString(2, activity.getDescription());
+                prepareStatement.setString(3, activity.getStartDate());
+                prepareStatement.setString(4, activity.getEndDate());
+                prepareStatement.setInt(5, activity.getIdActivity());
+                int  affectedRows = prepareStatement.executeUpdate();
+                connectionBD.close();
+                if(affectedRows > 0){
+                    answer.put("error", false);
+                    answer.put("message", "Actividad Guardada.");
+                }else{
+                    answer.put("message", "Error en la base de datos.");
+                }
+                
+            }catch(SQLException e){
+                answer.put("message", "Error: "+ e.getMessage());
+            }          
+        }else{
+            answer.put("message", "Error en la conexion a la base de datos.");
+        }
+        return answer;
+    }
+    
+    public static HashMap<String, Object> updateAssignedActivity(Activity activity){
+        HashMap<String, Object> answer = new HashMap();
+        answer.put("error",true);
+        Connection connectionBD = ConnectionDB.getConnection();
+        if(connectionBD != null){
+            try{
+                String statement = "update activity set name = ?, description = ?, startDate = ?, " + 
+                        "endDate = ?, idDeveloper = ?, status = ? where idActivity = ?";
+                PreparedStatement prepareStatement = connectionBD.prepareStatement(statement);
+                prepareStatement.setString(1, activity.getName());
+                prepareStatement.setString(2, activity.getDescription());
+                prepareStatement.setString(3, activity.getStartDate());
+                prepareStatement.setString(4, activity.getEndDate());
+                prepareStatement.setInt(5, activity.getIdDeveloper());
+                prepareStatement.setInt(6, 2);
+                prepareStatement.setInt(7, activity.getIdActivity());
+                int  affectedRows = prepareStatement.executeUpdate();
+                connectionBD.close();
+                if(affectedRows > 0){
+                    answer.put("error", false);
+                    answer.put("message", "Actividad Guardada.");
+                }else{
+                    answer.put("message", "Error en la base de datos.");
+                }
+                
+            }catch(SQLException e){
+                answer.put("message", "Error: "+ e.getMessage());
+            }          
+        }else{
+            answer.put("message", "Error en la conexion a la base de datos.");
+        }
+        return answer;
+    }
 }
