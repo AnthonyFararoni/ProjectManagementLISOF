@@ -12,19 +12,23 @@ public class Change {
     
     private Integer idChange;
     private Integer type;
+    private String typeName;
     private String description;
     private String dateCreated;
     private Integer idDeveloper;
+    private String developerName;
 
     public Change() {
     }
 
-    public Change(Integer idChange, Integer type, String description, String dateCreated, Integer idDeveloper) {
+    public Change(Integer idChange, Integer type, String typeName, String description, String dateCreated, Integer idDeveloper, String developerName) {
         this.idChange = idChange;
         this.type = type;
+        this.typeName = typeName;
         this.description = description;
         this.dateCreated = dateCreated;
         this.idDeveloper = idDeveloper;
+        this.developerName = developerName;
     }
 
     public Integer getIdChange() {
@@ -43,6 +47,14 @@ public class Change {
         this.type = type;
     }
 
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
+    
     public String getDescription() {
         return description;
     }
@@ -66,6 +78,16 @@ public class Change {
     public void setIdDeveloper(Integer idDeveloper) {
         this.idDeveloper = idDeveloper;
     }
+
+    public String getDeveloperName() {
+        return developerName;
+    }
+
+    public void setDeveloperName(String developerName) {
+        this.developerName = developerName;
+    }
+    
+    
     
     
 }
