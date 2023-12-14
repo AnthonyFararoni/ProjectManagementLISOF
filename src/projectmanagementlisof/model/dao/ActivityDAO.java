@@ -205,4 +205,73 @@ public class ActivityDAO {
         return answer;
     }
     
+    public static HashMap<String, Object> getActivityByID(int idActividad) {
+        HashMap<String, Object> answer = new HashMap<>();
+        answer.put("error", true);
+        Connection connectionBD = ConnectionDB.getConnection();
+        if (connectionBD != null) {
+            try {
+                String query = "select a.idActivity, a.name, a.description, a.status , s.status as statusName, "
+                        + "a.startDate, a.endDate, a.idDeveloper, a.idProjectManager from activity a "
+                        + "inner join status s on a.status = s.idStatus "
+                        + "where a.idActivity = ?";
+                PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                preparedStatement.setInt(1, idActividad);
+                ResultSet activityResult = preparedStatement.executeQuery();
+
+                if (activityResult.next()) {
+                    Activity activity = new Activity();
+                    activity.setIdActivity(activityResult.getInt("idActivity"));
+                    activity.setName(activityResult.getString("name"));
+                    activity.setDescription(activityResult.getString("description"));
+                    activity.setStatus(activityResult.getInt("status"));
+                    activity.setStatusName(activityResult.getString("statusName"));
+                    activity.setStartDate(activityResult.getString("startDate"));
+                    activity.setEndDate(activityResult.getString("endDate"));
+                    activity.setIdDeveloper(activityResult.getInt("idDeveloper"));
+                    activity.setIdProjectManager(activityResult.getInt("idProjectManager"));
+
+                    connectionBD.close();
+                    answer.put("error", false);
+                    answer.put("activity", activity);
+                } else {
+                    answer.put("message", "No se encontró ninguna actividad con ese ID.");
+                }
+            } catch (SQLException ex) {
+                answer.put("message", "Error: " + ex.getMessage());
+            }
+        } else {
+            answer.put("message", "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde");
+        }
+        return answer;
+    }
+    public static HashMap<String, Object> changeActivityStatus(int idActivity) {
+        HashMap<String, Object> answer = new HashMap<>();
+        answer.put("error", true);
+        Connection connectionBD = ConnectionDB.getConnection();
+        if (connectionBD != null) {
+            try {
+                String query = "UPDATE activity SET status = ? WHERE idActivity = ?";
+                PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                preparedStatement.setInt(1, 3); // Cambia el estado a 3
+                preparedStatement.setInt(2, idActivity);
+                int rowsAffected = preparedStatement.executeUpdate();
+
+                if (rowsAffected == 1) {
+                    connectionBD.close();
+                    answer.put("error", false);
+                    answer.put("message", "Estado de la actividad actualizado correctamente.");
+                } else {
+                    answer.put("message", "No se pudo encontrar la actividad con el ID especificado.");
+                }
+            } catch (SQLException ex) {
+                answer.put("message", "Error: " + ex.getMessage());
+            }
+        } else {
+            answer.put("message", "Hubo un error al conectar con la base de datos. Por favor, intenta de nuevo más tarde.");
+        }
+        return answer;
+    }
+
+    
 }

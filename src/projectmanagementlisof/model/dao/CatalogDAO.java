@@ -30,7 +30,6 @@ public class CatalogDAO {
                     CorrectionType type = new CorrectionType();
                     type.setIdType(types.getInt("idType"));
                     type.setTypeName(types.getString("type"));
-                    System.out.println(type.getTypeName());
                     typeList.add(type);
                 }
                 conexionBD.close();
