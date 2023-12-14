@@ -16,7 +16,7 @@ import projectmanagementlisof.model.pojo.Change;
  * @author ferdy
  */
 public class ChangeDAO {
-    public static HashMap<String, Object> registerActivity(Change change){
+    public static HashMap<String, Object> registerChange(Change change){
         HashMap<String, Object> answer = new HashMap();
         answer.put("error",true);
         Connection connectionBD = ConnectionDB.getConnection();
