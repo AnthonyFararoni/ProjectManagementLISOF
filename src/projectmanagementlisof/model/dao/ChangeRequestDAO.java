@@ -2,6 +2,7 @@ package projectmanagementlisof.model.dao;
 
 import java.lang.reflect.Array;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -120,32 +121,35 @@ public class ChangeRequestDAO
             return answer;
       }
 
-      public static void createChangeRequest(ChangeRequest changeRequest)
+      public int createChangeRequest(ChangeRequest changeRequest)
       {
-            Connection connectionBD = ConnectionDB.getConnection();
+            String query =
+                "INSERT INTO ChangeRequest(justification, description, status, creationDate, "
+                + "reviewDate, idDeveloper, idProjectManager, idDefect) values (?,?,?,?,?,?,?,?)";
 
-            if (connectionBD != null)
+            Connection conectionBD;
+            PreparedStatement statement;
+            int result = 0;
+
+            try
             {
-                  try
-                  {
-                        String query = "INSERT INTO ChangeRequest (justification, description, "
-                            + "status, creationDate, reviewDate, idDeveloper) VALUES (?,?,?,?,?,?);";
-
-                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
-                        preparedStatement.setString(1, changeRequest.getJustification());
-                        preparedStatement.setString(2, changeRequest.getDescription());
-                        preparedStatement.setString(3, changeRequest.getStatus());
-                        preparedStatement.setString(4, changeRequest.getCreationDate());
-                        preparedStatement.setString(5, changeRequest.getReviewDate());
-                        preparedStatement.setInt(6, changeRequest.getIdDeveloper());
-                        preparedStatement.executeUpdate();
-                        connectionBD.close();
-                  }
-                  catch (SQLException ex)
-                  {
-                        System.out.println("Error: " + ex.getMessage());
-                  }
+                  conectionBD = ConnectionDB.getConnection();
+                  statement = conectionBD.prepareStatement(query);
+                  statement.setString(1, changeRequest.getJustification());
+                  statement.setString(2, changeRequest.getDescription());
+                  statement.setString(3, changeRequest.getStatus());
+                  statement.setString(4, changeRequest.getCreationDate());
+                  statement.setString(5, changeRequest.getReviewDate());
+                  statement.setInt(6, changeRequest.getIdDeveloper());
+                  statement.setInt(7, changeRequest.getIdProjectManager());
+                  statement.setInt(8, changeRequest.getIdDefect());
+                  result = statement.executeUpdate();
             }
+            catch (SQLException e)
+            {
+                  result = -1;
+            }
+            return result;
       }
 
       public static void editChangeRequest(ChangeRequest changeRequest)
