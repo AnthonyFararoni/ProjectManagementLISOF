@@ -14,7 +14,8 @@ public class Activity {
     private Integer idActivity;
     private String name;
     private String description;
-    private Integer Status;
+    private Integer status;
+    private String statusName;
     private String startDate;
     private String endDate;
     private Integer idDeveloper;
@@ -22,12 +23,13 @@ public class Activity {
 
     public Activity() {}
 
-    public Activity(Integer idActivity, String name, String description, Integer Status, String startDate, String endDate, Integer idDeveloper, Integer idProjectManager) 
+    public Activity(Integer idActivity, String name, String description, Integer status, String statusName,String startDate, String endDate, Integer idDeveloper, Integer idProjectManager) 
     {
         this.idActivity = idActivity;
         this.name = name;
         this.description = description;
-        this.Status = Status;
+        this.status = status;
+        this.statusName = statusName;
         this.startDate = startDate;
         this.endDate = endDate;
         this.idDeveloper = idDeveloper;
@@ -59,11 +61,19 @@ public class Activity {
     }
 
     public Integer getStatus() {
-        return Status;
+        return status;
     }
 
-    public void setStatus(Integer Status) {
-        this.Status = Status;
+    public String getStatusName() {
+        return statusName;
+    }
+    
+        public void setStatusName(String statusName) {
+        this.statusName = statusName;
+    }
+        
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
     public String getStartDate() {

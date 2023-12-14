@@ -4,6 +4,7 @@
  */
 package projectmanagementlisof.controller;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,12 +12,17 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.observer.DeveloperObserver;
@@ -30,6 +36,7 @@ import projectmanagementlisof.utils.Utilities;
 public class FXMLUpdateActivityController implements Initializable, DeveloperObserver {
     
     private Integer idDeveloper;
+    private Integer idActivity;
     private Activity updateActivity;
     private DeveloperObserver observer;
 
@@ -51,6 +58,10 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
     }    
+    
+    private void initializeInformation(Integer idActivity){
+        this.idActivity = idActivity;
+    }
 
     @FXML
     private void btnReturn(MouseEvent event) {
@@ -58,7 +69,24 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
 
     @FXML
     private void btnSelectDeveloper(ActionEvent event) {
-        
+        try
+        {
+            FXMLLoader loader = Utilities.loadView("gui/FXMLChooseDeveloper.fxml");
+            Parent view = loader.load();
+            Scene scene = new Scene(view);
+            FXMLChooseDeveloperController controller = loader.getController();
+            controller.setObserver((DeveloperObserver) this);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setTitle("Asignar desarrollador");
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();           
+        } 
+        catch (IOException ex)
+        {   
+            ex.printStackTrace();
+        }
     }
 
     @FXML
@@ -79,6 +107,7 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
         if(!(boolean) answer.get("error")){
             Utilities.showSimpleAlert("Cambios Guardados", (String)answer.get("message"),
                     Alert.AlertType.INFORMATION);
+            observer.developerSelected(idDeveloper, activity.getName());
         }else{
             Utilities.showSimpleAlert("Error al guardar", (String)answer.get("message"),
                     Alert.AlertType.ERROR);
@@ -86,26 +115,35 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
     }
 
     
-    public void initializeInformation(Activity updateActivity, DeveloperObserver observer){
-        this.updateActivity = updateActivity;
+    public void initializeInformation(Integer idActivity, DeveloperObserver observer,Activity updateActivity){
+        this.idActivity = idActivity;
         this.observer = observer;
-        if(this.updateActivity != null){
-            loadActivityInformation();
-        }
+        this.updateActivity = updateActivity;
+        loadUnassignedActivityInformation();
     }
 
-    private void loadActivityInformation() {
+    private void loadUnassignedActivityInformation() {
+        tfActivityName.setText(this.updateActivity.getName());
+        taActivityDescription.setText(this.updateActivity.getDescription());
+    }
+    
+    /*private void loadActivityInformation() {
         tfActivityName.setText(this.updateActivity.getName());
         dpStartDate.setValue(LocalDate.parse(this.updateActivity.getStartDate(),
                 DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         dpStartDate.setValue(LocalDate.parse(this.updateActivity.getEndDate(),
                 DateTimeFormatter.ofPattern("dd/MM/yyyy")));
         taActivityDescription.setText(this.updateActivity.getDescription());
-    }
-
-    @Override
-    public void developerSelected(Integer idDeveloper, String developerName) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }*/
+    
+    private void loadDeveloper(Integer idDeveloper, String developerName){
+        this.idDeveloper = idDeveloper;
+        tfAssignDeveloper.setText(developerName);
     }
     
+     @Override
+    public void developerSelected(Integer idDeveloper, String developerName) {
+        loadDeveloper(idDeveloper, developerName);
+        System.out.println(idDeveloper);
+    }
 }

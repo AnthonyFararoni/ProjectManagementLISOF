@@ -7,6 +7,8 @@ package projectmanagementlisof.controller;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,7 +27,9 @@ import projectmanagementlisof.utils.Utilities;
  * @author edmun
  */
 public class FXMLDeveloperLogController implements Initializable {
+    
     private Utilities utilities = new Utilities();
+    
     private int idDeveloper;
     private String developerName;
     private String developerLogin;
@@ -51,13 +55,16 @@ public class FXMLDeveloperLogController implements Initializable {
         this.idDeveloper = idDeveloper;
         this.developerName = developerName;
         this.developerLogin = developerLogin;
-        tfDeveloperName.setText(this.developerName);
         tfDeveloperID.setText(this.developerLogin);
+        tfDeveloperName.setText(this.developerName);
+        System.out.println(idDeveloper);
+        
     }
 
     @FXML
-    private void btnShowActivitiesInLog(ActionEvent event) {
+    private void btnShowActivitiesInLog(ActionEvent event) {    
         utilities.loadFXML( "/projectmanagementlisof/gui/FXMLActivitiesInLog.fxml",apDeveloperlog);
+        
     }
 
     @FXML
@@ -85,7 +92,6 @@ public class FXMLDeveloperLogController implements Initializable {
         Stage currentStage = (Stage) tfDeveloperName.getScene().getWindow();
         utilities.closeWindow(currentStage);
     }
-    
     
     
 }

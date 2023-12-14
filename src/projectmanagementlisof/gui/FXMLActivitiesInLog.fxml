@@ -1,27 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.net.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="367.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="projectmanagementlisof.controller.FXMLActivitiesInLogController">
+<AnchorPane id="AnchorPane" prefHeight="367.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLActivitiesInLogController">
     <stylesheets>
         <URL value="@/projectmanagementlisof/css/Style.css" />
     </stylesheets>
    <children>
-      <TableView layoutX="97.0" layoutY="14.0" prefHeight="275.0" prefWidth="758.0" stylesheets="@../css/Style.css">
+      <TableView fx:id="tvAssignedActivities" layoutX="64.0" layoutY="14.0" prefHeight="275.0" prefWidth="854.0" stylesheets="@../css/Style.css">
         <columns>
-          <TableColumn prefWidth="360.0" text="Nombre de la actividad" />
-          <TableColumn prefWidth="130.0" text="Fecha de inicio" />
-            <TableColumn prefWidth="130.0" text="Fecha de fin" />
-            <TableColumn prefWidth="140.0" text="Estado" />
+          <TableColumn fx:id="colActivityName" prefWidth="433.7777099609375" text="Nombre de la actividad" />
+          <TableColumn fx:id="colStartDate" prefWidth="155.55557250976562" text="Fecha de inicio" />
+            <TableColumn fx:id="colEndDate" prefWidth="147.33331298828125" text="Fecha de fin" />
+            <TableColumn fx:id="colStatus" prefWidth="117.7777099609375" text="Estado" />
         </columns>
       </TableView>
-      <Button layoutX="417.0" layoutY="308.0" mnemonicParsing="false" stylesheets="@../css/Style.css" text="Ver detalles">
+      <Button fx:id="btnShowAssignedActivityDetails" disable="true" layoutX="670.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnShowAssignedActivityDetails" stylesheets="@../css/Style.css" text="Ver detalles">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnEditAssignedActivity" disable="true" layoutX="442.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnEditAssignedActivity" stylesheets="@../css/Style.css" text="Editar actividad">
+         <font>
+            <Font name="System Bold" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnDeleteAssignedActivity" disable="true" layoutX="198.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnDeleteAssignedActivity" stylesheets="@../css/Style.css" text="Eliminar actividad">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
