@@ -6,7 +6,9 @@ package projectmanagementlisof.model.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import projectmanagementlisof.model.ConnectionDB;
 import projectmanagementlisof.model.pojo.Change;
@@ -47,4 +49,73 @@ public class ChangeDAO {
         }
         return answer;
     }
+    
+     public static HashMap<String, Object> getDeveloperChanges(int idDeveloper) {
+        HashMap<String, Object> answer = new HashMap<>();
+        answer.put("error", true);
+        Connection connectionBD = ConnectionDB.getConnection();
+        if (connectionBD != null) {
+            try {
+                String query = "SELECT * FROM `change` WHERE idDeveloper = ?";
+                PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                preparedStatement.setInt(1, idDeveloper);
+                ResultSet changesResult = preparedStatement.executeQuery();
+
+                ArrayList<Change> changes = new ArrayList<>();
+                while (changesResult.next()) {
+                    Change change = new Change();
+                    change.setIdChange(changesResult.getInt("idChange"));
+                    change.setType(changesResult.getInt("type"));
+                    change.setDescription(changesResult.getString("description"));
+                    change.setDateCreated(changesResult.getString("dateCreated"));
+                    change.setIdDeveloper(changesResult.getInt("idDeveloper"));
+                    changes.add(change);
+                }
+
+                connectionBD.close();
+                answer.put("error", false);
+                answer.put("changes", changes);
+            } catch (SQLException ex) {
+                answer.put("message", "Error: " + ex.getMessage());
+            }
+        } else {
+            answer.put("message", "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde");
+        }
+        return answer;
+    }
+     
+    public static HashMap<String, Object> getChangeDetails(int idChange) {
+    HashMap<String, Object> answer = new HashMap<>();
+    answer.put("error", true);
+    Connection connectionBD = ConnectionDB.getConnection();
+    if (connectionBD != null) {
+        try {
+            String query = "SELECT * FROM `change` WHERE idChange = ?";
+            PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+            preparedStatement.setInt(1, idChange);
+            ResultSet changeResult = preparedStatement.executeQuery();
+
+            if (changeResult.next()) {
+                Change change = new Change();
+                change.setIdChange(changeResult.getInt("idChange"));
+                change.setType(changeResult.getInt("type"));
+                change.setDescription(changeResult.getString("description"));
+                change.setDateCreated(changeResult.getString("dateCreated"));
+                change.setIdDeveloper(changeResult.getInt("idDeveloper"));
+
+                connectionBD.close();
+                answer.put("error", false);
+                answer.put("change", change);
+            } else {
+                answer.put("message", "No se encontró el cambio con el ID proporcionado.");
+            }
+        } catch (SQLException ex) {
+            answer.put("message", "Error: " + ex.getMessage());
+        }
+    } else {
+        answer.put("message", "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde");
+    }
+    return answer;
+    }
+
 }

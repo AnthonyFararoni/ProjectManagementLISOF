@@ -15,8 +15,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import projectmanagementlisof.model.dao.ActivityDAO;
-import projectmanagementlisof.model.pojo.Activity;
+import projectmanagementlisof.model.dao.ChangeDAO;
+import projectmanagementlisof.model.pojo.Change;
 import projectmanagementlisof.utils.UserSingleton;
 import projectmanagementlisof.utils.Utilities;
 
@@ -25,37 +25,46 @@ import projectmanagementlisof.utils.Utilities;
  *
  * @author edmun
  */
-public class FXMLActivityDetailsController implements Initializable {
+public class FXMLChangesDetailsController implements Initializable {
 
-    private Utilities utilities = new Utilities();
-    private int idActivity;
     @FXML
     private ImageView imgBackButton;
     @FXML
-    private TextField tfStartDate;
+    private TextField tfFoundDate;
     @FXML
-    private TextField tfActivityName;
-    @FXML
-    private TextField tfStatus;
-    @FXML
-    private TextField tfEndDate;
+    private TextField tfChangeType;
     @FXML
     private TextArea taDescription;
-
+    private Utilities utilities = new Utilities();
+    private int idChange;
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         receiveData();
-        fillActivityDetails();
+        System.out.println(idChange);
+        fillChangeDetails();
     }    
-    public void receiveData(){
+    public void receiveData() {
         UserSingleton instance = UserSingleton.getInstace();
         System.out.println( instance.getIdSelected());
-        idActivity = instance.getIdSelected();
+        idChange = instance.getIdSelected();
     }
+    
+    private void fillChangeDetails() {
+        HashMap<String, Object> result = ChangeDAO.getChangeDetails(idChange);
 
+        if (!(boolean) result.get("error")) {
+            Change change = (Change) result.get("change");
+            tfFoundDate.setText(change.getDateCreated());
+            tfChangeType.setText(String.valueOf(change.getType()));
+            taDescription.setText(change.getDescription());
+        } else {
+            String errorMessage = (String) result.get("message");
+        }
+    }
+    
     @FXML private void changeToDefaultCursor(MouseEvent event)
       {
             imgBackButton.setCursor(Cursor.DEFAULT);
@@ -68,23 +77,8 @@ public class FXMLActivityDetailsController implements Initializable {
 
     @FXML
     private void goBackToLanding(MouseEvent event) {
-        Stage currentStage = (Stage) tfStartDate.getScene().getWindow();
+        Stage currentStage = (Stage) tfFoundDate.getScene().getWindow();
         utilities.closeWindow(currentStage);
-    }
-    
-    private void fillActivityDetails() {
-        HashMap<String, Object> result = ActivityDAO.getActivityByID(idActivity);
-
-        if (!(boolean) result.get("error")) {
-            Activity activity = (Activity) result.get("activity");
-            tfActivityName.setText(activity.getName());
-            taDescription.setText(activity.getDescription());
-            tfStatus.setText(activity.getStatusName());
-            tfStartDate.setText(activity.getStartDate());
-            tfEndDate.setText(activity.getEndDate());
-        } else {
-            String errorMessage = (String) result.get("message");
-        }
     }
     
 }

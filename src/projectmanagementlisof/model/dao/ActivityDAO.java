@@ -276,6 +276,7 @@ public class ActivityDAO {
         }
         return answer;
     }
+    
     public static HashMap<String, Object> changeActivityStatus(int idActivity) {
         HashMap<String, Object> answer = new HashMap<>();
         answer.put("error", true);
