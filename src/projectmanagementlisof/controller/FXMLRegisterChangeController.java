@@ -36,6 +36,7 @@ public class FXMLRegisterChangeController implements Initializable {
 
     private Utilities utilities = new Utilities();
     private ObservableList<CorrectionType> types = FXCollections.observableArrayList();
+    
     @FXML
     private TextArea taDescription;
     @FXML

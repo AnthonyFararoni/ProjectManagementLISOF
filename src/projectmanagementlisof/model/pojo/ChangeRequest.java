@@ -9,14 +9,17 @@ public class ChangeRequest
       private String creationDate;
       private String reviewDate;
       private Integer idDeveloper;
+      private String developerName;
       private Integer idProjectManager;
+      private String projectManagerName;
       private Integer idDefect;
+      private Integer idStatus;
 
       public ChangeRequest() {}
 
       public ChangeRequest(Integer idChangeRequest, String justification, String description,
-          String status, String creationDate, String reviewDate, Integer idDeveloper,
-          Integer idProjectManager, Integer idDefect)
+          String status, String creationDate, String reviewDate, Integer idDeveloper, String developerName,
+          Integer idProjectManager, String projectManagerName, Integer idDefect, Integer idStatus)
       {
             this.idChangeRequest = idChangeRequest;
             this.justification = justification;
@@ -25,8 +28,11 @@ public class ChangeRequest
             this.creationDate = creationDate;
             this.reviewDate = reviewDate;
             this.idDeveloper = idDeveloper;
+            this.developerName = developerName;
             this.idProjectManager = idProjectManager;
+            this.projectManagerName = projectManagerName;
             this.idDefect = idDefect;
+            this.idStatus = idStatus;
       }
 
       public Integer getIdChangeRequest()
@@ -99,6 +105,15 @@ public class ChangeRequest
             this.idDeveloper = idDeveloper;
       }
 
+    public String getDeveloperName() {
+        return developerName;
+    }
+
+    public void setDeveloperName(String developerName) {
+        this.developerName = developerName;
+    }
+      
+
       public Integer getIdProjectManager()
       {
             return idProjectManager;
@@ -109,6 +124,16 @@ public class ChangeRequest
             this.idProjectManager = idProjectManager;
       }
 
+    public String getProjectManagerName() {
+        return projectManagerName;
+    }
+
+    public void setProjectManagerName(String projectManagerName) {
+        this.projectManagerName = projectManagerName;
+    }
+      
+      
+
       public Integer getIdDefect()
       {
             return idDefect;
@@ -118,6 +143,14 @@ public class ChangeRequest
       {
             this.idDefect = idDefect;
       }
+
+    public Integer getIdStatus() {
+        return idStatus;
+    }
+
+    public void setIdStatus(Integer idStatus) {
+        this.idStatus = idStatus;
+    }
 
       @Override public String toString()
       {
