@@ -15,7 +15,9 @@ import projectmanagementlisof.utils.Utilities;
 public class FXMLDeveloperLandingController implements Initializable
 {
       private Utilities utilities = new Utilities();
+
       @FXML private AnchorPane apBackground;
+
       @Override public void initialize(URL url, ResourceBundle rb)
       {
             // TODO
@@ -23,11 +25,23 @@ public class FXMLDeveloperLandingController implements Initializable
 
       @FXML private void btnLogOut(MouseEvent event) {}
 
-      @FXML private void btnShowActivies(ActionEvent event) {}
+      @FXML private void btnShowActivies(ActionEvent event)
+      {
+            utilities.loadFXML(
+                "/projectmanagementlisof/gui/FXMLDeveloperActivitiesOption.fxml", apBackground);
+      }
 
-      @FXML private void btnShowChanges(ActionEvent event) {}
+      @FXML private void btnShowChanges(ActionEvent event)
+      {
+            utilities.loadFXML(
+                "/projectmanagementlisof/gui/FXMLDeveloperChangesOption.fxml", apBackground);
+      }
 
-      @FXML private void btnShowChangeRequests(ActionEvent event) {}
+      @FXML private void btnShowChangeRequests(ActionEvent event)
+      {
+            utilities.loadFXML(
+                "/projectmanagementlisof/gui/FXMLDeveloperChangeRequestsOption.fxml", apBackground);
+      }
 
       @FXML private void btnShowDefects(ActionEvent event)
       {

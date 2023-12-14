@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this
+ * license Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this
+ * template
  */
 package projectmanagementlisof.controller;
 
@@ -24,68 +25,64 @@ import projectmanagementlisof.utils.Utilities;
  *
  * @author edmun
  */
-public class FXMLDeveloperLogController implements Initializable {
-    private Utilities utilities = new Utilities();
-    private int idDeveloper;
-    private String developerName;
-    private String developerLogin;
-    @FXML
-    private AnchorPane apDeveloperlog;
-    @FXML
-    private ImageView imgBackButton;
-    @FXML
-    private TextField tfDeveloperName;
-    @FXML
-    private TextField tfDeveloperID;
+public class FXMLDeveloperLogController implements Initializable
+{
+      private Utilities utilities = new Utilities();
+      private int idDeveloper;
+      private String developerName;
+      private String developerLogin;
+      @FXML private AnchorPane apDeveloperlog;
+      @FXML private ImageView imgBackButton;
+      @FXML private TextField tfDeveloperName;
+      @FXML private TextField tfDeveloperID;
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }  
-    
-    public void initializeInformation(int idDeveloper, String developerName, String developerLogin)
-    {
-        this.idDeveloper = idDeveloper;
-        this.developerName = developerName;
-        this.developerLogin = developerLogin;
-        tfDeveloperName.setText(this.developerName);
-        tfDeveloperID.setText(this.developerLogin);
-    }
+      /**
+       * Initializes the controller class.
+       */
+      @Override public void initialize(URL url, ResourceBundle rb)
+      {
+            // TODO
+      }
 
-    @FXML
-    private void btnShowActivitiesInLog(ActionEvent event) {
-        utilities.loadFXML( "/projectmanagementlisof/gui/FXMLActivitiesInLog.fxml",apDeveloperlog);
-    }
+      public void initializeInformation(
+          int idDeveloper, String developerName, String developerLogin)
+      {
+            this.idDeveloper = idDeveloper;
+            this.developerName = developerName;
+            this.developerLogin = developerLogin;
+            tfDeveloperName.setText(this.developerName);
+            tfDeveloperID.setText(this.developerLogin);
+      }
 
-    @FXML
-    private void btnShowDefectsInLog(ActionEvent event) {
-         utilities.loadFXML( "/projectmanagementlisof/gui/FXMLDefectsInLog.fxml",apDeveloperlog);
-    }
+      @FXML private void btnShowActivitiesInLog(ActionEvent event)
+      {
+            utilities.loadFXML(
+                "/projectmanagementlisof/gui/FXMLActivitiesInLog.fxml", apDeveloperlog);
+      }
 
-    @FXML
-    private void btnShowChangesInLog(ActionEvent event) {
-         utilities.loadFXML( "/projectmanagementlisof/gui/FXMLChangesInLog.fxml",apDeveloperlog);
-    }
+      @FXML private void btnShowDefectsInLog(ActionEvent event)
+      {
+            utilities.loadFXML("/projectmanagementlisof/gui/FXMLDefectsInLog.fxml", apDeveloperlog);
+      }
 
-    @FXML
-    private void changeToDefaultCursor(MouseEvent event) {
-        imgBackButton.setCursor(Cursor.DEFAULT);
-    }
+      @FXML private void btnShowChangesInLog(ActionEvent event)
+      {
+            utilities.loadFXML("/projectmanagementlisof/gui/FXMLChangesInLog.fxml", apDeveloperlog);
+      }
 
-    @FXML
-    private void changeToHandCursor(MouseEvent event) {
-        imgBackButton.setCursor(Cursor.HAND);
-    }
+      @FXML private void changeToDefaultCursor(MouseEvent event)
+      {
+            imgBackButton.setCursor(Cursor.DEFAULT);
+      }
 
-    @FXML
-    private void goBackToLanding(MouseEvent event) {
-        Stage currentStage = (Stage) tfDeveloperName.getScene().getWindow();
-        utilities.closeWindow(currentStage);
-    }
-    
-    
-    
+      @FXML private void changeToHandCursor(MouseEvent event)
+      {
+            imgBackButton.setCursor(Cursor.HAND);
+      }
+
+      @FXML private void goBackToLanding(MouseEvent event)
+      {
+            Stage currentStage = (Stage) tfDeveloperName.getScene().getWindow();
+            utilities.closeWindow(currentStage);
+      }
 }

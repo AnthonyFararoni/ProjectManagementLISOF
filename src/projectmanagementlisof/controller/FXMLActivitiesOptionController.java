@@ -1,6 +1,6 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this
+ * license Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package projectmanagementlisof.controller;
 
@@ -22,35 +22,30 @@ import projectmanagementlisof.utils.Utilities;
  *
  * @author nando
  */
-public class FXMLActivitiesOptionController implements Initializable{
+public class FXMLActivitiesOptionController implements Initializable
+{
+      @FXML private TextField tfSearchActivity;
 
-    @FXML
-    private TextField tfSearchActivity;
+      @Override public void initialize(URL location, ResourceBundle resources) {}
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
+      @FXML private void btnShowCreateActivity(ActionEvent event)
+      {
+            try
+            {
+                  FXMLLoader loader = Utilities.loadView("gui/FXMLCreateActivity.fxml");
+                  Parent view = loader.load();
+                  Scene scene = new Scene(view);
+                  FXMLCreateActivityController controller = loader.getController();
+                  Stage stage = new Stage();
 
-    }
-
-    @FXML
-    private void btnShowCreateActivity(ActionEvent event) {
-        try
-        {
-            FXMLLoader loader = Utilities.loadView("gui/FXMLCreateActivity.fxml");
-            Parent view = loader.load();
-            Scene scene = new Scene(view);
-            FXMLCreateActivityController controller = loader.getController();
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.setTitle("Crear actividad");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();           
-        } 
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-    
+                  stage.setScene(scene);
+                  stage.setTitle("Crear actividad");
+                  stage.initModality(Modality.APPLICATION_MODAL);
+                  stage.showAndWait();
+            }
+            catch (IOException ex)
+            {
+                  ex.printStackTrace();
+            }
+      }
 }

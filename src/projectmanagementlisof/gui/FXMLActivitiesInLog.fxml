@@ -8,20 +8,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="367.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="projectmanagementlisof.controller.FXMLActivitiesInLogController">
-    <stylesheets>
-        <URL value="@/projectmanagementlisof/css/Style.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="367.0" prefWidth="952.0" styleClass="mainFxmlClass"
+   xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+   fx:controller="projectmanagementlisof.controller.FXMLActivitiesInLogController">
+   <stylesheets>
+      <URL value="@/projectmanagementlisof/css/Style.css" />
+   </stylesheets>
    <children>
-      <TableView layoutX="97.0" layoutY="14.0" prefHeight="275.0" prefWidth="758.0" stylesheets="@../css/Style.css">
-        <columns>
-          <TableColumn prefWidth="360.0" text="Nombre de la actividad" />
-          <TableColumn prefWidth="130.0" text="Fecha de inicio" />
+      <TableView layoutX="97.0" layoutY="14.0" prefHeight="275.0" prefWidth="758.0"
+         stylesheets="@../css/Style.css">
+         <columns>
+            <TableColumn prefWidth="360.0" text="Nombre de la actividad" />
+            <TableColumn prefWidth="130.0" text="Fecha de inicio" />
             <TableColumn prefWidth="130.0" text="Fecha de fin" />
             <TableColumn prefWidth="140.0" text="Estado" />
-        </columns>
+         </columns>
       </TableView>
-      <Button layoutX="417.0" layoutY="308.0" mnemonicParsing="false" stylesheets="@../css/Style.css" text="Ver detalles">
+      <Button layoutX="417.0" layoutY="308.0" mnemonicParsing="false"
+         stylesheets="@../css/Style.css" text="Ver detalles">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>

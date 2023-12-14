@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this
+ * license Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this
+ * template
  */
 package projectmanagementlisof.controller;
 
@@ -21,41 +22,37 @@ import projectmanagementlisof.utils.Utilities;
  *
  * @author edmun
  */
-public class FXMLDeveloperDefectsOptionController implements Initializable {
+public class FXMLDeveloperDefectsOptionController implements Initializable
+{
+      private Utilities utilities = new Utilities();
+      /**
+       * Initializes the controller class.
+       */
+      @Override public void initialize(URL url, ResourceBundle rb)
+      {
+            // TODO
+      }
 
-    private Utilities utilities = new Utilities();
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+      @FXML private void btnViewDetails(ActionEvent event) {}
 
-    @FXML
-    private void btnViewDetails(ActionEvent event) {
-    }
+      @FXML private void btnRegisterDefect(ActionEvent event)
+      {
+            try
+            {
+                  FXMLLoader loader = utilities.loadView("gui/FXMLCreateDefect.fxml");
+                  Parent view = loader.load();
+                  Scene scene = new Scene(view);
+                  FXMLCreateDefectController controller = loader.getController();
+                  Stage stage = new Stage();
 
-    @FXML
-    private void btnRegisterDefect(ActionEvent event) 
-    {
-         try
-        {
-            FXMLLoader loader = utilities.loadView("gui/FXMLCreateDefect.fxml");
-            Parent view = loader.load();
-            Scene scene = new Scene(view);
-            FXMLCreateDefectController controller = loader.getController();
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.setTitle("Crear defecto");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();            
-        } 
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-    
+                  stage.setScene(scene);
+                  stage.setTitle("Crear defecto");
+                  stage.initModality(Modality.APPLICATION_MODAL);
+                  stage.showAndWait();
+            }
+            catch (IOException ex)
+            {
+                  ex.printStackTrace();
+            }
+      }
 }

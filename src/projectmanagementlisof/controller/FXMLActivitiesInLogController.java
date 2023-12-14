@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this
+ * license Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this
+ * template
  */
 package projectmanagementlisof.controller;
 
@@ -13,14 +14,13 @@ import javafx.fxml.Initializable;
  *
  * @author edmun
  */
-public class FXMLActivitiesInLogController implements Initializable {
-
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+public class FXMLActivitiesInLogController implements Initializable
+{
+      /**
+       * Initializes the controller class.
+       */
+      @Override public void initialize(URL url, ResourceBundle rb)
+      {
+            // TODO
+      }
 }

@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this
+ * license Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this
+ * template
  */
 package projectmanagementlisof.controller;
 
@@ -18,29 +19,21 @@ import javafx.scene.control.TextField;
  *
  * @author ferdy
  */
-public class FXMLModifyRequestStatusController implements Initializable {
+public class FXMLModifyRequestStatusController implements Initializable
+{
+      @FXML private TextField tfJustification;
+      @FXML private TextField tfDeveloper;
+      @FXML private TextField tfDateRequested;
+      @FXML private TextArea taChangeDescription;
+      @FXML private ComboBox<?> cbStatus;
 
-    @FXML
-    private TextField tfJustification;
-    @FXML
-    private TextField tfDeveloper;
-    @FXML
-    private TextField tfDateRequested;
-    @FXML
-    private TextArea taChangeDescription;
-    @FXML
-    private ComboBox<?> cbStatus;
+      /**
+       * Initializes the controller class.
+       */
+      @Override public void initialize(URL url, ResourceBundle rb)
+      {
+            // TODO
+      }
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-
-    @FXML
-    private void btnSaveChange(ActionEvent event) {
-    }
-    
+      @FXML private void btnSaveChange(ActionEvent event) {}
 }

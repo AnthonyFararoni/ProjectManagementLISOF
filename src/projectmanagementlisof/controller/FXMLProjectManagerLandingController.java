@@ -19,24 +19,21 @@ public class FXMLProjectManagerLandingController implements Initializable
 {
       @FXML private AnchorPane apBackground;
 
-      @Override public void initialize(URL url, ResourceBundle rb)
-      {
-            
-      }
+      @Override public void initialize(URL url, ResourceBundle rb) {}
 
       @FXML private void btnLogOut(MouseEvent event)
       {
             try
             {
-                Stage currentStage = (Stage) apBackground.getScene().getWindow();
-                Parent newView =
-                    FXMLLoader.load(FXMLProjectManagerLandingController.class.getResource(
-                        "/projectmanagementlisof/gui/FXMLLogIn.fxml"));
-                Scene scene = new Scene(newView);
-                currentStage.setScene(scene);
-                currentStage.setTitle("Iniciar sesión");
-                currentStage.show();
-                Utilities.centerStage(currentStage);
+                  Stage currentStage = (Stage) apBackground.getScene().getWindow();
+                  Parent newView =
+                      FXMLLoader.load(FXMLProjectManagerLandingController.class.getResource(
+                          "/projectmanagementlisof/gui/FXMLLogIn.fxml"));
+                  Scene scene = new Scene(newView);
+                  currentStage.setScene(scene);
+                  currentStage.setTitle("Iniciar sesión");
+                  currentStage.show();
+                  Utilities.centerStage(currentStage);
             }
             catch (IOException ex)
             {
@@ -68,15 +65,16 @@ public class FXMLProjectManagerLandingController implements Initializable
       {
             loadFXML("FXMLDefectsOption");
       }
+
       private void loadFXML(String fxmlName)
       {
             try
             {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                        "/projectmanagementlisof/gui/" + fxmlName +".fxml"));
-                Node newNode = loader.load();
-                apBackground.getChildren().clear();
-                apBackground.getChildren().add(newNode);
+                  FXMLLoader loader = new FXMLLoader(
+                      getClass().getResource("/projectmanagementlisof/gui/" + fxmlName + ".fxml"));
+                  Node newNode = loader.load();
+                  apBackground.getChildren().clear();
+                  apBackground.getChildren().add(newNode);
             }
             catch (IOException ex)
             {

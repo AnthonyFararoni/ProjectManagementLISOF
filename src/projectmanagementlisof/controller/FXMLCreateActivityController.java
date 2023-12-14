@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this
+ * license Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this
+ * template
  */
 package projectmanagementlisof.controller;
 
@@ -30,91 +31,84 @@ import projectmanagementlisof.utils.Utilities;
  *
  * @author ferdy
  */
-public class FXMLCreateActivityController implements DeveloperObserver, Initializable {
-    
-    private Integer idDeveloper;
-    private String developerName;
+public class FXMLCreateActivityController implements DeveloperObserver, Initializable
+{
+      private Integer idDeveloper;
+      private String developerName;
 
-    @FXML
-    private TextField tfActivityName;
-    @FXML
-    private TextField tfAssignDeveloper;
-    @FXML
-    private DatePicker dpStartDate;
-    @FXML
-    private DatePicker dpEndDate;
-    @FXML
-    private TextArea taActivityDescription;
+      @FXML private TextField tfActivityName;
+      @FXML private TextField tfAssignDeveloper;
+      @FXML private DatePicker dpStartDate;
+      @FXML private DatePicker dpEndDate;
+      @FXML private TextArea taActivityDescription;
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        
-    }    
+      /**
+       * Initializes the controller class.
+       */
+      @Override public void initialize(URL url, ResourceBundle rb) {}
 
-    public void loadDeveloperName(){
-        
-    }
-    
-    @FXML
-    private void btnSelectDeveloper(ActionEvent event) {
-        try
-        {
-            FXMLLoader loader = Utilities.loadView("gui/FXMLChooseDeveloper.fxml");
-            Parent view = loader.load();
-            Scene scene = new Scene(view);
-            FXMLChooseDeveloperController controller = loader.getController();
-            controller.setObserver(this);
-            Stage stage = new Stage();
+      public void loadDeveloperName() {}
 
-            stage.setScene(scene);
-            stage.setTitle("Asignar desarrollador");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();           
-        } 
-        catch (IOException ex)
-        {   
-            ex.printStackTrace();
-        }
-    }
+      @FXML private void btnSelectDeveloper(ActionEvent event)
+      {
+            try
+            {
+                  FXMLLoader loader = Utilities.loadView("gui/FXMLChooseDeveloper.fxml");
+                  Parent view = loader.load();
+                  Scene scene = new Scene(view);
+                  FXMLChooseDeveloperController controller = loader.getController();
+                  controller.setObserver(this);
+                  Stage stage = new Stage();
 
-    @FXML
-    private void btnCreateActivity(ActionEvent event) {
-        registerActivity();
-    }
-    
-    private void loadDeveloper(Integer idDeveloper, String developerName){
-        this.idDeveloper = idDeveloper;
-        tfAssignDeveloper.setText(developerName);
-    }
-    
-    private void registerActivity(){
-        Activity activity = new Activity();
-        activity.setName(tfActivityName.getText());
-        activity.setDescription(taActivityDescription.getText());
-        activity.setStartDate(dpStartDate.getValue().toString());
-        activity.setEndDate(dpEndDate.getValue().toString());
-        if(!tfAssignDeveloper.getText().isEmpty()){
-            activity.setIdDeveloper(idDeveloper);
-        }
-        HashMap<String, Object> answer = ActivityDAO.registerActivity(activity);
-        if(!(boolean) answer.get("error")){
-            Utilities.showSimpleAlert("Actividad Guardada", (String)answer.get("message"),
-                    Alert.AlertType.INFORMATION);
-        }else{
-            Utilities.showSimpleAlert("Error al guardar", (String)answer.get("message"),
-                    Alert.AlertType.ERROR);
-        }
-    }   
+                  stage.setScene(scene);
+                  stage.setTitle("Asignar desarrollador");
+                  stage.initModality(Modality.APPLICATION_MODAL);
+                  stage.showAndWait();
+            }
+            catch (IOException ex)
+            {
+                  ex.printStackTrace();
+            }
+      }
 
-    @Override
-    public void developerSelected(Integer idDeveloper, String developerName) {
-        loadDeveloper(idDeveloper, developerName);
-        System.out.println(idDeveloper);
-    }
+      @FXML private void btnCreateActivity(ActionEvent event)
+      {
+            registerActivity();
+      }
 
-    
-    
+      private void loadDeveloper(Integer idDeveloper, String developerName)
+      {
+            this.idDeveloper = idDeveloper;
+            tfAssignDeveloper.setText(developerName);
+      }
+
+      private void registerActivity()
+      {
+            Activity activity = new Activity();
+            activity.setName(tfActivityName.getText());
+            activity.setDescription(taActivityDescription.getText());
+            activity.setStartDate(dpStartDate.getValue().toString());
+            activity.setEndDate(dpEndDate.getValue().toString());
+            if (!tfAssignDeveloper.getText().isEmpty())
+            {
+                  activity.setIdDeveloper(idDeveloper);
+            }
+            HashMap<String, Object> answer = ActivityDAO.registerActivity(activity);
+            if (!(boolean) answer.get("error"))
+            {
+                  Utilities.showSimpleAlert("Actividad Guardada", (String) answer.get("message"),
+                      Alert.AlertType.INFORMATION);
+            }
+            else
+            {
+                  Utilities.showSimpleAlert(
+                      "Error al guardar", (String) answer.get("message"), Alert.AlertType.ERROR);
+            }
+      }
+
+      @Override public void developerSelected(Integer idDeveloper, String developerName)
+      {
+            loadDeveloper(idDeveloper, developerName);
+            System.out.println(idDeveloper);
+      }
 }

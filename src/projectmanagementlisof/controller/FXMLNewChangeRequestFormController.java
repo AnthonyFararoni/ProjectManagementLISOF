@@ -16,7 +16,6 @@ import projectmanagementlisof.utils.Utilities;
 
 public class FXMLNewChangeRequestFormController implements Initializable
 {
-      private Utilities utilities = new Utilities();
       @FXML private TextField tfRequestedBy;
       @FXML private DatePicker dpDate;
       @FXML private TextField tfJustification;
@@ -25,15 +24,18 @@ public class FXMLNewChangeRequestFormController implements Initializable
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-            // btnRegisterChangeRequest.setCursor(Cursor.HAND);
+            setDate();
       }
 
       @FXML private void btnCreateChangeRequest(ActionEvent event)
       {
             if (validateFields())
-            {
                   createChangeRequest();
-            }
+      }
+
+      private void setDate()
+      {
+            dpDate.setValue(LocalDate.now());
       }
 
       private void createChangeRequest()
