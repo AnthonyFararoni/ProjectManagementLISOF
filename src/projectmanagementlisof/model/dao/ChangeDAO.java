@@ -55,8 +55,10 @@ public class ChangeDAO {
         Connection connectionBD = ConnectionDB.getConnection();
         if(connectionBD != null){
             try{
-                String query = "select idChange, type, description, dateCreated from change "
-                        + "where idDeveloper = ?";
+                String query = "SELECT *\n" +
+                "FROM `change` c\n" +
+                "INNER JOIN type t ON c.type = t.idtype\n" +
+                "WHERE c.idDeveloper = ?";
                 PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                 preparedStatement.setInt(1, idDeveloper);   
                 ResultSet activitiesList = preparedStatement.executeQuery();
@@ -74,6 +76,7 @@ public class ChangeDAO {
                 answer.put("error", false);
                 answer.put("changes", changes);
             } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
                 answer.put("message", "Error: " + ex.getMessage());
             }
         } else {
