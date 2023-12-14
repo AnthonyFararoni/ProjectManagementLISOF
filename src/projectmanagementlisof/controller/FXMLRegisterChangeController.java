@@ -5,8 +5,15 @@
 package projectmanagementlisof.controller;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import static java.time.temporal.TemporalQueries.localDate;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,8 +21,10 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
+import projectmanagementlisof.model.dao.CatalogDAO;
 import projectmanagementlisof.model.dao.ChangeDAO;
 import projectmanagementlisof.model.pojo.Change;
+import projectmanagementlisof.model.pojo.CorrectionType;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -25,17 +34,19 @@ import projectmanagementlisof.utils.Utilities;
  */
 public class FXMLRegisterChangeController implements Initializable {
 
+    private Utilities utilities = new Utilities();
+    private ObservableList<CorrectionType> types = FXCollections.observableArrayList();
     @FXML
     private TextArea taDescription;
     @FXML
-    private ComboBox cbChangeType;
+    private ComboBox<CorrectionType> cbChangeType;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        utilities.setItemsInComboBox(types, cbChangeType);
     }    
 
     @FXML
@@ -50,10 +61,14 @@ public class FXMLRegisterChangeController implements Initializable {
     private void registerChange(){
         Change change = new Change();
         change.setDescription(taDescription.getText());
-        Type type = cbType.getSelectionModel().getSelectedItem();
-        change.setType(type.getType());
-        
-        
+        CorrectionType type = cbChangeType.getSelectionModel().getSelectedItem();
+        change.setType(type.getIdType());
+        change.setIdDeveloper(1);
+        LocalDate date = LocalDate.now();
+        Date fechaComoDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
+        change.setDateCreated(date.toString());
+        System.out.println(date);
+                
         HashMap<String, Object> answer = ChangeDAO.registerChange(change);
         if(!(boolean) answer.get("error")){
             Utilities.showSimpleAlert("Cambio Registrado", (String)answer.get("message"),
