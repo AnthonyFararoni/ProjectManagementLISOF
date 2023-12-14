@@ -20,6 +20,7 @@ import javafx.stage.Stage;
 
 public class Utilities
 {
+    
     public static void centerStage(Stage stage)
       {
             Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -73,10 +74,12 @@ public class Utilities
         String fullName = name + " " + lastName + " " + secondLastName;
         return fullName;
     }
+    
     public static void loadFXML(String fxmlFile, AnchorPane anchorPane) {
         try {
             AnchorPane FXMLFile = FXMLLoader.load(Utilities.class.getResource(fxmlFile));
             anchorPane.getChildren().setAll(FXMLFile);
+
         } catch (IOException ex) {
             ex.printStackTrace();
         }

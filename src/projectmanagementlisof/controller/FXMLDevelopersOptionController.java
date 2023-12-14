@@ -60,11 +60,7 @@ public class FXMLDevelopersOptionController implements Initializable
     
     private void initializeInformation()
     {
-            boolean confirmation = Utilities.showConfirmationAlert("¿Eliminar desarrollador?", "¿Esta seguro"
-                    + " de eliminar al desarrollador seleccionado?");
-            if(confirmation){
-                disableDeveloper(idDeveloper);
-            }   
+            
     }
     
     private void btnRefreshTableDevelopers(MouseEvent event) {
@@ -90,8 +86,9 @@ public class FXMLDevelopersOptionController implements Initializable
                     btnShowDevelopersLog.setDisable(false);
                     int selectedPosition = tvDevelopers.getSelectionModel().getSelectedIndex();
                     Developer selectedDeveloper = developers.get(selectedPosition);
-                    idDeveloper = newValue.getIdDeveloper();
-                    developerName = selectedDeveloper.getFullName();                  
+                    idDeveloper = selectedDeveloper.getIdDeveloper();
+                    developerName = selectedDeveloper.getFullName(); 
+                    developerLogin = selectedDeveloper.getDeveloperLogin();
                 }
             }
         });
@@ -120,6 +117,7 @@ public class FXMLDevelopersOptionController implements Initializable
             Parent view = loader.load();
             Scene scene = new Scene(view);
             FXMLDeveloperLogController controller = loader.getController();
+            
             controller.initializeInformation(idDeveloper, developerName, developerLogin);
             Stage stage = new Stage();
 
@@ -182,6 +180,11 @@ public class FXMLDevelopersOptionController implements Initializable
 
     @FXML
     private void btnDisableDeveloper(ActionEvent event) {
+        boolean confirmation = Utilities.showConfirmationAlert("¿Eliminar desarrollador?", "¿Esta seguro"
+                    + " de eliminar al desarrollador seleccionado?");
+            if(confirmation){
+                disableDeveloper(idDeveloper);
+            }   
     }
 
    
