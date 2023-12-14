@@ -52,10 +52,6 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }    
-
-    public void loadDeveloperName(){
-        
     }
     
     @FXML
@@ -82,7 +78,16 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
 
     @FXML
     private void btnCreateActivity(ActionEvent event) {
-        registerActivity();
+        if(!tfAssignDeveloper.getText().isEmpty()){
+            registerAssignedActivity();
+        } else {
+            registerUnassignedActivity();
+        }
+        tfActivityName.clear();
+        tfAssignDeveloper.clear();
+        dpStartDate.setValue(null);
+        dpEndDate.setValue(null);
+        taActivityDescription.clear();
     }
     
     private void loadDeveloper(Integer idDeveloper, String developerName){
@@ -90,16 +95,16 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
         tfAssignDeveloper.setText(developerName);
     }
     
-    private void registerActivity(){
+    private void registerAssignedActivity(){
         Activity activity = new Activity();
         activity.setName(tfActivityName.getText());
-        activity.setDescription(taActivityDescription.getText());
+        activity.setDescription(taActivityDescription.getText());        
+        activity.setIdDeveloper(idDeveloper);
+        activity.setStatus(2);
         activity.setStartDate(dpStartDate.getValue().toString());
         activity.setEndDate(dpEndDate.getValue().toString());
-        if(!tfAssignDeveloper.getText().isEmpty()){
-            activity.setIdDeveloper(idDeveloper);
-        }
-        HashMap<String, Object> answer = ActivityDAO.registerActivity(activity);
+        
+        HashMap<String, Object> answer = ActivityDAO.registerAssignedActivity(activity);
         if(!(boolean) answer.get("error")){
             Utilities.showSimpleAlert("Actividad Guardada", (String)answer.get("message"),
                     Alert.AlertType.INFORMATION);
@@ -107,7 +112,25 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
             Utilities.showSimpleAlert("Error al guardar", (String)answer.get("message"),
                     Alert.AlertType.ERROR);
         }
-    }   
+    }
+    
+    private void registerUnassignedActivity(){
+        Activity activity = new Activity();
+        activity.setName(tfActivityName.getText());
+        activity.setDescription(taActivityDescription.getText());        
+        activity.setStatus(1);
+        activity.setStartDate(dpStartDate.getValue().toString());
+        activity.setEndDate(dpEndDate.getValue().toString());
+        
+        HashMap<String, Object> answer = ActivityDAO.registerUnassignedActivity(activity);
+        if(!(boolean) answer.get("error")){
+            Utilities.showSimpleAlert("Actividad Guardada", (String)answer.get("message"),
+                    Alert.AlertType.INFORMATION);
+        }else{
+            Utilities.showSimpleAlert("Error al guardar", (String)answer.get("message"),
+                    Alert.AlertType.ERROR);
+        }
+    } 
 
     @Override
     public void developerSelected(Integer idDeveloper, String developerName) {

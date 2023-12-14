@@ -91,19 +91,41 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
 
     @FXML
     private void btnUpdateActivity(ActionEvent event) {
-        updateActivity();
+        if(!tfAssignDeveloper.getText().isEmpty()){
+            updateAssignedActivity();
+        } else{
+            updateUnassignedActivity();
+        }
     }
     
-    private void updateActivity(){
+    private void updateUnassignedActivity(){
         Activity activity = new Activity();
         activity.setName(tfActivityName.getText());
         activity.setDescription(taActivityDescription.getText());
         activity.setStartDate(dpStartDate.getValue().toString());
         activity.setEndDate(dpEndDate.getValue().toString());
-        if(!tfAssignDeveloper.getText().isEmpty()){
-            activity.setIdDeveloper(idDeveloper);
+        activity.setIdActivity(idActivity);
+        
+        HashMap<String, Object> answer = ActivityDAO.updateUnassignedActivity(activity);
+        if(!(boolean) answer.get("error")){
+            Utilities.showSimpleAlert("Cambios Guardados", (String)answer.get("message"),
+                    Alert.AlertType.INFORMATION);
+        }else{
+            Utilities.showSimpleAlert("Error al guardar", (String)answer.get("message"),
+                    Alert.AlertType.ERROR);
         }
-        HashMap<String, Object> answer = ActivityDAO.registerActivity(activity);
+    }
+
+    private void updateAssignedActivity(){
+        Activity activity = new Activity();
+        activity.setName(tfActivityName.getText());
+        activity.setDescription(taActivityDescription.getText());
+        activity.setStartDate(dpStartDate.getValue().toString());
+        activity.setEndDate(dpEndDate.getValue().toString());        
+        activity.setIdDeveloper(idDeveloper);
+        activity.setIdActivity(idActivity);
+        
+        HashMap<String, Object> answer = ActivityDAO.updateAssignedActivity(activity);
         if(!(boolean) answer.get("error")){
             Utilities.showSimpleAlert("Cambios Guardados", (String)answer.get("message"),
                     Alert.AlertType.INFORMATION);
@@ -113,7 +135,6 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
                     Alert.AlertType.ERROR);
         }
     }
-
     
     public void initializeInformation(Integer idActivity, DeveloperObserver observer,Activity updateActivity){
         this.idActivity = idActivity;
@@ -125,16 +146,12 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
     private void loadUnassignedActivityInformation() {
         tfActivityName.setText(this.updateActivity.getName());
         taActivityDescription.setText(this.updateActivity.getDescription());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(this.updateActivity.getStartDate(), formatter);
+        dpStartDate.setValue(startDate);
+        LocalDate endDate = LocalDate.parse(this.updateActivity.getStartDate(), formatter);
+        dpEndDate.setValue(endDate);
     }
-    
-    /*private void loadActivityInformation() {
-        tfActivityName.setText(this.updateActivity.getName());
-        dpStartDate.setValue(LocalDate.parse(this.updateActivity.getStartDate(),
-                DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        dpStartDate.setValue(LocalDate.parse(this.updateActivity.getEndDate(),
-                DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-        taActivityDescription.setText(this.updateActivity.getDescription());
-    }*/
     
     private void loadDeveloper(Integer idDeveloper, String developerName){
         this.idDeveloper = idDeveloper;
