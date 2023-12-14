@@ -19,9 +19,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.util.converter.IntegerStringConverter;
 import projectmanagementlisof.model.dao.CatalogDAO;
 
 public class Utilities
@@ -112,9 +116,36 @@ public class Utilities
         currentStage.close();
     }
     
-      public static <T> void setItemsInComboBox(ObservableList<T> items, ComboBox<T> comboBox) {
+    public static <T> void setItemsInComboBox(ObservableList<T> items, ComboBox<T> comboBox) 
+    {
         List<T> result = (List<T>) CatalogDAO.getTypes();
         items.addAll(result);
         comboBox.setItems(items);
-  }
+    }
+    
+    public static void onlyNumbers(TextField textField) {
+        TextFormatter<Integer> formatter = new TextFormatter<>(new IntegerStringConverter(), null,
+                change -> {
+                    String newText = change.getControlNewText();
+                    if (newText.matches("\\d*")) {
+                        return change;
+                    }
+                    return null;
+                });
+        textField.setTextFormatter(formatter);
+    }
+    public static void limitTextFieldCharacters(TextField textField, int maxCharacters) {
+        textField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.length() > maxCharacters) {
+                textField.setText(oldValue);
+            }
+        });
+    }
+    public static void limitTextAreaCharacters(TextArea textArea, int maxCharacters) {
+        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null && newValue.length() > maxCharacters) {
+                textArea.setText(oldValue);
+            }
+        });
+    }
 }

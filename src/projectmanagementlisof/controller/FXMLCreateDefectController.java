@@ -49,6 +49,10 @@ public class FXMLCreateDefectController implements Initializable
       @Override public void initialize(URL url, ResourceBundle rb)
       {
             setTypesInComboBox();
+            utilities.onlyNumbers(tfTimeCost);
+            utilities.limitTextFieldCharacters(tfTimeCost, 10);
+            utilities.limitTextAreaCharacters(taDescription, 255);
+            
       }
 
       @FXML private void changeToDefaultCursor(MouseEvent event)
@@ -67,18 +71,27 @@ public class FXMLCreateDefectController implements Initializable
             utilities.closeWindow(currentStage);
       }
 
-      @FXML private void createDefect(ActionEvent event)
-      {
-            if (validarCampos())
+    @FXML
+    private void createDefect(ActionEvent event) 
+    {
+        if (validarCampos()) 
+        {
+            HashMap<String, Object> result = registerNewDefect();
+            if (!(boolean) result.get("error")) 
             {
-                  int saved = registerNewDefect();
-                  utilities.showSimpleAlert("Nuevo Defecto Creado",
-                      "El defecto a sido creado y almacenado con éxito",
-                      Alert.AlertType.CONFIRMATION);
-                  Stage currentStage = (Stage) tfTimeCost.getScene().getWindow();
-                  utilities.closeWindow(currentStage);
+                utilities.showSimpleAlert("Nuevo Defecto Creado", "El defecto ha sido creado y almacenado con éxito", Alert.AlertType.INFORMATION);
+            } else 
+            {
+                utilities.showSimpleAlert("Error", "Ha ocurrido un error al crear el defecto. Inténtelo más tarde", Alert.AlertType.ERROR);
             }
-      }
+            Stage currentStage = (Stage) tfTimeCost.getScene().getWindow();
+            utilities.closeWindow(currentStage);
+        } 
+        else 
+        {
+            utilities.showSimpleAlert("Error", "Por favor, llene los campos marcados con información válida", Alert.AlertType.WARNING);
+        }
+    }
 
       private void setTypesInComboBox()
       {
@@ -92,33 +105,32 @@ public class FXMLCreateDefectController implements Initializable
             boolean CamposValidos = true;
             if (tfTimeCost.getText().isEmpty())
             {
-                  CamposValidos = false;
+                tfTimeCost.setStyle("-fx-border-color: red;");
+                CamposValidos = false;
             }
             if (taDescription.getText().isEmpty())
-            {
-                  CamposValidos = false;
+            {   
+                taDescription.setStyle("-fx-border-color: red;");
+                CamposValidos = false;
             }
             if (cbType.getSelectionModel().isEmpty())
             {
-                  CamposValidos = false;
+                cbType.setStyle("-fx-border-color: red;");
+                CamposValidos = false;
             }
             return CamposValidos;
       }
 
-      private int registerNewDefect()
-      {
-            Defect defect = new Defect();
-            LocalDate date = LocalDate.now();
-            defect.setTimeCost(Integer.parseInt(tfTimeCost.getText()));
-            System.out.println(utilities.parseDateToString(date));
-            defect.setDate(utilities.parseDateToString(date));
-            defect.setDescription(taDescription.getText());
-            CorrectionType selectedType = cbType.getSelectionModel().getSelectedItem();
-            defect.setType(selectedType.getIdType());
-            defect.setIdDeveloper(1);
-            DefectDAO dao = new DefectDAO();
-            int result = dao.registerDefect(defect);
-            System.out.println(result);
-            return result;
-      }
+    private HashMap<String, Object> registerNewDefect() {
+        Defect defect = new Defect();
+        LocalDate date = LocalDate.now();
+        defect.setTimeCost(Integer.parseInt(tfTimeCost.getText()));
+        defect.setDate(utilities.parseDateToString(date));
+        defect.setDescription(taDescription.getText());
+        CorrectionType selectedType = cbType.getSelectionModel().getSelectedItem();
+        defect.setType(selectedType.getIdType());
+        defect.setIdDeveloper(1); // Cambiar al ID correcto del desarrollador
+        DefectDAO dao = new DefectDAO();
+        return dao.registerDefect(defect);
+    }
 }

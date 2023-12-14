@@ -23,10 +23,13 @@ public class FXMLDeveloperLandingController implements Initializable
 
       @FXML private void btnLogOut(MouseEvent event) {}
 
-      @FXML private void btnShowActivies(ActionEvent event) {}
+      @FXML private void btnShowActivies(ActionEvent event) 
+      {
+          utilities.loadFXML( "/projectmanagementlisof/gui/FXMLDeveloperActivities.fxml",apBackground);
+      }
 
       @FXML private void btnShowChanges(ActionEvent event) {
-        utilities.loadFXML( "/projectmanagementlisof/gui/FXMLDeveloperChangesOption.fxml",apBackground);
+          utilities.loadFXML( "/projectmanagementlisof/gui/FXMLDeveloperChangesOption.fxml",apBackground);
       }
 
       @FXML private void btnShowChangeRequests(ActionEvent event) {}
