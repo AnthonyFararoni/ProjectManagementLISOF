@@ -18,11 +18,9 @@ import projectmanagementlisof.model.pojo.Developer;
  *
  * @author nando
  */
-public class DeveloperDAO 
-{
+public class DeveloperDAO {
     
-    public static HashMap<String, Object> getDevelopers()
-    {
+    public static HashMap<String, Object> getDevelopers(){
         HashMap<String, Object> answer = new LinkedHashMap<>();
         answer.put("error", true);
         Connection connectionBD = ConnectionDB.getConnection();
@@ -34,8 +32,8 @@ public class DeveloperDAO
                         + "inner join project p on d.idProject = p.idProject "
                         + "inner join schoolperiod sp on sp.idSchoolPeriod = d.idSchoolPeriod "
                         + "where d.enrollment = 1";
-                PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
-                ResultSet developersList = preparedStatement.executeQuery();
+                PreparedStatement prepararSentencia = connectionBD.prepareStatement(query);
+                ResultSet developersList = prepararSentencia.executeQuery();
                 ArrayList<Developer> developers = new ArrayList<>();                
                 while(developersList.next()){
                     Developer developer = new Developer();
@@ -48,7 +46,6 @@ public class DeveloperDAO
                     developer.setEnrollment(developersList.getBoolean("enrollment"));
                     developer.setIdProject(developersList.getInt("idProject"));
                     developer.setProjectName(developersList.getString("projectName"));
-                    developer.setIdSchoolPeriod(developersList.getInt("idSchoolPeriod"));
                     developer.setStarDateSchoolPeriod(developersList.getString("startDate"));
                     developer.setEndDateSchoolPeriod(developersList.getString("endDate"));
                     developers.add(developer);

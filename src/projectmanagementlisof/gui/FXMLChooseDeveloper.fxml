@@ -40,12 +40,12 @@
             </AnchorPane>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
                <children>
-                  <ImageView fitHeight="39.0" fitWidth="40.0" layoutX="69.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                  <ImageView fitHeight="39.0" fitWidth="40.0" layoutX="69.0" layoutY="39.0" onMouseClicked="#btnSearchDeveloper" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                      <image>
                         <Image url="@../images/SearchIcon.png" />
                      </image>
                   </ImageView>
-                  <TextField alignment="CENTER" layoutX="121.0" layoutY="39.0" prefHeight="36.0" prefWidth="453.0" promptText="Matricula / Nombre" styleClass="search-text-field" stylesheets="@../css/Style.css">
+                  <TextField fx:id="tfSearchDeveloper" alignment="CENTER" layoutX="121.0" layoutY="39.0" prefHeight="36.0" prefWidth="453.0" promptText="Matricula / Nombre" styleClass="search-text-field" stylesheets="@../css/Style.css">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
@@ -57,7 +57,7 @@
                         <TableColumn fx:id="colDeveloperEmail" prefWidth="273.33343505859375" text="Correo electrónico" />
                      </columns>
                   </TableView>
-                  <Button layoutX="394.0" layoutY="471.0" mnemonicParsing="false" onAction="#btnAssignDeveloperToActivity" prefHeight="38.0" prefWidth="191.0" stylesheets="@../css/Style.css" text="Asignar">
+                  <Button fx:id="btnAssignDeveloperToActivity" disable="true" layoutX="394.0" layoutY="471.0" mnemonicParsing="false" onAction="#btnAssignDeveloperToActivity" prefHeight="38.0" prefWidth="191.0" stylesheets="@../css/Style.css" text="Asignar">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>

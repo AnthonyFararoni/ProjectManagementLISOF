@@ -24,10 +24,7 @@ public class Developer {
     private String starDateSchoolPeriod;
     private String endDateSchoolPeriod;
 
-    public Developer(Integer idDeveloper, String developerLogin, String name, String lastName, 
-            String secondLastName, String email, boolean enrollment, String password, Integer idProject, 
-            Integer idSchoolPeriod, String projectName, String starDateSchoolPeriod, String endDateSchoolPeriod) 
-    {
+    public Developer(Integer idDeveloper, String developerLogin, String name, String lastName, String secondLastName, String email, boolean enrollment, String password, Integer idProject, Integer idSchoolPeriod, String projectName, String starDateSchoolPeriod, String endDateSchoolPeriod) {
         this.idDeveloper = idDeveloper;
         this.developerLogin = developerLogin;
         this.name = name;
@@ -43,144 +40,117 @@ public class Developer {
         this.endDateSchoolPeriod = endDateSchoolPeriod;
     }
 
-    public Developer() 
-    {
+    public Developer() {
     }
 
-    public Integer getIdDeveloper() 
-    {
+    public Integer getIdDeveloper() {
         return idDeveloper;
     }
 
-    public String getDeveloperLogin() 
-    {
+    public String getDeveloperLogin() {
         return developerLogin;
     }
 
-    public String getName() 
-    {
+    public String getName() {
         return name;
     }
 
-    public String getLastName() 
-    {
+    public String getLastName() {
         return lastName;
     }
 
-    public String getSecondLastName() 
-    {
+    public String getSecondLastName() {
         return secondLastName;
     }
 
-    public String getEmail() 
-    {
+    public String getEmail() {
         return email;
     }
 
-    public boolean isEnrollment() 
-    {
+    public boolean isEnrollment() {
         return enrollment;
     }
 
-    public String getPassword() 
-    {
+    public String getPassword() {
         return password;
     }
 
-    public Integer getIdProject() 
-    {
+    public Integer getIdProject() {
         return idProject;
     }
 
-    public Integer getIdSchoolPeriod() 
-    {
+    public Integer getIdSchoolPeriod() {
         return idSchoolPeriod;
     }
 
-    public String getProjectName() 
-    {
+    public String getProjectName() {
         return projectName;
     }
 
-    public String getStarDateSchoolPeriod() 
-    {
+    public String getStarDateSchoolPeriod() {
         return starDateSchoolPeriod;
     }
 
-    public String getEndDateSchoolPeriod() 
-    {
+    public String getEndDateSchoolPeriod() {
         return endDateSchoolPeriod;
     }
 
-    public void setIdDeveloper(Integer idDeveloper) 
-    {
+    public void setIdDeveloper(Integer idDeveloper) {
         this.idDeveloper = idDeveloper;
     }
 
-    public void setDeveloperLogin(String developerLogin) 
-    {
+    public void setDeveloperLogin(String developerLogin) {
         this.developerLogin = developerLogin;
     }
 
-    public void setName(String name) 
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
-    public void setLastName(String lastName) 
-    {
+    public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
-    public void setSecondLastName(String secondLastName) 
-    {
+    public void setSecondLastName(String secondLastName) {
         this.secondLastName = secondLastName;
     }
 
-    public void setEmail(String email) 
-    {
+    public void setEmail(String email) {
         this.email = email;
     }
 
-    public void setEnrollment(boolean enrollment) 
-    {
+    public void setEnrollment(boolean enrollment) {
         this.enrollment = enrollment;
     }
 
-    public void setPassword(String password) 
-    {
+    public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setIdProject(Integer idProject) 
-    {
+    public void setIdProject(Integer idProject) {
         this.idProject = idProject;
     }
 
-    public void setIdSchoolPeriod(Integer idSchoolPeriod) 
-    {
+    public void setIdSchoolPeriod(Integer idSchoolPeriod) {
         this.idSchoolPeriod = idSchoolPeriod;
     }
 
-    public void setProjectName(String projectName) 
-    {
+    public void setProjectName(String projectName) {
         this.projectName = projectName;
     }
 
-    public void setStarDateSchoolPeriod(String starDateSchoolPeriod) 
-    {
+    public void setStarDateSchoolPeriod(String starDateSchoolPeriod) {
         this.starDateSchoolPeriod = starDateSchoolPeriod;
     }
 
-    public void setEndDateSchoolPeriod(String endDateSchoolPeriod) 
-    {
+    public void setEndDateSchoolPeriod(String endDateSchoolPeriod) {
         this.endDateSchoolPeriod = endDateSchoolPeriod;
     }
-
+    
     public String getFullName()
     {
         String fullName = name + " " + lastName + " " + secondLastName;
         return fullName;
     }
-  
+    
 }

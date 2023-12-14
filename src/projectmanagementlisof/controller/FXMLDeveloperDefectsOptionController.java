@@ -1,6 +1,6 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
  */
 package projectmanagementlisof.controller;
 
@@ -13,39 +13,44 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.utils.Utilities;
-
 /**
+ * FXML Controller class
  *
- * @author nando
+ * @author edmun
  */
-public class FXMLActivitiesOptionController implements Initializable{
+public class FXMLDeveloperDefectsOptionController implements Initializable {
+
+    private Utilities utilities = new Utilities();
+    /**
+     * Initializes the controller class.
+     */
+    @Override
+    public void initialize(URL url, ResourceBundle rb) {
+        // TODO
+    }    
 
     @FXML
-    private TextField tfSearchActivity;
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-
+    private void btnViewDetails(ActionEvent event) {
     }
 
     @FXML
-    private void btnShowCreateActivity(ActionEvent event) {
-        try
+    private void btnRegisterDefect(ActionEvent event) 
+    {
+         try
         {
-            FXMLLoader loader = Utilities.loadView("gui/FXMLCreateActivity.fxml");
+            FXMLLoader loader = utilities.loadView("gui/FXMLCreateDefect.fxml");
             Parent view = loader.load();
             Scene scene = new Scene(view);
-            FXMLCreateActivityController controller = loader.getController();
+            FXMLCreateDefectController controller = loader.getController();
             Stage stage = new Stage();
 
             stage.setScene(scene);
-            stage.setTitle("Crear actividad");
+            stage.setTitle("Crear defecto");
             stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();           
+            stage.showAndWait();            
         } 
         catch (IOException ex)
         {

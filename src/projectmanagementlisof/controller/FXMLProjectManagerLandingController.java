@@ -68,7 +68,6 @@ public class FXMLProjectManagerLandingController implements Initializable
       {
             loadFXML("FXMLDefectsOption");
       }
-
       private void loadFXML(String fxmlName)
       {
             try
@@ -78,8 +77,6 @@ public class FXMLProjectManagerLandingController implements Initializable
                 Node newNode = loader.load();
                 apBackground.getChildren().clear();
                 apBackground.getChildren().add(newNode);
-                //Object controller = loader.getController();
-                     
             }
             catch (IOException ex)
             {

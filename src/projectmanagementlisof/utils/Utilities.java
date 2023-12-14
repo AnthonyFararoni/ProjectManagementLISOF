@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 import com.sun.javafx.scene.SceneUtils;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
@@ -35,7 +37,7 @@ public class Utilities
       
       public static boolean validateIdDeveloper(String idDeveloper) 
       {
-        String rightPattern = "^(zs|zS|ZS)\\d{0,8}$";
+        String rightPattern = "^(zs|zS|ZS)\\d{8}$";
         Pattern pattern = Pattern.compile(rightPattern);
         Matcher matcher = pattern.matcher(idDeveloper);
         return matcher.matches() && !idDeveloper.trim().isEmpty();
@@ -68,6 +70,11 @@ public class Utilities
         return (buttonClic.get() == ButtonType.OK);
     }
     
+    public static String getFullName(String name, String lastName, String secondLastName)
+    {
+        String fullName = name + " " + lastName + " " + secondLastName;
+        return fullName;
+    }
     public static void loadFXML(String fxmlFile, AnchorPane anchorPane) {
         try {
             AnchorPane FXMLFile = FXMLLoader.load(Utilities.class.getResource(fxmlFile));
@@ -88,7 +95,14 @@ public class Utilities
         }
     }
     
-    public static void cerrarVentana(Stage currentStage) {
+    public String parseDateToString(LocalDate date)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String parsedDate = formatter.format(date);
+        return parsedDate;
+    }
+    
+    public static void closeWindow(Stage currentStage) {
         currentStage.close();
     }
 }

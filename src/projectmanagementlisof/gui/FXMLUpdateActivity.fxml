@@ -11,8 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="projectmanagementlisof.controller.FXMLUpdateActivityController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLUpdateActivityController">
    <children>
       <Pane prefHeight="72.0" prefWidth="600.0" styleClass="window-header" stylesheets="@../css/Style.css">
          <children>
@@ -55,7 +54,7 @@
             <TextField fx:id="tfAssignDeveloper" layoutX="33.0" layoutY="113.0" prefHeight="27.0" prefWidth="204.0" promptText="Seleccione un desarrollador" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
             <DatePicker fx:id="dpStartDate" layoutX="370.0" layoutY="58.0" promptText="Seleccione una fecha" />
             <DatePicker fx:id="dpEndDate" layoutX="370.0" layoutY="115.0" promptText="Seleccione una fecha" />
-            <TextArea fx:id="taActivityDescripcion" layoutX="33.0" layoutY="177.0" prefHeight="118.0" prefWidth="519.0" />
+            <TextArea fx:id="taActivityDescription" layoutX="33.0" layoutY="177.0" prefHeight="118.0" prefWidth="519.0" />
             <Button layoutX="250.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnSelectDeveloper" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Seleccione" />
             <Button layoutX="262.0" layoutY="306.0" mnemonicParsing="false" onAction="#btnUpdateActivity" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Guardar Actividad" />
          </children>
