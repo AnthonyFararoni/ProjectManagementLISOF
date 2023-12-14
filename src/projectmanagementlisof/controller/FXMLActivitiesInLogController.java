@@ -84,6 +84,11 @@ public class FXMLActivitiesInLogController implements Initializable {
 
     @FXML
     private void btnDeleteAssignedActivity(ActionEvent event) {
+        boolean confirmation = Utilities.showConfirmationAlert("¿Eliminar actividad?", "¿Esta seguro"
+                    + " de eliminar la actividad seleccionada?");
+            if(confirmation){
+                deleteActivity(idActivity);
+            } 
     }
     
     private void configureActivitiesTable(){
@@ -123,6 +128,20 @@ public class FXMLActivitiesInLogController implements Initializable {
             Utilities.showSimpleAlert("Error de carga", (String)answer.get("message"), 
                     Alert.AlertType.ERROR);
         }        
+    }
+    
+    private void deleteActivity(int idActivity){
+        HashMap<String, Object> answer = ActivityDAO.deleteActivity(idActivity);
+        if(!(boolean) answer.get("error")){
+            Utilities.showSimpleAlert("Eliminacion exitosa", (String)answer.get("mensaje"),
+                    Alert.AlertType.INFORMATION);
+            getAssignedActivitiesForTable();
+        }else{
+            Utilities.showSimpleAlert("Eliminacion fallida", (String)answer.get("mensaje"),
+                    Alert.AlertType.ERROR);
+        }
+        btnDeleteAssignedActivity.setDisable(true);
+        btnEditAssignedActivity.setDisable(true);
     }
     
 }

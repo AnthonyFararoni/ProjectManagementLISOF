@@ -19,6 +19,7 @@ import projectmanagementlisof.model.pojo.Developer;
  * @author ferdy
  */
 public class ActivityDAO {
+    
     public static HashMap<String, Object> registerActivity(Activity activity){
         HashMap<String, Object> answer = new HashMap();
         answer.put("error",true);
