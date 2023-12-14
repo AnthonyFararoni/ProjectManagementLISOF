@@ -10,10 +10,8 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -28,7 +26,6 @@ import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
 import projectmanagementlisof.model.dao.CatalogDAO;
 
-
 public class Utilities
 {
       public static void centerStage(Stage stage)
@@ -39,6 +36,12 @@ public class Utilities
       }
 
       public static FXMLLoader loadView(String pathFXML) throws IOException
+      {
+            URL url = projectmanagementlisof.ProjectManagementLISOF.class.getResource(pathFXML);
+            return new FXMLLoader(url);
+      }
+
+      public static boolean validateIdDeveloper(String idDeveloper)
       {
             String rightPattern = "^(zs|zS|ZS)\\d{8}$";
             Pattern pattern = Pattern.compile(rightPattern);

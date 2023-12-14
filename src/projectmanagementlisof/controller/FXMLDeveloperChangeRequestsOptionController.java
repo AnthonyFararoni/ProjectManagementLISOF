@@ -47,7 +47,7 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
 
       private void loadChangeRequests()
       {
-            HashMap<String, Object> answer = ChangeRequestDAO.getChangeRequests();
+            HashMap<String, Object> answer = ChangeRequestDAO.getAllChangeRequests();
 
             if (!(boolean) answer.get("error"))
             {
