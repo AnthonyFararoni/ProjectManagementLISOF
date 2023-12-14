@@ -146,7 +146,7 @@ public class FXMLDevelopersOptionController implements Initializable
     
     private void disableDeveloper(int idDeveloper)
     {
-        if(DeveloperDAO.validateProfessor(idDeveloper)){
+        if(DeveloperDAO.validateDeveloper(idDeveloper)){
             HashMap<String, Object> answer = DeveloperDAO.disableDeveloper(idDeveloper);
             if(!(boolean) answer.get("error")){
                 Utilities.showSimpleAlert("Eliminacion exitosa", (String)answer.get("mensaje"),
