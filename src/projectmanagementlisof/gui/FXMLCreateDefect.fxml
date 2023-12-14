@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="projectmanagementlisof.controller.FXMLCreateDefectController">
+    <stylesheets>
+        <URL value="@/projectmanagementlisof/css/Style.css" />
+    </stylesheets>
+   <children>
+      <Pane prefHeight="91.0" prefWidth="952.0" style="-fx-background-color: Black;">
+         <children>
+            <Label layoutX="327.0" layoutY="12.0" text="Crear Defecto" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="46.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="imgBackButton" fitHeight="68.0" fitWidth="65.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#goBackToLanding" onMouseEntered="#changeToHandCursor" onMouseExited="#changeToDefaultCursor" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ReturnIcon2.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutY="91.0" prefHeight="531.0" prefWidth="952.0">
+         <children>
+            <Label layoutX="128.0" layoutY="60.0" text="Esfuerzo">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="601.0" layoutY="60.0" text="Tipo">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="128.0" layoutY="161.0" text="Descripción del Defecto">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfTimeCost" layoutX="128.0" layoutY="96.0" prefHeight="44.0" prefWidth="254.0" promptText="Esfuerzo en minutos" styleClass="lower-gray-text-area" stylesheets="@../css/Style.css">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <ComboBox fx:id="cbType" layoutX="601.0" layoutY="96.0" prefHeight="44.0" prefWidth="223.0" promptText="Tipo De Defecto" />
+            <TextArea fx:id="taDescription" layoutX="128.0" layoutY="197.0" prefHeight="200.0" prefWidth="696.0" promptText="Escribe tu descripción aquí" styleClass="lower-gray-text-area" stylesheets="@../css/Style.css" />
+            <Button layoutX="411.0" layoutY="434.0" mnemonicParsing="false" onAction="#createDefect" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Guardar Defecto" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
