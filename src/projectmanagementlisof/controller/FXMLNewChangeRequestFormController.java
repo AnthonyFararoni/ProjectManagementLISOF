@@ -4,7 +4,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import javafx.collections.ListChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,9 +44,9 @@ public class FXMLNewChangeRequestFormController implements Initializable
             changeRequest.setStatus("1");
             changeRequest.setCreationDate(LocalDate.now().toString());
             changeRequest.setReviewDate(dpDate.getValue().toString());
-            // changeRequest.setIdDeveloper(1);
-            // changeRequest.setIdProjectManager(1);
-            // changeRequest.setIdDefect(1);
+            changeRequest.setIdDeveloper(1);
+            changeRequest.setIdProjectManager(1);
+            changeRequest.setIdDefect(1);
 
             HashMap<String, Object> answer = ChangeRequestDAO.createChangeRequest(changeRequest);
             if ((boolean) answer.get("error"))
