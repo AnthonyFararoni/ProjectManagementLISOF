@@ -75,7 +75,7 @@ public class ActivityDAO {
                     activity.setDescription(activitiesList.getString("description"));
                     activity.setStatus(activitiesList.getInt("status"));
                     activity.setStatusName(activitiesList.getString("statusName"));
-                    activity.setStartDate(activitiesList.getString("statDate"));
+                    activity.setStartDate(activitiesList.getString("startDate"));
                     activity.setEndDate(activitiesList.getString("endDate"));
                     activity.setIdDeveloper(activitiesList.getInt("idDeveloper"));
                     activity.setIdProjectManager(activitiesList.getInt("idProjectManager"));
@@ -106,6 +106,76 @@ public class ActivityDAO {
                         + "inner join status s on a.status = s.idStatus "
                         + "where a.status = 1";
                 PreparedStatement preparedStatement = connectionBD.prepareStatement(query);  
+                ResultSet activitiesList = preparedStatement.executeQuery();
+                ArrayList<Activity> activities = new ArrayList<>();                
+                while(activitiesList.next()){
+                    Activity activity = new Activity();
+                    activity.setIdActivity(activitiesList.getInt("idActivity"));
+                    activity.setName(activitiesList.getString("name"));
+                    activity.setDescription(activitiesList.getString("description"));
+                    activity.setStatus(activitiesList.getInt("status"));
+                    activity.setStatusName(activitiesList.getString("statusName"));
+                    activity.setStartDate(activitiesList.getString("startDate"));
+                    activity.setEndDate(activitiesList.getString("endDate"));
+                    activity.setIdDeveloper(activitiesList.getInt("idDeveloper"));
+                    activity.setIdProjectManager(activitiesList.getInt("idProjectManager"));
+                    activities.add(activity);
+                }
+                connectionBD.close();
+                answer.put("error", false);
+                answer.put("activities", activities);
+            } catch (SQLException ex) {
+                answer.put("message","Error: " + ex.getMessage());
+            }     
+        }else{
+            answer.put("message", "Hubo un error al intentar conectar con la base de datos. Intente "
+                    + "de nuevo más tarde");
+        }
+        return answer;
+    }
+    
+    public static HashMap<String, Object> deleteActivity(Integer idActivity)
+    {
+        HashMap<String, Object> answer = new HashMap<>();
+        answer.put("error", true);
+        Connection connectionBD = ConnectionDB.getConnection();
+        if(connectionBD != null){
+            try{
+                String query = "DELETE FROM activity WHERE idActivity = ?;";
+                PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                preparedStatement.setInt(1, idActivity);           
+                int filasAfectadas = preparedStatement.executeUpdate();
+                connectionBD.close();
+                if(filasAfectadas == 1){
+                    answer.put("error", false);
+                    answer.put("mensaje", "Actividad eliminada con éxito");
+                }else{
+                    answer.put("mensaje", "Hubo un error al intentar eliminar la actividad seleccioanda. "
+                            + "Intente de nuevo más tarde");
+                }
+            }catch(SQLException ex){
+                answer.put("mensaje", "Error: " + ex.getMessage());
+            }
+        }else{
+            answer.put("mensaje", "Hubo un error al intentar conectar con la base de datos. Intente "
+                    + "de nuevo más tarde");
+        }
+        return answer;
+    }
+    
+    public static HashMap<String, Object> searchActivity(String activityName)
+    {
+        HashMap<String, Object> answer = new HashMap<>();
+        answer.put("error", true);
+        Connection connectionBD = ConnectionDB.getConnection();
+        if(connectionBD != null){
+            try{
+                String query = "select a.idActivity, a.name, a.description, a.status , s.status as statusName, "
+                        + "a.startDate, a.endDate, a.idDeveloper, a.idProjectManager from activity a "
+                        + "inner join status s on a.status = s.idStatus "
+                        + "where a.name like ?";
+                PreparedStatement preparedStatement = connectionBD.prepareStatement(query);  
+                preparedStatement.setString(1, activityName + "%");  
                 ResultSet activitiesList = preparedStatement.executeQuery();
                 ArrayList<Activity> activities = new ArrayList<>();                
                 while(activitiesList.next()){

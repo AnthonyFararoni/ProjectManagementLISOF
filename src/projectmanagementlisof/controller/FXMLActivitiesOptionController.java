@@ -93,10 +93,16 @@ public class FXMLActivitiesOptionController implements Initializable{
 
     @FXML
     private void btnSearchActivity(MouseEvent event) {
+        searchDeveloper();
     }
 
     @FXML
     private void btnDeleteActivity(ActionEvent event) {
+        boolean confirmation = Utilities.showConfirmationAlert("¿Eliminar actividad?", "¿Esta seguro"
+                    + " de eliminar la actividad seleccionada?");
+            if(confirmation){
+                deleteActivity(idActivity);
+            } 
     }
     
     private void configureUnassignedActivitiesTable(){
@@ -135,6 +141,40 @@ public class FXMLActivitiesOptionController implements Initializable{
             Utilities.showSimpleAlert("Error de carga", (String)answer.get("message"), 
                     Alert.AlertType.ERROR);
         }        
+    }
+    
+    private void searchDeveloper()
+    {
+        String searchActivity = tfSearchActivity.getText();
+        if(Utilities.validateStringsFields(searchActivity)){
+            HashMap<String, Object> answer = ActivityDAO.searchActivity(searchActivity);
+            if(!(boolean)answer.get("error")){
+            activities = FXCollections.observableArrayList();
+            ArrayList<Activity> list = (ArrayList<Activity>) answer.get("activities");
+            activities.addAll(list);
+            tvUnassignedActivities.setItems(activities);           
+        }else{
+            Utilities.showSimpleAlert("Error de carga", (String)answer.get("mensaje"), 
+                    Alert.AlertType.ERROR);
+        }
+        }else{
+            Utilities.showSimpleAlert("Busqueda incorrecta", "La estructura de los criterios de "
+                    + "busqueda es incorrecta. Intente de nuevo", Alert.AlertType.ERROR);
+        } 
+    }
+    
+    private void deleteActivity(int idActivity){
+        HashMap<String, Object> answer = ActivityDAO.deleteActivity(idActivity);
+        if(!(boolean) answer.get("error")){
+            Utilities.showSimpleAlert("Eliminacion exitosa", (String)answer.get("mensaje"),
+                    Alert.AlertType.INFORMATION);
+            getUnassignedActivitiesForTable();
+        }else{
+            Utilities.showSimpleAlert("Eliminacion fallida", (String)answer.get("mensaje"),
+                    Alert.AlertType.ERROR);
+        }
+        btnDeleteActivity.setDisable(true);
+        btnEditActivity.setDisable(true);
     }
     
 }

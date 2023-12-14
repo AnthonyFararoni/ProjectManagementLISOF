@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import projectmanagementlisof.model.ConnectionDB;
 import projectmanagementlisof.model.pojo.Developer;
 
@@ -61,6 +63,25 @@ public class DeveloperDAO {
                     + "de nuevo más tarde");
         }
         return answer;
+    }
+    
+    
+    public static boolean validateProfessor(Integer idDeveloper)  {
+        boolean resultValidation = false;
+        try {        
+            String query = "select * from activity where idDeveloper = ?;";
+            ConnectionDB connectionDB = new ConnectionDB();
+            Connection connection = connectionDB.getConnection();
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, idDeveloper);
+            ResultSet resultSet = statement.executeQuery();
+            if(!resultSet.next()){
+                resultValidation = true;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return resultValidation;
     }
     
     public static HashMap<String, Object> disableDeveloper(Integer idDeveloper)

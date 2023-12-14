@@ -27,6 +27,7 @@ import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.utils.Utilities;
 import projectmanagementlisof.controller.FXMLDeveloperLogController;
+import projectmanagementlisof.utils.UserSingleton;
 
 /**
  * FXML Controller class
@@ -61,14 +62,17 @@ public class FXMLActivitiesInLogController implements Initializable {
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
+        receiveData();
         configureActivitiesTable();        
         getAssignedActivitiesForTable();
-
-        //getAssignedActivitiesForTable(sharedControllerIdDeveloper.getIdDeveloper());;
-        
+        System.out.println(idDeveloper);
     }
     
+    public void receiveData(){
+        UserSingleton instance = UserSingleton.getInstace();
+        idDeveloper = instance.getIdSelected();
+    }
 
     @FXML
     private void btnShowAssignedActivityDetails(ActionEvent event) {
