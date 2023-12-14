@@ -18,10 +18,7 @@ public class FXMLDeveloperLandingController implements Initializable
 
       @FXML private AnchorPane apBackground;
 
-      @Override public void initialize(URL url, ResourceBundle rb)
-      {
-            // TODO
-      }
+      @Override public void initialize(URL url, ResourceBundle rb) {}
 
       @FXML private void btnLogOut(MouseEvent event) {}
 

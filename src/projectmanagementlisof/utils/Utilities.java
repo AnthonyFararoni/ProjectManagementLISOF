@@ -10,8 +10,10 @@ import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -23,7 +25,9 @@ import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.converter.IntegerStringConverter;
+import projectmanagementlisof.controller.FXMLNewChangeRequestFormController;
 import projectmanagementlisof.model.dao.CatalogDAO;
 
 public class Utilities
@@ -88,6 +92,20 @@ public class Utilities
             {
                   AnchorPane FXMLFile = FXMLLoader.load(Utilities.class.getResource(fxmlFile));
                   anchorPane.getChildren().setAll(FXMLFile);
+            }
+            catch (IOException ex)
+            {
+                  ex.printStackTrace();
+            }
+      }
+
+      public static void closeCurrentWindowAndOpenAnotherOne(Stage currentStage, String fxmlPath)
+      {
+            try
+            {
+                  Parent view = FXMLLoader.load(Utilities.class.getResource(fxmlPath));
+                  Scene scene = new Scene(view);
+                  currentStage.setScene(scene);
             }
             catch (IOException ex)
             {

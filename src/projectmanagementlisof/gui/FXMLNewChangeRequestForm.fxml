@@ -11,12 +11,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLNewChangeRequestFormController">
+<AnchorPane id="AnchorPane" fx:id="apNewChangeRequestForm" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLNewChangeRequestFormController">
       <children>
             <Pane layoutX="-8.0" layoutY="-5.0" prefHeight="85.0" prefWidth="971.0" styleClass="window-header" stylesheets="@../css/Style.css">
                   <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="25.0" styleClass="window-title" stylesheets="@../css/Style.css" text="Nueva Solicitud de Cambio" textAlignment="CENTER" />
-                        <ImageView fitHeight="49.0" fitWidth="43.0" layoutX="35.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="49.0" fitWidth="43.0" layoutX="35.0" layoutY="23.0" onMouseClicked="#clickImageReturn" pickOnBounds="true" preserveRatio="true">
                               <image>
                                     <Image url="@../images/ReturnIcon2.png" />
                               </image>
@@ -43,7 +43,11 @@
                                           </font>
                                     </Label>
                                     <TextField fx:id="tfJustification" layoutX="81.0" layoutY="94.0" prefHeight="37.0" prefWidth="809.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
-                                    <Button alignment="CENTER" layoutX="348.0" layoutY="518.0" mnemonicParsing="false" onAction="#btnCreateChangeRequest" prefHeight="65.0" prefWidth="258.0" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Registrar Solicitud de Cambio" />
+                                    <Button alignment="CENTER" layoutX="289.0" layoutY="528.0" mnemonicParsing="false" onAction="#btnCreateChangeRequest" prefHeight="66.0" prefWidth="425.0" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Registrar Solicitud de Cambio" textAlignment="CENTER">
+                     <font>
+                        <Font name="Arial Bold" size="24.0" />
+                     </font>
+                  </Button>
                                     <TextField fx:id="tfRequestedBy" layoutX="81.0" layoutY="187.0" prefHeight="37.0" prefWidth="554.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
                                     <DatePicker fx:id="dpDate" layoutX="657.0" layoutY="184.0" prefHeight="39.0" prefWidth="229.0" />
                                     <Label layoutX="82.0" layoutY="255.0" text="Descripción del Cambio">

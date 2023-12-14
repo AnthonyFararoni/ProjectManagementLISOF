@@ -6,16 +6,23 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLNewChangeRequestFormController implements Initializable
 {
+      @FXML private AnchorPane apNewChangeRequestForm;
       @FXML private TextField tfRequestedBy;
       @FXML private DatePicker dpDate;
       @FXML private TextField tfJustification;
@@ -31,6 +38,13 @@ public class FXMLNewChangeRequestFormController implements Initializable
       {
             if (validateFields())
                   createChangeRequest();
+      }
+
+      @FXML private void clickImageReturn(MouseEvent event) throws Exception
+      {
+            Stage stage = (Stage) apNewChangeRequestForm.getScene().getWindow();
+            Utilities.closeCurrentWindowAndOpenAnotherOne(
+                stage, "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml");
       }
 
       private void setDate()
@@ -61,7 +75,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
                       "Éxito", "Solicitud de cambio registrada", Alert.AlertType.INFORMATION);
             }
       }
-      
+
       private boolean validateFields()
       {
             boolean isValid = true;

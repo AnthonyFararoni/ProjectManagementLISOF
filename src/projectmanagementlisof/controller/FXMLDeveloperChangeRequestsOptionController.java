@@ -30,7 +30,7 @@ import projectmanagementlisof.utils.Utilities;
 
 public class FXMLDeveloperChangeRequestsOptionController implements Initializable
 {
-      @FXML private AnchorPane apBackground;
+      @FXML private AnchorPane apDeveloperChangeRequestOptions;
 
       private ObservableList<ChangeRequest> changeRequests;
       @FXML private TextField tfSearchChangeRequest;
@@ -69,23 +69,10 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
             }
       }
 
-      @FXML private void loadFXMLNewChangeRequestForm(ActionEvent event) throws IOException
+      @FXML private void loadFXMLNewChangeRequestForm(ActionEvent event)
       {
-            try
-            {
-                  FXMLLoader fxmlLoader = new FXMLLoader();
-                  fxmlLoader.setLocation(getClass().getResource(
-                      "/projectmanagementlisof/gui/FXMLNewChangeRequestForm.fxml"));
-                  Scene scene = new Scene(fxmlLoader.load());
-                  Stage stage = new Stage();
-                  stage.setTitle("Crear nueva solicitud de cambio");
-                  stage.initModality(Modality.APPLICATION_MODAL);
-                  stage.setScene(scene);
-                  stage.showAndWait();
-            }
-            catch (IOException ex)
-            {
-                  ex.printStackTrace();
-            }
+            Stage stage = (Stage) apDeveloperChangeRequestOptions.getScene().getWindow();
+            Utilities.closeCurrentWindowAndOpenAnotherOne(
+                stage, "/projectmanagementlisof/gui/FXMLNewChangeRequestForm.fxml");
       }
 }
