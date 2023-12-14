@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import projectmanagementlisof.utils.Constant;
 
-
 public class ConnectionDB
 {
       public static final String URL_CONNECTION = "jdbc:mysql://" + Constant.HOSTNAME + ":"
@@ -29,5 +28,26 @@ public class ConnectionDB
                   e.printStackTrace();
             }
             return connectionDB;
+      }
+
+      public static int getLastId(String string)
+      {
+            int id = 0;
+            Connection connectionDB = null;
+            try
+            {
+                  Class.forName(Constant.DRIVER);
+                  connectionDB =
+                      DriverManager.getConnection(URL_CONNECTION, Constant.USER, Constant.PASSWORD);
+            }
+            catch (ClassNotFoundException e)
+            {
+                  e.printStackTrace();
+            }
+            catch (SQLException e)
+            {
+                  e.printStackTrace();
+            }
+            return id;
       }
 }

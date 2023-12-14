@@ -1,6 +1,5 @@
 package projectmanagementlisof.controller;
 
-import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -8,67 +7,62 @@ import java.util.ResourceBundle;
 import javafx.collections.ListChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLNewChangeRequestFormController implements Initializable
 {
-      //@FXML private Button btnRegisterChangeRequest;
+      private Utilities utilities = new Utilities();
       @FXML private TextField tfRequestedBy;
       @FXML private DatePicker dpDate;
       @FXML private TextField tfJustification;
       @FXML private TextField tfRequestNumber;
       @FXML private TextField tfChangeDescription;
 
-      private Utilities utilities = new Utilities();
-
       @Override public void initialize(URL url, ResourceBundle rb)
       {
             // btnRegisterChangeRequest.setCursor(Cursor.HAND);
       }
 
-      @FXML private void createChangeRequest(ActionEvent event)
+      @FXML private void btnCreateChangeRequest(ActionEvent event)
       {
             if (validateFields())
             {
-                  int saved = registerNewChangeRequest();
+                  createChangeRequest();
             }
-
-            System.out.println("Solicitud de cambio creada con éxito");
       }
 
-      public int registerNewChangeRequest()
+      private void createChangeRequest()
       {
             ChangeRequest changeRequest = new ChangeRequest();
-            LocalDate date = LocalDate.now();
             changeRequest.setJustification(tfJustification.getText());
             changeRequest.setDescription(tfChangeDescription.getText());
-            changeRequest.setCreationDate(dpDate.getValue().toString());
-            changeRequest.setStatus("Pendiente");
-            changeRequest.setIdDeveloper(1);
-            changeRequest.setIdProjectManager(1);
-            changeRequest.setIdDefect(1);
+            changeRequest.setStatus("1");
+            changeRequest.setCreationDate(LocalDate.now().toString());
+            changeRequest.setReviewDate(dpDate.getValue().toString());
+            // changeRequest.setIdDeveloper(1);
+            // changeRequest.setIdProjectManager(1);
+            // changeRequest.setIdDefect(1);
 
-            ChangeRequestDAO dao = new ChangeRequestDAO();
-            int result = dao.createChangeRequest(changeRequest);
-            System.out.println(result);
-
-            return result;
+            HashMap<String, Object> answer = ChangeRequestDAO.createChangeRequest(changeRequest);
+            if ((boolean) answer.get("error"))
+            {
+                  Utilities.showSimpleAlert(
+                      "Error", (String) answer.get("message"), Alert.AlertType.ERROR);
+            }
+            else
+            {
+                  Utilities.showSimpleAlert(
+                      "Éxito", "Solicitud de cambio registrada", Alert.AlertType.INFORMATION);
+            }
       }
 
-      public boolean validateFields()
+      private boolean validateFields()
       {
             boolean isValid = true;
 
