@@ -26,7 +26,6 @@ import projectmanagementlisof.model.dao.CatalogDAO;
 
 public class Utilities
 {
-    
     public static void centerStage(Stage stage)
       {
             Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();

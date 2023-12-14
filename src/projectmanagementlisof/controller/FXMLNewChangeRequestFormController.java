@@ -59,7 +59,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
                       "Éxito", "Solicitud de cambio registrada", Alert.AlertType.INFORMATION);
             }
       }
-
+      
       private boolean validateFields()
       {
             boolean isValid = true;
