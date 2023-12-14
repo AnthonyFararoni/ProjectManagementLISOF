@@ -17,10 +17,14 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.CatalogDAO;
 import projectmanagementlisof.model.dao.ChangeDAO;
 import projectmanagementlisof.model.pojo.Change;
@@ -36,10 +40,15 @@ public class FXMLRegisterChangeController implements Initializable {
 
     private Utilities utilities = new Utilities();
     private ObservableList<CorrectionType> types = FXCollections.observableArrayList();
+    
     @FXML
     private TextArea taDescription;
     @FXML
     private ComboBox<CorrectionType> cbChangeType;
+    @FXML
+    private ImageView btnReturn;
+    @FXML
+    private Button btnRegisterChange;
 
     /**
      * Initializes the controller class.
@@ -47,10 +56,15 @@ public class FXMLRegisterChangeController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         utilities.setItemsInComboBox(types, cbChangeType);
+        btnRegisterChange.setDisable(true);
+        taDescription.textProperty().addListener((observable, oldValue, newValue) -> checkEnableButton());        
+        cbChangeType.valueProperty().addListener((observable, oldValue, newValue) -> checkEnableButton());
     }    
 
     @FXML
     private void btnReturn(MouseEvent event) {
+        Stage currentStage = (Stage) taDescription.getScene().getWindow();
+        utilities.closeWindow(currentStage);
     }
 
     @FXML
@@ -77,6 +91,21 @@ public class FXMLRegisterChangeController implements Initializable {
             Utilities.showSimpleAlert("Error al guardar", (String)answer.get("message"),
                     Alert.AlertType.ERROR);
         }
-    }   
+    }
+    
+     private void checkEnableButton() {
+        boolean allFieldsFilled = !taDescription.getText().isEmpty() && cbChangeType.getValue() != null;
+        btnRegisterChange.setDisable(!allFieldsFilled);
+    }
+
+    @FXML
+    private void changeToDefaultCursor(MouseEvent event) {
+        btnReturn.setCursor(Cursor.DEFAULT);
+    }
+
+    @FXML
+    private void changeToHandCursor(MouseEvent event) {
+        btnReturn.setCursor(Cursor.HAND);
+    }
     
 }

@@ -41,7 +41,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
             ChangeRequest changeRequest = new ChangeRequest();
             changeRequest.setJustification(tfJustification.getText());
             changeRequest.setDescription(tfChangeDescription.getText());
-            changeRequest.setStatus("1");
+            changeRequest.setStatus(1);
             changeRequest.setCreationDate(LocalDate.now().toString());
             changeRequest.setIdDeveloper(1);
             changeRequest.setIdProjectManager(1);
@@ -59,7 +59,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
                       "Éxito", "Solicitud de cambio registrada", Alert.AlertType.INFORMATION);
             }
       }
-
+      
       private boolean validateFields()
       {
             boolean isValid = true;

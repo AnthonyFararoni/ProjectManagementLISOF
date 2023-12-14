@@ -10,12 +10,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19" fx:controller="projectmanagementlisof.controller.FXMLRegisterChangeController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLRegisterChangeController">
    <children>
       <Pane prefHeight="74.0" prefWidth="600.0" styleClass="window-header" stylesheets="@../css/Style.css">
          <children>
-            <ImageView fitHeight="74.0" fitWidth="70.0" layoutY="2.0" onMouseClicked="#btnReturn" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btnReturn" fitHeight="74.0" fitWidth="70.0" layoutY="2.0" onMouseClicked="#btnReturn" onMouseEntered="#changeToHandCursor" onMouseExited="#changeToDefaultCursor" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/ReturnIcon2.png" />
                </image>
@@ -37,7 +36,7 @@
             </Label>
             <TextArea fx:id="taDescription" layoutX="38.0" layoutY="57.0" prefHeight="142.0" prefWidth="523.0" />
             <ComboBox fx:id="cbChangeType" layoutX="38.0" layoutY="247.0" prefWidth="150.0" promptText="Seleccione el tipo" />
-            <Button layoutX="334.0" layoutY="241.0" mnemonicParsing="false" onAction="#btnRegisterChange" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Registrar Cambio" />
+            <Button fx:id="btnRegisterChange" layoutX="334.0" layoutY="241.0" mnemonicParsing="false" onAction="#btnRegisterChange" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Registrar Cambio" />
          </children>
       </Pane>
    </children>

@@ -15,7 +15,7 @@
    <children>
       <Pane prefHeight="72.0" prefWidth="600.0" styleClass="window-header" stylesheets="@../css/Style.css">
          <children>
-            <ImageView fitHeight="72.0" fitWidth="141.0" onMouseClicked="#btnReturn" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="btnReturn" fitHeight="72.0" fitWidth="141.0" onMouseClicked="#btnReturn" onMouseEntered="#changeToHandCursor" onMouseExited="#changeToDefaultCursor" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/ReturnIcon2.png" />
                </image>
@@ -51,12 +51,12 @@
                </font>
             </Label>
             <TextField fx:id="tfActivityName" layoutX="33.0" layoutY="57.0" prefHeight="27.0" prefWidth="255.0" promptText="Escriba el nombre de la actividad" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
-            <TextField fx:id="tfAssignDeveloper" layoutX="33.0" layoutY="113.0" prefHeight="27.0" prefWidth="204.0" promptText="Seleccione un desarrollador" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
-            <DatePicker fx:id="dpStartDate" layoutX="370.0" layoutY="58.0" promptText="Seleccione una fecha" />
-            <DatePicker fx:id="dpEndDate" layoutX="370.0" layoutY="115.0" promptText="Seleccione una fecha" />
+            <TextField fx:id="tfAssignDeveloper" editable="false" layoutX="33.0" layoutY="113.0" prefHeight="27.0" prefWidth="204.0" promptText="Seleccione un desarrollador" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
+            <DatePicker fx:id="dpStartDate" editable="false" layoutX="370.0" layoutY="58.0" promptText="Seleccione una fecha" />
+            <DatePicker fx:id="dpEndDate" editable="false" layoutX="370.0" layoutY="115.0" promptText="Seleccione una fecha" />
             <TextArea fx:id="taActivityDescription" layoutX="33.0" layoutY="177.0" prefHeight="118.0" prefWidth="519.0" />
             <Button layoutX="250.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnSelectDeveloper" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Seleccione" />
-            <Button layoutX="262.0" layoutY="306.0" mnemonicParsing="false" onAction="#btnUpdateActivity" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Guardar Actividad" />
+            <Button fx:id="btnUpdateActivity" layoutX="262.0" layoutY="306.0" mnemonicParsing="false" onAction="#btnUpdateActivity" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Guardar Actividad" />
          </children>
       </Pane>
    </children>

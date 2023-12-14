@@ -14,12 +14,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -39,6 +42,7 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
     private Integer idActivity;
     private Activity updateActivity;
     private DeveloperObserver observer;
+    private Utilities utilities = new Utilities();
 
     @FXML
     private TextField tfActivityName;
@@ -50,13 +54,21 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
     private DatePicker dpEndDate;
     @FXML
     private TextArea taActivityDescription;
+    @FXML
+    private ImageView btnReturn;
+    @FXML
+    private Button btnUpdateActivity;
 
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        btnUpdateActivity.setDisable(true);
+        tfActivityName.textProperty().addListener((observable, oldValue, newValue) -> checkEnableButton());        
+        dpStartDate.valueProperty().addListener((observable, oldValue, newValue) -> checkEnableButton());
+        dpEndDate.valueProperty().addListener((observable, oldValue, newValue) -> checkEnableButton());
+        taActivityDescription.textProperty().addListener((observable, oldValue, newValue) -> checkEnableButton());
     }    
     
     private void initializeInformation(Integer idActivity){
@@ -65,6 +77,8 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
 
     @FXML
     private void btnReturn(MouseEvent event) {
+        Stage currentStage = (Stage) tfActivityName.getScene().getWindow();
+        utilities.closeWindow(currentStage);
     }
 
     @FXML
@@ -158,9 +172,28 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
         tfAssignDeveloper.setText(developerName);
     }
     
+    private void checkEnableButton() {
+        boolean allFieldsFilled = !tfActivityName.getText().isEmpty() &&
+                dpStartDate.getValue() != null &&
+                dpEndDate.getValue() != null &&
+                !taActivityDescription.getText().isEmpty();
+
+        btnUpdateActivity.setDisable(!allFieldsFilled);
+    }
+    
      @Override
     public void developerSelected(Integer idDeveloper, String developerName) {
         loadDeveloper(idDeveloper, developerName);
         System.out.println(idDeveloper);
+    }
+
+    @FXML
+    private void changeToDefaultCursor(MouseEvent event) {
+        btnReturn.setCursor(Cursor.DEFAULT);
+    }
+
+    @FXML
+    private void changeToHandCursor(MouseEvent event) {
+        btnReturn.setCursor(Cursor.HAND);
     }
 }

@@ -30,7 +30,6 @@ public class ChangeDAO {
                 prepareStatement.setString(2, change.getDescription());
                 prepareStatement.setString(3, change.getDateCreated());
                 prepareStatement.setInt(4, change.getIdDeveloper());
-                System.out.println(change.getIdDeveloper());
                 int  affectedRows = prepareStatement.executeUpdate();
                 connectionBD.close();
                 if(affectedRows > 0){
@@ -49,29 +48,29 @@ public class ChangeDAO {
         }
         return answer;
     }
-    
-     public static HashMap<String, Object> getDeveloperChanges(int idDeveloper) {
+
+
+    public static HashMap<String, Object> getChangesByDeveloperId(int idDeveloper) {
         HashMap<String, Object> answer = new HashMap<>();
         answer.put("error", true);
         Connection connectionBD = ConnectionDB.getConnection();
-        if (connectionBD != null) {
-            try {
-                String query = "SELECT * FROM `change` WHERE idDeveloper = ?";
+        if(connectionBD != null){
+            try{
+                String query = "select idChange, type, description, dateCreated from change "
+                        + "where idDeveloper = ?";
                 PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
-                preparedStatement.setInt(1, idDeveloper);
-                ResultSet changesResult = preparedStatement.executeQuery();
-
-                ArrayList<Change> changes = new ArrayList<>();
-                while (changesResult.next()) {
+                preparedStatement.setInt(1, idDeveloper);   
+                ResultSet activitiesList = preparedStatement.executeQuery();
+                ArrayList<Change> changes = new ArrayList<>();                
+                while(activitiesList.next()){
                     Change change = new Change();
-                    change.setIdChange(changesResult.getInt("idChange"));
-                    change.setType(changesResult.getInt("type"));
-                    change.setDescription(changesResult.getString("description"));
-                    change.setDateCreated(changesResult.getString("dateCreated"));
-                    change.setIdDeveloper(changesResult.getInt("idDeveloper"));
+                    change.setIdChange(activitiesList.getInt("idChange"));
+                    change.setType(activitiesList.getInt("type"));
+                    change.setDescription(activitiesList.getString("description"));
+                    change.setDateCreated(activitiesList.getString("dateCreated"));
+                    
                     changes.add(change);
                 }
-
                 connectionBD.close();
                 answer.put("error", false);
                 answer.put("changes", changes);
@@ -116,6 +115,10 @@ public class ChangeDAO {
         answer.put("message", "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde");
     }
     return answer;
+    }
+
+    public static HashMap<String, Object> getDeveloperChanges(int idDeveloper) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
 }

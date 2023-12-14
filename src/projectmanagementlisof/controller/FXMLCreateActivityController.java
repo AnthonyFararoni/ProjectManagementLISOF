@@ -12,12 +12,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ActivityDAO;
@@ -34,6 +38,7 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
     
     private Integer idDeveloper;
     private String developerName;
+    private Utilities utilities = new Utilities();
 
     @FXML
     private TextField tfActivityName;
@@ -45,6 +50,10 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
     private DatePicker dpEndDate;
     @FXML
     private TextArea taActivityDescription;
+    @FXML
+    private ImageView imgBackButton;
+    @FXML
+    private Button btnCreateActivity;
 
     /**
      * Initializes the controller class.
@@ -52,6 +61,11 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
+        btnCreateActivity.setDisable(true);
+        tfActivityName.textProperty().addListener((observable, oldValue, newValue) -> checkEnableButton());        
+        dpStartDate.valueProperty().addListener((observable, oldValue, newValue) -> checkEnableButton());
+        dpEndDate.valueProperty().addListener((observable, oldValue, newValue) -> checkEnableButton());
+        taActivityDescription.textProperty().addListener((observable, oldValue, newValue) -> checkEnableButton());
     }
     
     @FXML
@@ -131,13 +145,36 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
                     Alert.AlertType.ERROR);
         }
     } 
+    
+     private void checkEnableButton() {
+        boolean allFieldsFilled = !tfActivityName.getText().isEmpty() &&
+                dpStartDate.getValue() != null &&
+                dpEndDate.getValue() != null &&
+                !taActivityDescription.getText().isEmpty();
+
+        btnCreateActivity.setDisable(!allFieldsFilled);
+    }
 
     @Override
     public void developerSelected(Integer idDeveloper, String developerName) {
         loadDeveloper(idDeveloper, developerName);
         System.out.println(idDeveloper);
+    }    
+
+    @FXML
+    private void btnReturn(MouseEvent event) {
+        Stage currentStage = (Stage) tfActivityName.getScene().getWindow();
+        utilities.closeWindow(currentStage);
     }
 
-    
+    @FXML
+    private void changeToDefaultCursor(MouseEvent event) {
+        imgBackButton.setCursor(Cursor.DEFAULT);
+    }
+
+    @FXML
+    private void changeToHandCursor(MouseEvent event) {
+        imgBackButton.setCursor(Cursor.HAND);
+    }
     
 }
