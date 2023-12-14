@@ -5,7 +5,6 @@ public class ChangeRequest
       private Integer idChangeRequest;
       private String justification;
       private String description;
-      private Integer idStatus;
       private String status;
       private String creationDate;
       private String reviewDate;
@@ -136,13 +135,9 @@ public class ChangeRequest
             this.idDeveloper = idDeveloper;
       }
 
-    public String getDeveloperName() {
-        return developerName;
-    }
+    
 
-    public void setDeveloperName(String developerName) {
-        this.developerName = developerName;
-    }
+    
       
 
       public Integer getIdProjectManager()
@@ -153,17 +148,7 @@ public class ChangeRequest
       public void setIdProjectManager(Integer idProjectManager)
       {
             this.idProjectManager = idProjectManager;
-      }
-
-    public String getProjectManagerName() {
-        return projectManagerName;
-    }
-
-    public void setProjectManagerName(String projectManagerName) {
-        this.projectManagerName = projectManagerName;
-    }
-      
-      
+      }  
 
       public Integer getIdDefect()
       {
@@ -174,14 +159,6 @@ public class ChangeRequest
       {
             this.idDefect = idDefect;
       }
-
-    public Integer getIdStatus() {
-        return idStatus;
-    }
-
-    public void setIdStatus(Integer idStatus) {
-        this.idStatus = idStatus;
-    }
 
       @Override public String toString()
       {
