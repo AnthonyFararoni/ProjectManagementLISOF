@@ -12,7 +12,7 @@ public class ProjectManagementLISOF extends Application
       @Override public void start(Stage stage) throws Exception
       {
             Parent root =
-                FXMLLoader.load(getClass().getResource("gui/FXMLProjectManagerLanding.fxml"));
+                FXMLLoader.load(getClass().getResource("gui/FXMLNewChangeRequestForm.fxml"));
 
             Scene scene = new Scene(root);
 

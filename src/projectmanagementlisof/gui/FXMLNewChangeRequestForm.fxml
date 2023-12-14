@@ -13,7 +13,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/21"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="projectmanagementlisof.controller.FXMLProjectManagerLandingController">
+      fx:controller="projectmanagementlisof.controller.FXMLNewChangeRequestFormController">
       <children>
             <Pane layoutX="-8.0" layoutY="-5.0" prefHeight="85.0" prefWidth="971.0"
                   styleClass="window-header" stylesheets="@../css/Style.css">
