@@ -76,7 +76,7 @@ public class ChangeRequestDAO
             {
                   try
                   {
-                        String query = "SELECT * FROM ChangeRequest;";
+                        String query = "SELECT * FROM ChangeRequest;"; // TODO change query
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -86,7 +86,18 @@ public class ChangeRequestDAO
                               changeRequest.setIdChangeRequest(resultSet.getInt("idChangeRequest"));
                               changeRequest.setJustification(resultSet.getString("justification"));
                               changeRequest.setDescription(resultSet.getString("description"));
-                              changeRequest.setStatus(resultSet.getString("status"));
+                              if (resultSet.getInt("status") == 1)
+                              {
+                                    changeRequest.setStatus("Pendiente");
+                              }
+                              else if (resultSet.getInt("status") == 2)
+                              {
+                                    changeRequest.setStatus("Aprobada");
+                              }
+                              else if (resultSet.getInt("status") == 3)
+                              {
+                                    changeRequest.setStatus("Rechazada");
+                              }
                               changeRequest.setCreationDate(resultSet.getString("creationDate"));
                               changeRequest.setReviewDate(resultSet.getString("reviewDate"));
                               changeRequest.setIdDeveloper(resultSet.getInt("idDeveloper"));

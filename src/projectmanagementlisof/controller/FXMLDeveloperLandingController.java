@@ -36,7 +36,7 @@ public class FXMLDeveloperLandingController implements Initializable
 
       @FXML private void btnShowChangeRequests(ActionEvent event)
       {
-            utilities.loadFXML(
+            Utilities.loadFXML(
                 "/projectmanagementlisof/gui/FXMLDeveloperChangeRequestsOption.fxml", apBackground);
       }
 
