@@ -113,6 +113,22 @@ public class Utilities
             }
       }
 
+      public static void openAnotherWindowWithoutClosingCurrentOne(
+          Stage currentStage, String fxmlPath)
+      {
+            try
+            {
+                  Parent view = FXMLLoader.load(Utilities.class.getResource(fxmlPath));
+                  Scene scene = new Scene(view);
+                  currentStage.setScene(scene);
+                  currentStage.show();
+            }
+            catch (IOException ex)
+            {
+                  ex.printStackTrace();
+            }
+      }
+
       public static void closeView(Stage currentStage, String fxmlPath)
       {
             try

@@ -5,6 +5,7 @@
  */
 package projectmanagementlisof.controller;
 
+import com.sun.glass.events.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,7 +45,7 @@ import projectmanagementlisof.utils.Utilities;
 public class FXMLActivitiesInLogController implements Initializable
 {
       private ObservableList<Activity> activities;
-      @FXML private AnchorPane apDeveloperChangeRequestOptions;
+      @FXML private AnchorPane apActivitiesLogAnchorPane;
       private int idDeveloper;
       private int idActivity;
       private Utilities utilities = new Utilities();
@@ -189,7 +190,7 @@ public class FXMLActivitiesInLogController implements Initializable
                   UserSingleton instance = UserSingleton.getInstace();
                   instance.setIdSelected(idActivity);
 
-                  Stage stage = (Stage) apDeveloperChangeRequestOptions.getScene().getWindow();
+                  Stage stage = (Stage) apActivitiesLogAnchorPane.getScene().getWindow();
                   Utilities.closeCurrentWindowAndOpenAnotherOne(
                       stage, "/projectmanagementlisof/gui/FXMLEditAssignedActivityDetails.fxml");
             }
