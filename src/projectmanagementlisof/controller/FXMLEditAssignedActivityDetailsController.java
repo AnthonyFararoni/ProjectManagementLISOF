@@ -147,6 +147,7 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable
       @FXML private void clickImageReturn(MouseEvent event)
       {
             Stage stage = (Stage) apEditAssignedActivityDetails.getScene().getWindow();
-            stage.close();
+            Utilities.closeCurrentWindowAndOpenAnotherOneMouseEvent(
+                "/projectmanagementlisof/gui/FXMLProjectManagerLanding.fxml", stage, event);
       }
 }

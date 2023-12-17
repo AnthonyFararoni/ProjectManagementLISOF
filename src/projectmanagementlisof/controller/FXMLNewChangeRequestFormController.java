@@ -17,7 +17,11 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
+import projectmanagementlisof.model.dao.DeveloperDAO;
+import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.ChangeRequest;
+import projectmanagementlisof.model.pojo.Developer;
+import projectmanagementlisof.utils.UserSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLNewChangeRequestFormController implements Initializable
@@ -43,8 +47,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
       @FXML private void clickImageReturn(MouseEvent event) throws Exception
       {
             Stage stage = (Stage) apNewChangeRequestForm.getScene().getWindow();
-            Utilities.closeCurrentWindowAndOpenAnotherOne(
-                stage, "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml");
+            stage.close();
       }
 
       private void setDate()

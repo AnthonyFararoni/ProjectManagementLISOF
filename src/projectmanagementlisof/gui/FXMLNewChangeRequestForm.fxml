@@ -11,12 +11,12 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLNewChangeRequestFormController">
+<AnchorPane id="AnchorPane" fx:id="apNewChangeRequestForm" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLNewChangeRequestFormController">
       <children>
             <Pane layoutX="-8.0" layoutY="-5.0" prefHeight="85.0" prefWidth="971.0" styleClass="window-header" stylesheets="@../css/Style.css">
                   <children>
                         <Label alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="25.0" styleClass="window-title" stylesheets="@../css/Style.css" text="Nueva Solicitud de Cambio" textAlignment="CENTER" />
-                        <ImageView fitHeight="49.0" fitWidth="43.0" layoutX="35.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="49.0" fitWidth="43.0" layoutX="35.0" layoutY="23.0" onMouseClicked="#clickImageReturn" pickOnBounds="true" preserveRatio="true">
                               <image>
                                     <Image url="@../images/ReturnIcon2.png" />
                               </image>
@@ -27,7 +27,7 @@
                   <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="621.0" prefWidth="959.0">
                               <children>
-                                    <Label layoutX="82.0" layoutY="150.0" text="Solicitado Por:">
+                                    <Label layoutX="82.0" layoutY="150.0" stylesheets="@../css/Style.css" text="Solicitado Por:">
                                           <font>
                                                 <Font name="System Bold" size="23.0" />
                                           </font>
