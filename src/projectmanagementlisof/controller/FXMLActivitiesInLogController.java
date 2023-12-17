@@ -192,7 +192,8 @@ public class FXMLActivitiesInLogController implements Initializable
 
                   Stage stage = (Stage) apActivitiesLogAnchorPane.getScene().getWindow();
                   Utilities.closeCurrentWindowAndOpenAnotherOne(
-                      stage, "/projectmanagementlisof/gui/FXMLEditAssignedActivityDetails.fxml");
+                      "/projectmanagementlisof/gui/FXMLEditAssignedActivityDetails.fxml", stage,
+                      event);
             }
       }
 }

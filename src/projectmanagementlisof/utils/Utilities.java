@@ -22,6 +22,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -99,17 +100,45 @@ public class Utilities
             }
       }
 
-      public static void closeCurrentWindowAndOpenAnotherOne(Stage currentStage, String fxmlPath)
+      public static void closeCurrentWindowAndOpenAnotherOne(
+          String fxmlPath, Stage currentStage, ActionEvent event)
       {
             try
             {
-                  Parent view = FXMLLoader.load(Utilities.class.getResource(fxmlPath));
-                  Scene scene = new Scene(view);
-                  currentStage.setScene(scene);
+                  FXMLLoader loader = new FXMLLoader(Utilities.class.getResource(fxmlPath));
+                  Parent root = loader.load();
+
+                  Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                  stage.setScene(new Scene(root));
+
+                  currentStage.close();
+
+                  stage.show();
             }
-            catch (IOException ex)
+            catch (IOException e)
             {
-                  ex.printStackTrace();
+                  e.printStackTrace();
+            }
+      }
+
+      public static void closeCurrentWindowAndOpenAnotherOneMouseEvent(
+          String fxmlPath, Stage currentStage, MouseEvent event)
+      {
+            try
+            {
+                  FXMLLoader loader = new FXMLLoader(Utilities.class.getResource(fxmlPath));
+                  Parent root = loader.load();
+
+                  Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                  stage.setScene(new Scene(root));
+
+                  currentStage.close();
+
+                  stage.show();
+            }
+            catch (IOException e)
+            {
+                  e.printStackTrace();
             }
       }
 
