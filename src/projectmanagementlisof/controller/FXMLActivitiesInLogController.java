@@ -10,6 +10,8 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -34,6 +36,7 @@ import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.Developer;
+import projectmanagementlisof.observer.DeveloperObserver;
 import projectmanagementlisof.utils.UserSingleton;
 import projectmanagementlisof.utils.Utilities;
 
@@ -42,13 +45,16 @@ import projectmanagementlisof.utils.Utilities;
  *
  * @author edmun
  */
-public class FXMLActivitiesInLogController implements Initializable
+public class FXMLActivitiesInLogController implements Initializable, DeveloperObserver
 {
       private ObservableList<Activity> activities;
       @FXML private AnchorPane apActivitiesLogAnchorPane;
       private int idDeveloper;
       private int idActivity;
       private Utilities utilities = new Utilities();
+
+      private Integer selectedDeveloperId;
+      private String selectedDeveloperName;
 
       @FXML private TableView<Activity> tvAssignedActivities;
       @FXML private TableColumn colActivityName;
@@ -68,6 +74,12 @@ public class FXMLActivitiesInLogController implements Initializable
             configureActivitiesTable();
             getAssignedActivitiesForTable();
             System.out.println(idDeveloper);
+      }
+
+      @Override public void developerSelected(Integer id, String name)
+      {
+            this.selectedDeveloperId = id;
+            this.selectedDeveloperName = name;
       }
 
       public void receiveData()
@@ -182,18 +194,27 @@ public class FXMLActivitiesInLogController implements Initializable
 
       @FXML private void btnEditAssignedActivity(ActionEvent event)
       {
-            Activity selectedActivity = tvAssignedActivities.getSelectionModel().getSelectedItem();
-
-            if (selectedActivity != null)
+            try
             {
-                  int idActivity = selectedActivity.getIdActivity();
-                  UserSingleton instance = UserSingleton.getInstace();
-                  instance.setIdSelected(idActivity);
+                  FXMLLoader loader =
+                      Utilities.loadView("gui/FXMLEditAssignedActivityDetails.fxml");
+                  Parent view = loader.load();
+                  Scene scene = new Scene(view);
+                  FXMLEditAssignedActivityDetailsController controller = loader.getController();
+                  Activity selectedActivity =
+                      tvAssignedActivities.getSelectionModel().getSelectedItem();
+                  controller.initializeInformation(idActivity, this, selectedActivity);
+                  Stage stage = new Stage();
 
-                  Stage stage = (Stage) apActivitiesLogAnchorPane.getScene().getWindow();
-                  Utilities.closeCurrentWindowAndOpenAnotherOne(
-                      "/projectmanagementlisof/gui/FXMLEditAssignedActivityDetails.fxml", stage,
-                      event);
+                  stage.setScene(scene);
+                  stage.setTitle("Crear actividad");
+                  stage.initModality(Modality.APPLICATION_MODAL);
+                  stage.showAndWait();
+            }
+            catch (Exception ex)
+            {
+                  Logger.getLogger(FXMLActivitiesOptionController.class.getName())
+                      .log(Level.SEVERE, null, ex);
             }
       }
 }

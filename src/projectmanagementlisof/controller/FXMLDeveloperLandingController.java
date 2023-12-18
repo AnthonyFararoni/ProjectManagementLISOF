@@ -45,4 +45,9 @@ public class FXMLDeveloperLandingController implements Initializable
             utilities.loadFXML(
                 "/projectmanagementlisof/gui/FXMLDeveloperDefectsOption.fxml", apBackground);
       }
+
+      public AnchorPane getApBackground()
+      {
+            return apBackground;
+      }
 }

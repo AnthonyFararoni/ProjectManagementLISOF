@@ -2,6 +2,7 @@ package projectmanagementlisof.utils;
 
 import com.sun.javafx.scene.SceneUtils;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -28,6 +29,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.converter.IntegerStringConverter;
+import projectmanagementlisof.controller.FXMLDeveloperLandingController;
 import projectmanagementlisof.controller.FXMLNewChangeRequestFormController;
 import projectmanagementlisof.model.dao.CatalogDAO;
 
@@ -142,15 +144,46 @@ public class Utilities
             }
       }
 
-      public static void openAnotherWindowWithoutClosingCurrentOne(
-          Stage currentStage, String fxmlPath)
+      public static void loadFXMLInAnchorPane(AnchorPane anchorPane, String fxmlPath)
       {
             try
             {
-                  Parent view = FXMLLoader.load(Utilities.class.getResource(fxmlPath));
-                  Scene scene = new Scene(view);
-                  currentStage.setScene(scene);
-                  currentStage.show();
+                  FXMLLoader loader = new FXMLLoader(Utilities.class.getResource(fxmlPath));
+                  Parent content = loader.load();
+
+                  anchorPane.getChildren().setAll(content);
+            }
+            catch (IOException ex)
+            {
+                  ex.printStackTrace();
+            }
+      }
+
+      public static void loadFXMLInAnchorPaneAndCloseCurrent(
+          Stage currentStage, String landingFxmlPath, String contentFxmlPath)
+      {
+            try
+            {
+                  currentStage.close();
+
+                  FXMLLoader landingLoader =
+                      new FXMLLoader(Utilities.class.getResource(landingFxmlPath));
+                  Parent landingRoot = landingLoader.load();
+
+                  FXMLLoader contentLoader =
+                      new FXMLLoader(Utilities.class.getResource(contentFxmlPath));
+                  Parent contentRoot = contentLoader.load();
+
+                  FXMLDeveloperLandingController landingController = landingLoader.getController();
+
+                  AnchorPane apBackground = landingController.getApBackground();
+
+                  apBackground.getChildren().clear();
+                  apBackground.getChildren().add(contentRoot);
+
+                  Stage stage = new Stage();
+                  stage.setScene(new Scene(landingRoot));
+                  stage.show();
             }
             catch (IOException ex)
             {

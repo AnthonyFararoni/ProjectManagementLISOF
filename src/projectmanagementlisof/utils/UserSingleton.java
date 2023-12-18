@@ -30,9 +30,4 @@ public class UserSingleton
       {
             this.idSelected = idSelected;
       }
-
-      public int getId()
-      {
-            return 0;
-      }
 }
