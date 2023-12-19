@@ -1,10 +1,7 @@
 package projectmanagementlisof.controller;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
-import com.mysql.cj.xdevapi.Table;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -22,12 +19,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
-import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLDeveloperChangeRequestsOptionController implements Initializable
@@ -40,6 +36,8 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
       @FXML private TableColumn<String, String> colJustification;
       @FXML private TableColumn<String, String> colDate;
       @FXML private TableColumn<String, String> colStatus;
+      private String developerName;
+      private Integer idDeveloper;
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
@@ -70,6 +68,15 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
                   alert.showAndWait();
             }
       }
+
+      @FXML private void clickSearchChangeRequest(MouseEvent event)
+      {
+            searchChangeRequest();
+            System.out.println(
+                "****************************************************************************************************************************************************************************clickSearchChangeRequest");
+      }
+
+      private void searchChangeRequest() {}
 
       @FXML private void loadFXMLNewChangeRequestForm(ActionEvent event)
       {

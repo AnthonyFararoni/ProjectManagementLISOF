@@ -207,7 +207,7 @@ public class FXMLActivitiesInLogController implements Initializable, DeveloperOb
                   Stage stage = new Stage();
 
                   stage.setScene(scene);
-                  stage.setTitle("Crear actividad");
+                  stage.setTitle("Editar Actividad Asignada");
                   stage.initModality(Modality.APPLICATION_MODAL);
                   stage.showAndWait();
             }

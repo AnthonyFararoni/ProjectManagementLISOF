@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -23,6 +24,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ActivityDAO;
+import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.observer.DeveloperObserver;
@@ -45,9 +47,6 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
       private Activity updateActivity;
       private DeveloperObserver observer;
       private Activity activity;
-
-      UserSingleton instance = UserSingleton.getInstace();
-      Integer activityId, developerId = instance.getIdSelected();
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
@@ -95,9 +94,7 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
             }
       }
 
-      @FXML
-
-      private void clickDeassignDeveloper(ActionEvent event)
+      @FXML private void clickDeassignDeveloper(ActionEvent event)
       {
             tfAssignedDeveloper.setText("");
       }
@@ -110,15 +107,15 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
       private void updateAssignedActivity()
       {
             Activity activity = new Activity();
+
             activity.setName(taActivityName.getText());
             activity.setDescription(taActivityDescription.getText());
             activity.setStartDate(dpStartDate.getValue().toString());
             activity.setEndDate(dpEndDate.getValue().toString());
-            activity.setIdDeveloper(idDeveloper);
+            activity.setIdDeveloper(this.idDeveloper);
             activity.setIdActivity(idActivity);
 
             HashMap<String, Object> answer = ActivityDAO.updateAssignedActivity(activity);
-
             if (!(boolean) answer.get("error"))
             {
                   Utilities.showSimpleAlert("Cambios Guardados", (String) answer.get("message"),
@@ -150,6 +147,8 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
             dpStartDate.setValue(startDate);
             LocalDate endDate = LocalDate.parse(this.updateActivity.getStartDate(), formatter);
             dpEndDate.setValue(endDate);
+
+            this.idDeveloper = this.updateActivity.getIdDeveloper();
 
             HashMap<String, Object> answer =
                 ActivityDAO.getCompleteDeveloperName(this.updateActivity.getIdDeveloper());

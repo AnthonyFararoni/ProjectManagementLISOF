@@ -82,7 +82,7 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
       }
 
       @FXML private void btnEditActivity(ActionEvent event)
-      { // TODO:
+      {
             try
             {
                   FXMLLoader loader = Utilities.loadView("gui/FXMLUpdateActivity.fxml");

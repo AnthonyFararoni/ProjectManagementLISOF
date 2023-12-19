@@ -24,7 +24,6 @@ import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.utils.UserSingleton;
 import projectmanagementlisof.utils.Utilities;
 
-
 public class FXMLNewChangeRequestFormController implements Initializable
 {
       @FXML private AnchorPane apNewChangeRequestForm;
@@ -33,6 +32,8 @@ public class FXMLNewChangeRequestFormController implements Initializable
       @FXML private TextField tfJustification;
       @FXML private TextField tfRequestNumber;
       @FXML private TextArea taChangeDescription;
+      private ChangeRequest developerName;
+      private Integer idDeveloper;
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
@@ -67,7 +68,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
             changeRequest.setDescription(taChangeDescription.getText());
             changeRequest.setStatus(1);
             changeRequest.setCreationDate(LocalDate.now().toString());
-            changeRequest.setIdDeveloper(UserSingleton.getInstace().getIdSelected());
+            changeRequest.setIdDeveloper(1); // TODO change this to the real id
             changeRequest.setIdProjectManager(1);
             changeRequest.setIdDefect(1);
 

@@ -260,7 +260,7 @@ public class ChangeRequestDAO
             return answer;
       }
 
-      public static HashMap<String, Object> searchChangeRequestByJustification(String justification)
+      public static HashMap<String, Object> getChangeRequestByJustification(String justification)
       {
             HashMap<String, Object> answer = new LinkedHashMap<>();
             answer.put("error", true);
