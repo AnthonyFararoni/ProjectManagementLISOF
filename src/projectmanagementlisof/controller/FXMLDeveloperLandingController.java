@@ -24,13 +24,13 @@ public class FXMLDeveloperLandingController implements Initializable
 
       @FXML private void btnShowActivies(ActionEvent event)
       {
-            utilities.loadFXML(
+            Utilities.loadFXML(
                 "/projectmanagementlisof/gui/FXMLDeveloperActivities.fxml", apBackground);
       }
 
       @FXML private void btnShowChanges(ActionEvent event)
       {
-            utilities.loadFXML(
+            Utilities.loadFXML(
                 "/projectmanagementlisof/gui/FXMLDeveloperChangesOption.fxml", apBackground);
       }
 
@@ -42,7 +42,12 @@ public class FXMLDeveloperLandingController implements Initializable
 
       @FXML private void btnShowDefects(ActionEvent event)
       {
-            utilities.loadFXML(
+            Utilities.loadFXML(
                 "/projectmanagementlisof/gui/FXMLDeveloperDefectsOption.fxml", apBackground);
+      }
+
+      public AnchorPane getApBackground()
+      {
+            return apBackground;
       }
 }

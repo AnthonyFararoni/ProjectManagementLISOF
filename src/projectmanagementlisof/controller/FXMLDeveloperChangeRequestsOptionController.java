@@ -1,15 +1,13 @@
 package projectmanagementlisof.controller;
 
-import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
-import com.mysql.cj.xdevapi.Table;
 import java.io.IOException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,13 +20,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
-import projectmanagementlisof.model.pojo.Developer;
-import projectmanagementlisof.utils.Utilities;
 
 public class FXMLDeveloperChangeRequestsOptionController implements Initializable
 {
@@ -40,6 +36,9 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
       @FXML private TableColumn<String, String> colJustification;
       @FXML private TableColumn<String, String> colDate;
       @FXML private TableColumn<String, String> colStatus;
+
+      private ObservableList<ChangeRequest> masterData = FXCollections.observableArrayList();
+      private FilteredList<ChangeRequest> filteredData;
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
@@ -56,6 +55,7 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
                   ArrayList<ChangeRequest> changeRequestsList =
                       (ArrayList<ChangeRequest>) answer.get("changeRequests");
                   changeRequests = FXCollections.observableArrayList(changeRequestsList);
+                  masterData.addAll(changeRequests); // Add this line
                   tvChangeRequests.setItems(changeRequests);
                   colJustification.setCellValueFactory(new PropertyValueFactory<>("justification"));
                   colDate.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
@@ -69,6 +69,41 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
                   alert.setContentText((String) answer.get("message"));
                   alert.showAndWait();
             }
+      }
+
+      @FXML private void clickSearchChangeRequest(KeyEvent event)
+      {
+            searchChangeRequest();
+      }
+
+      private void searchChangeRequest()
+      {
+            filteredData = new FilteredList<>(masterData, p -> true);
+
+            tfSearchChangeRequest.textProperty().addListener((observable, oldValue, newValue) -> {
+                  filteredData.setPredicate(changeRequest -> {
+                        if (newValue == null || newValue.isEmpty())
+                        {
+                              return true;
+                        }
+
+                        String lowerCaseFilter = newValue.toLowerCase();
+
+                        if (changeRequest.getJustification().toLowerCase().contains(
+                                lowerCaseFilter))
+                        {
+                              return true;
+                        }
+                        else if (changeRequest.getDescription().toLowerCase().contains(
+                                     lowerCaseFilter))
+                        {
+                              return true;
+                        }
+                        return false;
+                  });
+            });
+
+            tvChangeRequests.setItems(filteredData);
       }
 
       @FXML private void loadFXMLNewChangeRequestForm(ActionEvent event)

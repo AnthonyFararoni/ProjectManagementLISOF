@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this
+ * license Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this
+ * template
  */
 package projectmanagementlisof.controller;
 
@@ -33,85 +34,93 @@ import projectmanagementlisof.utils.Utilities;
  *
  * @author edmun
  */
-public class FXMLChangesInLogController implements Initializable {
+public class FXMLChangesInLogController implements Initializable
+{
+      @FXML private TableView<Change> tvLogChanges;
+      @FXML private TableColumn<Change, Integer> colType;
+      @FXML private TableColumn<Change, String> colDescription;
+      @FXML private TableColumn<Change, String> colDate;
+      @FXML private Button btnDetails;
+      private ObservableList<Change> changes;
+      private int idDeveloper;
+      private Utilities utilities = new Utilities();
+      /**
+       * Initializes the controller class.
+       */
+      @Override public void initialize(URL url, ResourceBundle rb)
+      {
+            receiveData();
+            configureChangesTable();
+            getDeveloperChanges();
 
-    @FXML
-    private TableView<Change> tvLogChanges;
-    @FXML
-    private TableColumn<Change, Integer> colType;
-    @FXML
-    private TableColumn<Change, String> colDescription;
-    @FXML
-    private TableColumn<Change, String> colDate;
-    @FXML
-    private Button btnDetails;
-    private ObservableList<Change> changes;
-    private int idDeveloper;
-    private Utilities utilities = new Utilities();
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        receiveData();
-        configureChangesTable();
-        getDeveloperChanges();
-        
-        btnDetails.setDisable(true);
-        tvLogChanges.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-            if (newSelection != null) {
-                btnDetails.setDisable(false);
-            } else {
-                btnDetails.setDisable(true);
-            }
-        });
-    }    
-    
-    public void receiveData(){
-        UserSingleton instance = UserSingleton.getInstace();
-        idDeveloper = instance.getIdSelected();
-    }
-    
-    private void configureChangesTable() {
-        colType.setCellValueFactory(new PropertyValueFactory<>("type"));
-        colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
-        colDate.setCellValueFactory(new PropertyValueFactory<>("dateCreated"));
-    }
-    
-    private void getDeveloperChanges() {
-        HashMap<String, Object> answer = ChangeDAO.getDeveloperChanges(idDeveloper);
-        if (!(boolean) answer.get("error")) {
-            changes = FXCollections.observableArrayList();
-            ArrayList<Change> list = (ArrayList<Change>) answer.get("changes");
-            changes.addAll(list);
-            tvLogChanges.setItems(changes);
-        } else {
-            System.out.println("Error al obtener cambios: " + answer.get("message"));
-        }
-    }
+            btnDetails.setDisable(true);
+            tvLogChanges.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldSelection, newSelection) -> {
+                      if (newSelection != null)
+                      {
+                            btnDetails.setDisable(false);
+                      }
+                      else
+                      {
+                            btnDetails.setDisable(true);
+                      }
+                });
+      }
 
-    @FXML
-    private void btnDetailsclick(ActionEvent event) {
-            Change selectedActivity = tvLogChanges.getSelectionModel().getSelectedItem();
-        if (selectedActivity != null) {
-            int idActivity = selectedActivity.getIdChange();
-            System.out.println(idActivity);
+      public void receiveData()
+      {
             UserSingleton instance = UserSingleton.getInstace();
-            instance.setIdSelected(idActivity);
-            try {
-                FXMLLoader loader = utilities.loadView("gui/FXMLChangesDetails.fxml");
-                Parent view = loader.load();
-                Scene scene = new Scene(view);
-                Stage stage = new Stage();
+            idDeveloper = instance.getIdSelected();
+      }
 
-                stage.setScene(scene);
-                stage.setTitle("Detalles del defecto");
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
-            } catch (java.io.IOException ex) {
-                ex.printStackTrace();
+      private void configureChangesTable()
+      {
+            colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+            colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
+            colDate.setCellValueFactory(new PropertyValueFactory<>("dateCreated"));
+      }
+
+      private void getDeveloperChanges()
+      {
+            HashMap<String, Object> answer = ChangeDAO.getDeveloperChanges(idDeveloper);
+            if (!(boolean) answer.get("error"))
+            {
+                  changes = FXCollections.observableArrayList();
+                  ArrayList<Change> list = (ArrayList<Change>) answer.get("changes");
+                  changes.addAll(list);
+                  tvLogChanges.setItems(changes);
             }
-        }
-    }
-    
+            else
+            {
+                  System.out.println("Error al obtener cambios: " + answer.get("message"));
+            }
+      }
+
+      @FXML private void btnDetailsclick(ActionEvent event)
+      {
+            Change selectedActivity = tvLogChanges.getSelectionModel().getSelectedItem();
+            if (selectedActivity != null)
+            {
+                  int idActivity = selectedActivity.getIdChange();
+                  System.out.println(idActivity);
+                  UserSingleton instance = UserSingleton.getInstace();
+                  instance.setIdSelected(idActivity);
+                  try
+                  {
+                        FXMLLoader loader = utilities.loadView("gui/FXMLChangesDetails.fxml");
+                        Parent view = loader.load();
+                        Scene scene = new Scene(view);
+                        Stage stage = new Stage();
+
+                        stage.setScene(scene);
+                        stage.setTitle("Detalles del defecto");
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.showAndWait();
+                  }
+                  catch (java.io.IOException ex)
+                  {
+                        ex.printStackTrace();
+                  }
+            }
+      }
 }

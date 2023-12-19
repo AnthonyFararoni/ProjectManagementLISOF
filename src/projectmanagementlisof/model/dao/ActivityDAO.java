@@ -354,6 +354,52 @@ public class ActivityDAO
             return answer;
       }
 
+      public static HashMap<String, Object> getCompleteDeveloperName(int idDeveloper)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query =
+                            "select name, lastName, secondLastname from developer where idDeveloper = ?";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idDeveloper);
+                        ResultSet developerResult = preparedStatement.executeQuery();
+
+                        if (developerResult.next())
+                        {
+                              Developer developer = new Developer();
+                              developer.setName(developerResult.getString("name"));
+                              developer.setLastName(developerResult.getString("lastName"));
+                              developer.setSecondLastName(
+                                  developerResult.getString("secondLastname"));
+
+                              connectionBD.close();
+                              answer.put("error", false);
+                              answer.put("developer", developer);
+                        }
+                        else
+                        {
+                              answer.put(
+                                  "message", "No se encontró ningún desarrollador con ese ID.");
+                        }
+                  }
+                  catch (SQLException ex)
+                  {
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message",
+                      "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde");
+            }
+            return answer;
+      }
+
       public static HashMap<String, Object> changeActivityStatus(int idActivity)
       {
             HashMap<String, Object> answer = new HashMap<>();

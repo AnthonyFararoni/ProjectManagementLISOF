@@ -89,4 +89,9 @@ public class FXMLDeveloperLogController implements Initializable
             Stage currentStage = (Stage) tfDeveloperName.getScene().getWindow();
             utilities.closeWindow(currentStage);
       }
+
+      public String getDeveloperName()
+      {
+            return developerName;
+      }
 }

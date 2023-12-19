@@ -16,7 +16,7 @@
                         <Image url="@../images/SearchIcon.png" />
                   </image>
             </ImageView>
-            <TextField fx:id="tfSearchChangeRequest" alignment="CENTER" layoutX="109.0" layoutY="41.0" prefHeight="34.0" prefWidth="366.0" promptText="Fecha / Estado" styleClass="search-text-field" stylesheets="@../css/Style.css">
+            <TextField fx:id="tfSearchChangeRequest" alignment="CENTER" layoutX="109.0" layoutY="41.0" onKeyPressed="#clickSearchChangeRequest" prefHeight="34.0" prefWidth="366.0" promptText="Justificación" styleClass="search-text-field" stylesheets="@../css/Style.css">
                   <font>
                         <Font name="System Bold" size="16.0" />
                   </font>

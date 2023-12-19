@@ -120,22 +120,4 @@ public class FXMLChangeRequestOptionController implements Initializable
                       "Error de carga", (String) answer.get("mensaje"), Alert.AlertType.ERROR);
             }
       }
-
-      private void searchChangeRequest()
-      {
-            String searchChangeRequest = tfSearchChangeRequest.getText();
-            if (Utilities.validateStringsFields(searchChangeRequest))
-            {
-                  HashMap<String, Object> answer =
-                      ChangeRequestDAO.searchChangeRequestByJustification(searchChangeRequest);
-                  showChangeRequests(answer);
-            }
-            else
-            {
-                  Utilities.showSimpleAlert("Busqueda incorrecta",
-                      "La estructura de los criterios de "
-                          + "busqueda es incorrecta. Intente de nuevo",
-                      Alert.AlertType.ERROR);
-            }
-      }
 }
