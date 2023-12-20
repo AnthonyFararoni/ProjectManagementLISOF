@@ -23,6 +23,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.converter.IntegerStringConverter;
@@ -147,5 +148,24 @@ public class Utilities
                 textArea.setText(oldValue);
             }
         });
+    }
+    
+    public static void showDetails(int id, String fxmlPath, String title) {
+        UserSingleton instance = UserSingleton.getInstace();
+        instance.setIdSelected(id);
+
+        try {
+            FXMLLoader loader = loadView(fxmlPath);
+            Parent view = loader.load();
+            Scene scene = new Scene(view);
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+            stage.setTitle(title);
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.showAndWait();
+        } catch (java.io.IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

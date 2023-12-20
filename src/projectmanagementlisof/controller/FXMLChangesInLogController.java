@@ -79,7 +79,7 @@ public class FXMLChangesInLogController implements Initializable {
     }
     
     private void getDeveloperChanges() {
-        HashMap<String, Object> answer = ChangeDAO.getDeveloperChanges(idDeveloper);
+        HashMap<String, Object> answer = ChangeDAO.getChangesByDeveloperId(idDeveloper);
         if (!(boolean) answer.get("error")) {
             changes = FXCollections.observableArrayList();
             ArrayList<Change> list = (ArrayList<Change>) answer.get("changes");
@@ -92,25 +92,10 @@ public class FXMLChangesInLogController implements Initializable {
 
     @FXML
     private void btnDetailsclick(ActionEvent event) {
-            Change selectedActivity = tvLogChanges.getSelectionModel().getSelectedItem();
-        if (selectedActivity != null) {
-            int idActivity = selectedActivity.getIdChange();
-            System.out.println(idActivity);
-            UserSingleton instance = UserSingleton.getInstace();
-            instance.setIdSelected(idActivity);
-            try {
-                FXMLLoader loader = utilities.loadView("gui/FXMLChangesDetails.fxml");
-                Parent view = loader.load();
-                Scene scene = new Scene(view);
-                Stage stage = new Stage();
-
-                stage.setScene(scene);
-                stage.setTitle("Detalles del defecto");
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
-            } catch (java.io.IOException ex) {
-                ex.printStackTrace();
-            }
+        Change selectedChange = tvLogChanges.getSelectionModel().getSelectedItem();
+        if (selectedChange != null) {
+            int idChange = selectedChange.getIdChange();
+            Utilities.showDetails(idChange, "gui/FXMLChangesDetails.fxml", "Detalles del cambio");
         }
     }
     

@@ -24,6 +24,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DefectDAO;
+import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.Defect;
 import projectmanagementlisof.utils.UserSingleton;
 import projectmanagementlisof.utils.Utilities;
@@ -97,23 +98,8 @@ public class FXMLDefectsInLogController implements Initializable {
         Defect selectedDefect = tvLogDefects.getSelectionModel().getSelectedItem();
         if (selectedDefect != null) {
             int idDefect = selectedDefect.getIdDefect();
-            UserSingleton instance = UserSingleton.getInstace();
-            instance.setIdSelected(idDefect);
-
-            try {
-                FXMLLoader loader = utilities.loadView("gui/FXMLDefectDetails.fxml");
-                Parent view = loader.load();
-                Scene scene = new Scene(view);
-                Stage stage = new Stage();
-
-                stage.setScene(scene);
-                stage.setTitle("Detalles del defecto");
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
-            } catch (java.io.IOException ex) {
-                ex.printStackTrace();
-            }
-        }
+            Utilities.showDetails(idDefect, "gui/FXMLDefectDetails.fxml", "Detalles del defecto");
+        }   
     }
     
 }

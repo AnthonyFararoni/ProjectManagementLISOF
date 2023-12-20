@@ -152,21 +152,7 @@ public class FXMLActivitiesInLogController implements Initializable {
         Activity selectedActivity = tvAssignedActivities.getSelectionModel().getSelectedItem();
         if (selectedActivity != null) {
             int idActivity = selectedActivity.getIdActivity();
-            UserSingleton instance = UserSingleton.getInstace();
-            instance.setIdSelected(idActivity);
-            try {
-                FXMLLoader loader = utilities.loadView("gui/FXMLActivityDetails.fxml");
-                Parent view = loader.load();
-                Scene scene = new Scene(view);
-                Stage stage = new Stage();
-
-                stage.setScene(scene);
-                stage.setTitle("Detalles del defecto");
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
-            } catch (java.io.IOException ex) {
-                ex.printStackTrace();
-            }
+            Utilities.showDetails(idActivity, "gui/FXMLActivityDetails.fxml", "Detalles de la actividad");
         }
     }
     

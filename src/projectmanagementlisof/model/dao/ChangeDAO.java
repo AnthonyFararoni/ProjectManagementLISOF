@@ -118,9 +118,4 @@ public class ChangeDAO {
     }
     return answer;
     }
-
-    public static HashMap<String, Object> getDeveloperChanges(int idDeveloper) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
-
 }
