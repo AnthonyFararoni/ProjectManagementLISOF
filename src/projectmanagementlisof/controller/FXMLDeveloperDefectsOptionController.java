@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this
+ * license Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this
+ * template
  */
 package projectmanagementlisof.controller;
 
@@ -31,100 +32,108 @@ import projectmanagementlisof.utils.Utilities;
  *
  * @author edmun
  */
-public class FXMLDeveloperDefectsOptionController implements Initializable {
+public class FXMLDeveloperDefectsOptionController implements Initializable
+{
+      private Utilities utilities = new Utilities();
+      private DefectDAO defectDAO = new DefectDAO();
+      @FXML private TableView<Defect> tvDeveloperDefects;
+      @FXML private TableColumn<Defect, Integer> colDefectID;
+      @FXML private TableColumn<Defect, String> colTimeCost;
+      @FXML private TableColumn<Defect, String> colFoundDate;
+      @FXML private TableColumn<Defect, String> colDescription;
+      @FXML private Button btnViewDetails;
+      /**
+       * Initializes the controller class.
+       */
+      @Override public void initialize(URL url, ResourceBundle rb)
+      {
+            colDefectID.setCellValueFactory(
+                data -> new SimpleIntegerProperty(data.getValue().getIdDefect()).asObject());
+            colTimeCost.setCellValueFactory(
+                data -> new SimpleStringProperty(String.valueOf(data.getValue().getTimeCost())));
+            colFoundDate.setCellValueFactory(
+                data -> new SimpleStringProperty(data.getValue().getDate()));
+            colDescription.setCellValueFactory(
+                data -> new SimpleStringProperty(data.getValue().getDescription()));
 
-    private Utilities utilities = new Utilities();
-    private DefectDAO defectDAO = new DefectDAO();
-    @FXML
-    private TableView<Defect> tvDeveloperDefects;
-    @FXML
-    private TableColumn<Defect, Integer> colDefectID;
-    @FXML
-    private TableColumn<Defect, String> colTimeCost;
-    @FXML
-    private TableColumn<Defect, String> colFoundDate;
-    @FXML
-    private TableColumn<Defect, String> colDescription;
-    @FXML
-    private Button btnViewDetails;
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        colDefectID.setCellValueFactory(data -> new SimpleIntegerProperty(data.getValue().getIdDefect()).asObject());
-        colTimeCost.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getTimeCost())));
-        colFoundDate.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDate()));
-        colDescription.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getDescription()));
-        
-        loadDeveloperDefects();
-        btnViewDetails.setDisable(true);
-
-        tvDeveloperDefects.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                btnViewDetails.setDisable(false);
-            } else {
-                btnViewDetails.setDisable(true);
-            }
-        });
-    }    
-
-
-    @FXML
-    private void btnRegisterDefect(ActionEvent event) 
-    {
-         try
-        {
-            FXMLLoader loader = utilities.loadView("gui/FXMLCreateDefect.fxml");
-            Parent view = loader.load();
-            Scene scene = new Scene(view);
-            FXMLCreateDefectController controller = loader.getController();
-            Stage stage = new Stage();
-
-            stage.setScene(scene);
-            stage.setTitle("Crear defecto");
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();        
             loadDeveloperDefects();
-        } 
-        catch (IOException ex)
-        {
-            ex.printStackTrace();
-        }
-    }
-    private void loadDeveloperDefects() {
-        int idDeveloper = 1;
-        HashMap<String, Object> result = DefectDAO.getDefectsById(idDeveloper);
+            btnViewDetails.setDisable(true);
 
-        if (!(boolean) result.get("error")) {
-            ArrayList<Defect> defects = (ArrayList<Defect>) result.get("defects");
-            tvDeveloperDefects.getItems().setAll(defects);
-        } else {
-            String errorMessage = (String) result.get("message");
-        }
-    }
+            tvDeveloperDefects.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue) -> {
+                      if (newValue != null)
+                      {
+                            btnViewDetails.setDisable(false);
+                      }
+                      else
+                      {
+                            btnViewDetails.setDisable(true);
+                      }
+                });
+      }
 
-    @FXML
-    private void btnViewDetailsclick(ActionEvent event) {
-        Defect selectedDefect = tvDeveloperDefects.getSelectionModel().getSelectedItem();
-        if (selectedDefect != null) {
-            int idDefect = selectedDefect.getIdDefect();
-            UserSingleton instance = UserSingleton.getInstace();
-            instance.setIdSelected(idDefect);
+      @FXML private void btnRegisterDefect(ActionEvent event)
+      {
+            try
+            {
+                  FXMLLoader loader = utilities.loadView("gui/FXMLCreateDefect.fxml");
+                  Parent view = loader.load();
+                  Scene scene = new Scene(view);
+                  FXMLCreateDefectController controller = loader.getController();
+                  Stage stage = new Stage();
 
-            try {
-                FXMLLoader loader = utilities.loadView("gui/FXMLDefectDetails.fxml");
-                Parent view = loader.load();
-                Scene scene = new Scene(view);
-                Stage stage = new Stage();
-
-                stage.setScene(scene);
-                stage.setTitle("Detalles del defecto");
-                stage.initModality(Modality.APPLICATION_MODAL);
-                stage.showAndWait();
-            } catch (IOException ex) {
-                ex.printStackTrace();
+                  stage.setScene(scene);
+                  stage.setTitle("Crear defecto");
+                  stage.initModality(Modality.APPLICATION_MODAL);
+                  stage.showAndWait();
+                  loadDeveloperDefects();
             }
-        }
-    }
+            catch (IOException ex)
+            {
+                  ex.printStackTrace();
+            }
+      }
+      private void loadDeveloperDefects()
+      {
+            int idDeveloper = 1;
+            HashMap<String, Object> result = DefectDAO.getDefectsById(idDeveloper);
+
+            if (!(boolean) result.get("error"))
+            {
+                  ArrayList<Defect> defects = (ArrayList<Defect>) result.get("defects");
+                  tvDeveloperDefects.getItems().setAll(defects);
+            }
+            else
+            {
+                  String errorMessage = (String) result.get("message");
+            }
+      }
+
+      @FXML private void btnViewDetailsclick(ActionEvent event)
+      {
+            Defect selectedDefect = tvDeveloperDefects.getSelectionModel().getSelectedItem();
+            if (selectedDefect != null)
+            {
+                  int idDefect = selectedDefect.getIdDefect();
+                  UserSingleton instance = UserSingleton.getInstace();
+                  instance.setIdSelected(idDefect);
+
+                  try
+                  {
+                        FXMLLoader loader = utilities.loadView("gui/FXMLDefectDetails.fxml");
+                        Parent view = loader.load();
+                        Scene scene = new Scene(view);
+                        Stage stage = new Stage();
+
+                        stage.setScene(scene);
+                        stage.setTitle("Detalles del defecto");
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.showAndWait();
+                  }
+                  catch (IOException ex)
+                  {
+                        ex.printStackTrace();
+                  }
+            }
+      }
 }

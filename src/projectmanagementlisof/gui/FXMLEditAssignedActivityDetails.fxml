@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -10,50 +11,62 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLProjectManagerLandingController">
+<AnchorPane id="AnchorPane" fx:id="apEditAssignedActivityDetails" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLEditAssignedActivityDetailsController">
    <children>
       <Pane layoutX="-8.0" layoutY="-5.0" prefHeight="85.0" prefWidth="971.0" styleClass="window-header" stylesheets="@../css/Style.css">
          <children>
             <Label alignment="CENTER" contentDisplay="CENTER" layoutX="398.0" layoutY="25.0" styleClass="window-title" stylesheets="@../css/Style.css" text="Editar Actividad" textAlignment="CENTER" />
-            <ImageView fitHeight="49.0" fitWidth="43.0" layoutX="35.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="ivReturn" fitHeight="49.0" fitWidth="43.0" layoutX="35.0" layoutY="23.0" onMouseClicked="#clickImageReturn" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/ReturnIcon2.png" />
                </image>
             </ImageView>
          </children>
       </Pane>
-      <Label layoutX="74.0" layoutY="161.0" text="Nombre Actividad">
+      <Label layoutX="74.0" layoutY="121.0" text="Nombre Actividad">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="666.0" layoutY="162.0" text="Fecha de Inicio">
+      <Label layoutX="666.0" layoutY="122.0" text="Fecha de Inicio">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="74.0" layoutY="285.0" text="Desarrollador Asignado">
+      <Label layoutX="74.0" layoutY="245.0" text="Desarrollador Asignado">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="666.0" layoutY="287.0" text="Fecha de Fin">
+      <Label layoutX="666.0" layoutY="247.0" text="Fecha de Fin">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <Label layoutX="77.0" layoutY="406.0" text="Descripción de la Actividad">
+      <Label layoutX="77.0" layoutY="346.0" text="Descripción de la Actividad">
          <font>
             <Font name="System Bold" size="23.0" />
          </font>
       </Label>
-      <TextField layoutX="72.0" layoutY="201.0" prefHeight="32.0" prefWidth="379.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
-      <TextField layoutX="72.0" layoutY="325.0" prefHeight="32.0" prefWidth="379.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
-      <TextField layoutX="72.0" layoutY="447.0" prefHeight="81.0" prefWidth="799.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
-      <Button layoutX="419.0" layoutY="557.0" mnemonicParsing="false" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Guardar Actividad" />
-      <Button layoutX="511.0" layoutY="207.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="100.0" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Seleccionar Desarrollador" textAlignment="CENTER" wrapText="true" />
-      <Button layoutX="510.0" layoutY="292.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="100.0" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Desasignar Actividad" textAlignment="CENTER" wrapText="true" />
-      <DatePicker layoutX="665.0" layoutY="330.0" prefHeight="37.0" prefWidth="206.0" />
-      <DatePicker layoutX="665.0" layoutY="206.0" prefHeight="37.0" prefWidth="206.0" />
+      <TextField fx:id="tfAssignedDeveloper" layoutX="72.0" layoutY="285.0" prefHeight="42.0" prefWidth="379.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
+      <Button fx:id="btnEditAssignedActivity" layoutX="371.0" layoutY="529.0" mnemonicParsing="false" onAction="#btnEditAssignedActivity" prefHeight="54.0" prefWidth="246.0" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Guardar Actividad">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
+      <Button layoutX="490.0" layoutY="155.0" mnemonicParsing="false" onAction="#clickChooseDeveloper" prefHeight="64.0" prefWidth="136.0" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Reasignar Desarrollador" textAlignment="CENTER" wrapText="true" />
+      <DatePicker fx:id="dpEndDate" layoutX="665.0" layoutY="290.0" prefHeight="37.0" prefWidth="206.0" />
+      <DatePicker fx:id="dpStartDate" layoutX="665.0" layoutY="166.0" prefHeight="37.0" prefWidth="206.0" />
+      <Button layoutX="491.0" layoutY="263.0" mnemonicParsing="false" onAction="#clickDeassignDeveloper" prefHeight="64.0" prefWidth="136.0" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Desasignar Actividad" textAlignment="CENTER" wrapText="true" />
+      <TextArea fx:id="taActivityDescription" layoutX="73.0" layoutY="391.0" prefHeight="110.0" prefWidth="806.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextArea>
+      <TextArea fx:id="taActivityName" layoutX="73.0" layoutY="157.0" prefHeight="78.0" prefWidth="379.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" wrapText="true">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </TextArea>
    </children>
 </AnchorPane>

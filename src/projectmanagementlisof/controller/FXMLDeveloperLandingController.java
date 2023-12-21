@@ -15,28 +15,39 @@ import projectmanagementlisof.utils.Utilities;
 public class FXMLDeveloperLandingController implements Initializable
 {
       private Utilities utilities = new Utilities();
+
       @FXML private AnchorPane apBackground;
-      @Override public void initialize(URL url, ResourceBundle rb)
-      {
-            // TODO
-      }
+
+      @Override public void initialize(URL url, ResourceBundle rb) {}
 
       @FXML private void btnLogOut(MouseEvent event) {}
 
-      @FXML private void btnShowActivies(ActionEvent event) 
+      @FXML private void btnShowActivies(ActionEvent event)
       {
-          utilities.loadFXML( "/projectmanagementlisof/gui/FXMLDeveloperActivities.fxml",apBackground);
+            Utilities.loadFXML(
+                "/projectmanagementlisof/gui/FXMLDeveloperActivities.fxml", apBackground);
       }
 
-      @FXML private void btnShowChanges(ActionEvent event) {
-          utilities.loadFXML( "/projectmanagementlisof/gui/FXMLDeveloperChangesOption.fxml",apBackground);
+      @FXML private void btnShowChanges(ActionEvent event)
+      {
+            Utilities.loadFXML(
+                "/projectmanagementlisof/gui/FXMLDeveloperChangesOption.fxml", apBackground);
       }
 
-      @FXML private void btnShowChangeRequests(ActionEvent event) {}
+      @FXML private void btnShowChangeRequests(ActionEvent event)
+      {
+            Utilities.loadFXML(
+                "/projectmanagementlisof/gui/FXMLDeveloperChangeRequestsOption.fxml", apBackground);
+      }
 
       @FXML private void btnShowDefects(ActionEvent event)
       {
-            utilities.loadFXML(
+            Utilities.loadFXML(
                 "/projectmanagementlisof/gui/FXMLDeveloperDefectsOption.fxml", apBackground);
+      }
+
+      public AnchorPane getApBackground()
+      {
+            return apBackground;
       }
 }

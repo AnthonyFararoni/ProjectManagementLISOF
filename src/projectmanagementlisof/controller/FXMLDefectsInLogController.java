@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this
+ * license Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this
+ * template
  */
 package projectmanagementlisof.controller;
 
@@ -34,20 +35,14 @@ import projectmanagementlisof.utils.Utilities;
  *
  * @author edmun
  */
-public class FXMLDefectsInLogController implements Initializable {
-
-    @FXML
-    private TableView<Defect> tvLogDefects;
-    @FXML
-    private TableColumn<Defect, Integer> colDefectID;
-    @FXML
-    private TableColumn<Defect, Integer> colTimeCost;
-    @FXML
-    private TableColumn<Defect, String> colDateFound;
-    @FXML
-    private TableColumn<Defect, String> colDescription;
-    @FXML
-    private Button btnViewDetails;
+public class FXMLDefectsInLogController implements Initializable
+{
+      @FXML private TableView<Defect> tvLogDefects;
+      @FXML private TableColumn<Defect, Integer> colDefectID;
+      @FXML private TableColumn<Defect, Integer> colTimeCost;
+      @FXML private TableColumn<Defect, String> colDateFound;
+      @FXML private TableColumn<Defect, String> colDescription;
+      @FXML private Button btnViewDetails;
 
     private Utilities utilities = new Utilities();
     private ObservableList<Defect> defects;
