@@ -20,15 +20,6 @@ public class ProjectManagementLISOF extends Application
             stage.setTitle("Iniciar sesión");
             stage.show();
             Utilities.centerStage(stage);
-
-            Stage stage2 = new Stage();
-            Parent root2 =
-                FXMLLoader.load(getClass().getResource("gui/FXMLProjectManagerLanding.fxml"));
-            Scene scene2 = new Scene(root2);
-            stage2.setScene(scene2);
-            stage2.setTitle("Crear solicitud de cambio");
-            stage2.show();
-            Utilities.centerStage(stage2);
       }
 
       public static void main(String[] args)

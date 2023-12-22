@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLChangesDetailsController">
+   <children>
+      <Pane prefHeight="91.0" prefWidth="954.0" style="-fx-background-color: Black;">
+         <children>
+            <Label layoutX="265.0" layoutY="12.0" text="Detalles del cambio" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="46.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="imgBackButton" fitHeight="68.0" fitWidth="65.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#goBackToLanding" onMouseEntered="#changeToHandCursor" onMouseExited="#changeToDefaultCursor" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ReturnIcon2.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutY="91.0" prefHeight="531.0" prefWidth="954.0">
+         <children>
+            <Label layoutX="90.0" layoutY="69.0" text="Tipo de cambio ">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="520.0" layoutY="69.0" text="Fecha de registro">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="97.0" layoutY="164.0" text="Descripción del cambio">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfFoundDate" editable="false" focusTraversable="false" layoutX="520.0" layoutY="105.0" prefHeight="44.0" prefWidth="344.0" promptText="Fecha de inicio">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="tfChangeType" editable="false" focusTraversable="false" layoutX="90.0" layoutY="105.0" prefHeight="44.0" prefWidth="410.0" promptText="Tipo de cambio" styleClass="lower-gray-text-area" stylesheets="@../css/Style.css">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextArea fx:id="taDescription" editable="false" focusTraversable="false" layoutX="90.0" layoutY="198.0" prefHeight="200.0" prefWidth="774.0" promptText="Descripcion de la actividad">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextArea>
+         </children>
+      </Pane>
+   </children>
+   <stylesheets>
+      <URL value="@/projectmanagementlisof/css/Style.css" />
+   </stylesheets>
+</AnchorPane>
