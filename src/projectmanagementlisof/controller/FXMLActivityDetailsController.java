@@ -18,7 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.pojo.Activity;
-import projectmanagementlisof.utils.UserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -47,7 +47,7 @@ public class FXMLActivityDetailsController implements Initializable
       }
       public void receiveData()
       {
-            UserSingleton instance = UserSingleton.getInstace();
+            SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
             System.out.println(instance.getIdSelected());
             idActivity = instance.getIdSelected();
       }

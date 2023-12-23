@@ -20,6 +20,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Control;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -255,7 +256,7 @@ public class Utilities
     }
     
     public static void showDetails(int id, String fxmlPath, String title) {
-        UserSingleton instance = UserSingleton.getInstace();
+        SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
         instance.setIdSelected(id);
 
         try {
@@ -272,4 +273,31 @@ public class Utilities
             ex.printStackTrace();
         }
     }
+    
+    public static void goTolanding(Stage currentStage, String userFullName, String userLogin, int userId, String fxmlPath, String title) {
+        LoggedUserSingleton instance = LoggedUserSingleton.getInstance();
+        instance.setUserData(userFullName, userLogin, userId);
+        try {
+            FXMLLoader loader = loadView(fxmlPath);
+            Parent view = loader.load();
+            Scene scene = new Scene(view);
+            Stage stage = new Stage();
+
+            currentStage.setScene(scene);
+            currentStage.setTitle(title);
+            currentStage.show();
+            currentStage.centerOnScreen();
+        } catch (java.io.IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+    public static void redBorder(Control field) {
+        field.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+    }
+    
+    public static void noBoder(Control field) {
+        field.setStyle(null);
+    }
+    
 }

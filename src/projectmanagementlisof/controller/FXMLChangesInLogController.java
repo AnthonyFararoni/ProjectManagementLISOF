@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.Change;
-import projectmanagementlisof.utils.UserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -70,7 +70,7 @@ public class FXMLChangesInLogController implements Initializable
     }    
     
     public void receiveData(){
-        UserSingleton instance = UserSingleton.getInstace();
+        SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
         idDeveloper = instance.getIdSelected();
     }
     

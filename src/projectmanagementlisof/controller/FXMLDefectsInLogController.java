@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DefectDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.Defect;
-import projectmanagementlisof.utils.UserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -66,7 +66,7 @@ public class FXMLDefectsInLogController implements Initializable
         });
     }    
     public void receiveData(){
-        UserSingleton instance = UserSingleton.getInstace();
+        SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
         idDeveloper = instance.getIdSelected();
     }
     private void configureDefectsTable() {

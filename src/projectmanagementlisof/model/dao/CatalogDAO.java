@@ -39,4 +39,30 @@ public class CatalogDAO {
         }
         return typeList;
     }
+    public static int checkProjectManager(String user, String password) {
+        int result = 0;
+        Connection connectionBD = ConnectionDB.getConnection();
+
+        if (connectionBD != null) {
+            try {
+                String query = "SELECT COUNT(*) AS count FROM projectmanager WHERE managerLogin = ? AND password = ?";
+                PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                preparedStatement.setString(1, user);
+                preparedStatement.setString(2, password);
+
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                if (resultSet.next()) {
+                    int count = resultSet.getInt("count");
+                    if (count > 0) {
+                        result = 1;
+                    }
+                }
+                connectionBD.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        return result;
+    }
 }

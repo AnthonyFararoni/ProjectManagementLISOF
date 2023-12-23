@@ -18,7 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeDAO;
 import projectmanagementlisof.model.pojo.Change;
-import projectmanagementlisof.utils.UserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -45,7 +45,7 @@ public class FXMLChangesDetailsController implements Initializable
       }
       public void receiveData()
       {
-            UserSingleton instance = UserSingleton.getInstace();
+            SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
             System.out.println(instance.getIdSelected());
             idChange = instance.getIdSelected();
       }

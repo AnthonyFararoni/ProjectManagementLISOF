@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLUpdateActivityController">
+   <children>
+      <Pane prefHeight="72.0" prefWidth="600.0" styleClass="window-header" stylesheets="@../css/Style.css">
+         <children>
+            <ImageView fx:id="btnReturn" fitHeight="72.0" fitWidth="141.0" onMouseClicked="#btnReturn" onMouseEntered="#changeToHandCursor" onMouseExited="#changeToDefaultCursor" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ReturnIcon2.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="199.0" layoutY="17.0" styleClass="window-title" stylesheets="@../css/Style.css" text="Editar Actividad" />
+         </children>
+      </Pane>
+      <Pane layoutY="72.0" prefHeight="364.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="33.0" layoutY="32.0" text="Nombre Actividad">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="377.0" layoutY="32.0" text="Fecha de Inicio">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="377.0" layoutY="88.0" text="Fecha de Fin">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="33.0" layoutY="88.0" text="Desarrollador Asignado">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="33.0" layoutY="152.0" text="Descripcion de la Actividad">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfActivityName" layoutX="33.0" layoutY="57.0" prefHeight="27.0" prefWidth="255.0" promptText="Escriba el nombre de la actividad" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
+            <TextField fx:id="tfAssignDeveloper" editable="false" layoutX="33.0" layoutY="113.0" prefHeight="27.0" prefWidth="204.0" promptText="Seleccione un desarrollador" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
+            <DatePicker fx:id="dpStartDate" editable="false" layoutX="370.0" layoutY="58.0" promptText="Seleccione una fecha" />
+            <DatePicker fx:id="dpEndDate" editable="false" layoutX="370.0" layoutY="115.0" promptText="Seleccione una fecha" />
+            <TextArea fx:id="taActivityDescription" layoutX="33.0" layoutY="177.0" prefHeight="118.0" prefWidth="519.0" />
+            <Button layoutX="250.0" layoutY="108.0" mnemonicParsing="false" onAction="#btnSelectDeveloper" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Seleccione" />
+            <Button fx:id="btnUpdateActivity" layoutX="262.0" layoutY="306.0" mnemonicParsing="false" onAction="#btnUpdateActivity" styleClass="button-rounded" stylesheets="@../css/Style.css" text="Guardar Actividad" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
