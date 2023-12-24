@@ -370,4 +370,78 @@ public class ChangeRequestDAO
             }
             return answer;
       }
+
+      public static HashMap<String, Object> approveChangeRequest(Integer idChangeRequest)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query =
+                            "update ChangeRequest set status = 2 where idChangeRequest = ?";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idChangeRequest);
+                        int affectedRows = preparedStatement.executeUpdate();
+                        connectionBD.close();
+                        if (affectedRows > 0)
+                        {
+                              answer.put("error", false);
+                              answer.put("message", "Solicitud de cambio aprobada.");
+                        }
+                        else
+                        {
+                              answer.put("message", "Error en la base de datos.");
+                        }
+                  }
+                  catch (SQLException ex)
+                  {
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message", "Error en la conexion a la base de datos.");
+            }
+            return answer;
+      }
+
+      public static HashMap<String, Object> rejectChangeRequest(Integer idChangeRequest)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query =
+                            "update ChangeRequest set status = 3 where idChangeRequest = ?";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idChangeRequest);
+                        int affectedRows = preparedStatement.executeUpdate();
+                        connectionBD.close();
+                        if (affectedRows > 0)
+                        {
+                              answer.put("error", false);
+                              answer.put("message", "Solicitud de cambio rechazada.");
+                        }
+                        else
+                        {
+                              answer.put("message", "Error en la base de datos.");
+                        }
+                  }
+                  catch (SQLException ex)
+                  {
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message", "Error en la conexion a la base de datos.");
+            }
+            return answer;
+      }
 }
