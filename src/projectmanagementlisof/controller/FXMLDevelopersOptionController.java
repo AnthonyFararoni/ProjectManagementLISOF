@@ -70,7 +70,8 @@ public class FXMLDevelopersOptionController implements Initializable
 
       private void showDeveloperSelected()
       {
-            tvDevelopers.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Developer>() {
+            tvDevelopers.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<Developer>() {
                       @Override
                       public void changed(ObservableValue<? extends Developer> observable,
                           Developer oldValue, Developer newValue)
@@ -83,7 +84,8 @@ public class FXMLDevelopersOptionController implements Initializable
                                       tvDevelopers.getSelectionModel().getSelectedIndex();
                                   Developer selectedDeveloper = developers.get(selectedPosition);
                                   idDeveloper = selectedDeveloper.getIdDeveloper();
-                                  SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
+                                  SelectedItemSingleton instance =
+                                      SelectedItemSingleton.getInstace();
                                   instance.setIdSelected(idDeveloper);
                                   developerName = selectedDeveloper.getFullName();
                                   developerLogin = selectedDeveloper.getDeveloperLogin();
