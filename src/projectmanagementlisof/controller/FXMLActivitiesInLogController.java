@@ -76,14 +76,17 @@ public class FXMLActivitiesInLogController implements Initializable, DeveloperOb
             System.out.println(idDeveloper);
       }
 
-    @FXML private void btnShowAssignedActivityDetailsclick(ActionEvent event) {
-        Activity selectedActivity = tvAssignedActivities.getSelectionModel().getSelectedItem();
-        if (selectedActivity != null) {
-            int idActivity = selectedActivity.getIdActivity();
-            Utilities.showDetails(idActivity, "gui/FXMLActivityDetails.fxml", "Detalles de la actividad");
-        }
-    }
-    
+      @FXML private void btnShowAssignedActivityDetailsclick(ActionEvent event)
+      {
+            Activity selectedActivity = tvAssignedActivities.getSelectionModel().getSelectedItem();
+            if (selectedActivity != null)
+            {
+                  int idActivity = selectedActivity.getIdActivity();
+                  Utilities.showDetails(
+                      idActivity, "gui/FXMLActivityDetails.fxml", "Detalles de la actividad");
+            }
+      }
+
       @Override public void developerSelected(Integer id, String name)
       {
             this.selectedDeveloperId = id;

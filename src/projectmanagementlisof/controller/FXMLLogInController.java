@@ -40,12 +40,13 @@ public class FXMLLogInController implements Initializable
     
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-        pswPassword.setOnKeyPressed(event -> {
-            if (event.getCode() == KeyCode.ENTER) {
-                btnLogIn(new ActionEvent()); 
-                event.consume();
-            }
-        });
+            pswPassword.setOnKeyPressed(event -> {
+                  if (event.getCode() == KeyCode.ENTER)
+                  {
+                        btnLogIn(new ActionEvent());
+                        event.consume();
+                  }
+            });
       }
 
       @FXML private void btnLogIn(ActionEvent event) {
@@ -64,23 +65,29 @@ public class FXMLLogInController implements Initializable
             }   
           }
       }
-      
-      private int checkDeveloperInDB(){
-          HashMap<String, Object> answer = DeveloperDAO.checkDeveloperLogIn(user, password);
-          int  developerResult = (int) answer.get("result");
-          int methodResponse = 0;
-          if(developerResult == 2){
-              methodResponse = 1;
-               HashMap<String, Object> loggedDeveloper = DeveloperDAO.getDeveloperByCredentials(user, password);
-               Developer developer = (Developer) loggedDeveloper.get("developer");
-               Stage currentStage = (Stage) txUser.getScene().getWindow();
-               Utilities.goTolanding(currentStage, developer.getFullName(), developer.getDeveloperLogin() , developer.getIdDeveloper(), "gui/FXMLDeveloperLanding.fxml", "Inicio");
-          } 
-          else if (developerResult == 1){
-              lbWrongPassword.setVisible(true);
-              methodResponse = 1;
-          }
-          return methodResponse;
+
+      private int checkDeveloperInDB()
+      {
+            HashMap<String, Object> answer = DeveloperDAO.checkDeveloperLogIn(user, password);
+            int developerResult = (int) answer.get("result");
+            int methodResponse = 0;
+            if (developerResult == 2)
+            {
+                  methodResponse = 1;
+                  HashMap<String, Object> loggedDeveloper =
+                      DeveloperDAO.getDeveloperByCredentials(user, password);
+                  Developer developer = (Developer) loggedDeveloper.get("developer");
+                  Stage currentStage = (Stage) txUser.getScene().getWindow();
+                  Utilities.goTolanding(currentStage, developer.getFullName(),
+                      developer.getDeveloperLogin(), developer.getIdDeveloper(),
+                      "gui/FXMLDeveloperLanding.fxml", "Inicio");
+            }
+            else if (developerResult == 1)
+            {
+                  lbWrongPassword.setVisible(true);
+                  methodResponse = 1;
+            }
+            return methodResponse;
       }
       
       private int checkProjectManagerInDB(){
@@ -99,19 +106,23 @@ public class FXMLLogInController implements Initializable
           }
           return response;
       }
-      
-      private boolean filledFields() {
+
+      private boolean filledFields()
+      {
             boolean filledFields = true;
-            if (txUser.getText().isEmpty()) {
-                Utilities.redBorder(txUser);
-                filledFields = false;
+            if (txUser.getText().isEmpty())
+            {
+                  Utilities.redBorder(txUser);
+                  filledFields = false;
             }
-            if (pswPassword.getText().isEmpty()) {
-                Utilities.redBorder(pswPassword);
-                filledFields = false;
+            if (pswPassword.getText().isEmpty())
+            {
+                  Utilities.redBorder(pswPassword);
+                  filledFields = false;
             }
-            if(filledFields == false){
-                lbEmptyFields.setVisible(true);
+            if (filledFields == false)
+            {
+                  lbEmptyFields.setVisible(true);
             }
             return filledFields;
         }

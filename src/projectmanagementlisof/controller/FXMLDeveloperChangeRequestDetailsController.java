@@ -5,27 +5,32 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
+import projectmanagementlisof.model.dao.DeveloperDAO;
+import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.observer.DeveloperObserver;
 import projectmanagementlisof.utils.Utilities;
 
-public class FXMLChangeRequestDetailsController implements Initializable, DeveloperObserver
+public class FXMLDeveloperChangeRequestDetailsController implements Initializable, DeveloperObserver
 {
-      @FXML private TextField tfJustification;
-      @FXML private TextField tfDateCreated;
+      @FXML private AnchorPane apNewChangeRequestForm;
       @FXML private TextField tfRequestedBy;
+      @FXML private DatePicker dpDate;
+      @FXML private TextField tfJustification;
+      @FXML private TextField tfRequestNumber;
       @FXML private TextArea taChangeDescription;
-      @FXML private TextField tfDateReviewed;
 
       private DeveloperObserver observer;
       private Integer idChangeRequest;
@@ -35,16 +40,15 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-            // TODO
+            // TODO Auto-generated method stub
       }
 
       public void initializeInformation(
           Integer idChangeRequest, DeveloperObserver observer, ChangeRequest updateChangeRequest)
       {
+            this.idChangeRequest = idChangeRequest;
             this.observer = observer;
             this.updateChangeRequest = updateChangeRequest;
-            this.idChangeRequest = this.updateChangeRequest.getIdChangeRequest();
-
             loadChangeRequestInformation();
       }
 
@@ -52,8 +56,10 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
       {
             tfJustification.setText(this.updateChangeRequest.getJustification());
             taChangeDescription.setText(this.updateChangeRequest.getDescription());
-            tfDateCreated.setText(this.updateChangeRequest.getCreationDate().toString());
-            tfDateReviewed.setText(this.updateChangeRequest.getReviewDate().toString());
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate creationDate =
+                LocalDate.parse(this.updateChangeRequest.getCreationDate(), formatter);
+            dpDate.setValue(creationDate);
 
             this.idDeveloper = this.updateChangeRequest.getIdDeveloper();
 
@@ -87,52 +93,6 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
       }
 
       @FXML private void clickImageReturn(MouseEvent event)
-      {
-            Stage currentStage = (Stage) tfJustification.getScene().getWindow();
-            Utilities.closeWindow(currentStage);
-      }
-
-      @FXML private void btnAproveChangeRequest(ActionEvent event)
-      {
-            HashMap<String, Object> answer =
-                ChangeRequestDAO.approveChangeRequest(this.idChangeRequest);
-
-            if (!(boolean) answer.get("error"))
-            {
-                  Utilities.showSimpleAlert("Solicitud de cambio aprobada",
-                      (String) answer.get("message"), Alert.AlertType.INFORMATION);
-                  this.observer.developerSelected(this.idDeveloper, this.developerNameString);
-                  Stage currentStage = (Stage) tfJustification.getScene().getWindow();
-                  Utilities.closeWindow(currentStage);
-            }
-            else
-            {
-                  Utilities.showSimpleAlert("Error al aprobar la solicitud de cambio",
-                      (String) answer.get("message"), Alert.AlertType.ERROR);
-            }
-      }
-
-      @FXML private void btnRejectChangeRequest(ActionEvent event)
-      {
-            HashMap<String, Object> answer =
-                ChangeRequestDAO.rejectChangeRequest(this.idChangeRequest);
-
-            if (!(boolean) answer.get("error"))
-            {
-                  Utilities.showSimpleAlert("Solicitud de cambio rechazada",
-                      (String) answer.get("message"), Alert.AlertType.INFORMATION);
-                  this.observer.developerSelected(this.idDeveloper, this.developerNameString);
-                  Stage currentStage = (Stage) tfJustification.getScene().getWindow();
-                  Utilities.closeWindow(currentStage);
-            }
-            else
-            {
-                  Utilities.showSimpleAlert("Error al rechazar la solicitud de cambio",
-                      (String) answer.get("message"), Alert.AlertType.ERROR);
-            }
-      }
-
-      @FXML private void btnReturn(MouseEvent event)
       {
             Stage currentStage = (Stage) tfJustification.getScene().getWindow();
             Utilities.closeWindow(currentStage);
