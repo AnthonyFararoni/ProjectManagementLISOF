@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
@@ -15,6 +16,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DeveloperDAO;
+import projectmanagementlisof.model.dao.ProjectDAO;
 import projectmanagementlisof.model.dao.ProjectManagerDAO;
 import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.model.pojo.ProjectManager;
@@ -35,6 +37,7 @@ public class FXMLLogInController implements Initializable
     private Label lbEmptyFields;
     private String user;
     private String password;
+    
       @Override public void initialize(URL url, ResourceBundle rb)
       {
         pswPassword.setOnKeyPressed(event -> {
@@ -53,9 +56,9 @@ public class FXMLLogInController implements Initializable
           lbEmptyFields.setVisible(false);
           Utilities.noBoder(txUser);
           Utilities.noBoder(pswPassword);
-          int developerExits = checkDeveloperInDB();
-          int managerExists = checkProjectManagerInDB();
           if(filledFields()){
+            int developerExits = checkDeveloperInDB();
+            int managerExists = checkProjectManagerInDB();
             if(developerExits == 0 && managerExists == 0){
               lbUserDontExist.setVisible(true);
             }   
@@ -88,8 +91,7 @@ public class FXMLLogInController implements Initializable
               response = 1;
                HashMap<String, Object> loggedManager = ProjectManagerDAO.getProjectManagerByCredentials(user, password);
                ProjectManager manager = (ProjectManager) loggedManager.get("projectManager");
-               Stage currentStage = (Stage) txUser.getScene().getWindow();
-               Utilities.goTolanding(currentStage, manager.getFullName(), manager.getManagerLogin(), manager.getManagerId(),"gui/FXMLProjectManagerLanding.fxml", "Inicio");
+               managerFollowUp(manager);
           } 
           else if (managerResult == 1){
               response = 1;
@@ -113,4 +115,23 @@ public class FXMLLogInController implements Initializable
             }
             return filledFields;
         }
+      
+      private void managerFollowUp(ProjectManager manager){
+          int idManager = manager.getManagerId();
+          Stage currentStage = (Stage) txUser.getScene().getWindow();
+          HashMap<String, Object> daoResponse = new HashMap<>();
+          daoResponse = ProjectDAO.isInMoreProjects(idManager);
+          int projects = (int) daoResponse.get("projects");
+          switch (projects){
+            case 0:
+                Utilities.showSimpleAlert("Error", "No se han encobtrado projectos a su cargo. Porfavor comuniquese con el director de carrera", Alert.AlertType.WARNING);
+            break;
+            case 1:
+            Utilities.goTolanding(currentStage, manager.getFullName(), manager.getManagerLogin(), manager.getManagerId(),"gui/FXMLProjectManagerLanding.fxml", "Inicio");
+            break;
+            case 2:
+            Utilities.goTolanding(currentStage, manager.getFullName(), manager.getManagerLogin(), manager.getManagerId(),"gui/FXMLSelectProject.fxml", "Inicio");
+            break;
+          }
+      }
 }

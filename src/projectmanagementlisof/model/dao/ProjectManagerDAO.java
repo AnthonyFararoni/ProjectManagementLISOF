@@ -17,6 +17,7 @@ import projectmanagementlisof.model.pojo.ProjectManager;
  * @author edmun
  */
 public class ProjectManagerDAO {
+    
     public static HashMap<String, Object> checkProjectManager(String user) {
         HashMap<String, Object> answer = new HashMap<>();
         answer.put("error", true);
@@ -126,5 +127,6 @@ public class ProjectManagerDAO {
         }
         return answer;
     }
+    
     
 }

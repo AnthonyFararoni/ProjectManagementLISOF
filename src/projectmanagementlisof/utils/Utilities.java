@@ -300,4 +300,18 @@ public class Utilities
         field.setStyle(null);
     }
     
+    public static void backToLogIn(MouseEvent event) {
+        try {
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Parent newView = FXMLLoader.load(Utilities.class.getResource("/projectmanagementlisof/gui/FXMLLogIn.fxml"));
+            Scene scene = new Scene(newView);
+            currentStage.setScene(scene);
+            currentStage.setTitle("Iniciar sesión");
+            currentStage.show();
+            centerStage(currentStage);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
 }
