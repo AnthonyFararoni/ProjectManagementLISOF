@@ -47,7 +47,7 @@ public class FXMLActivityDetailsController implements Initializable
       }
       public void receiveData()
       {
-            SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
+            SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
             System.out.println(instance.getIdSelected());
             idActivity = instance.getIdSelected();
       }

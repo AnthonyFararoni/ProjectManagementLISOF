@@ -120,7 +120,7 @@ public class FXMLDeveloperActivitiesController implements Initializable
             if (selectedActivity != null)
             {
                   int idActivity = selectedActivity.getIdActivity();
-                  SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
+                  SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
                   instance.setIdSelected(idActivity);
             }
             try

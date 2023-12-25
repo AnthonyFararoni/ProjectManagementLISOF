@@ -115,7 +115,7 @@ public class FXMLDeveloperDefectsOptionController implements Initializable
             if (selectedDefect != null)
             {
                   int idDefect = selectedDefect.getIdDefect();
-                  SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
+                  SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
                   instance.setIdSelected(idDefect);
 
                   try

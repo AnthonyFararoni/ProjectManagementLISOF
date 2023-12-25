@@ -85,7 +85,7 @@ public class FXMLDevelopersOptionController implements Initializable
                                   Developer selectedDeveloper = developers.get(selectedPosition);
                                   idDeveloper = selectedDeveloper.getIdDeveloper();
                                   SelectedItemSingleton instance =
-                                      SelectedItemSingleton.getInstace();
+                                      SelectedItemSingleton.getInstance();
                                   instance.setIdSelected(idDeveloper);
                                   developerName = selectedDeveloper.getFullName();
                                   developerLogin = selectedDeveloper.getDeveloperLogin();

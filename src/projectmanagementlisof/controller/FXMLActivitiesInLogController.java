@@ -95,7 +95,7 @@ public class FXMLActivitiesInLogController implements Initializable, DeveloperOb
 
       public void receiveData()
       {
-            SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
+            SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
             idDeveloper = instance.getIdSelected();
       }
 

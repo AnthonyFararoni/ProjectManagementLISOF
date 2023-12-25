@@ -16,7 +16,7 @@ public class SelectedItemSingleton
 
       private SelectedItemSingleton() {}
 
-      public static SelectedItemSingleton getInstace()
+      public static SelectedItemSingleton getInstance()
       {
             return INSTANCE;
       }

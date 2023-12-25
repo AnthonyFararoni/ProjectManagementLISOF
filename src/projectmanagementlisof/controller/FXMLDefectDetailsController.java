@@ -48,7 +48,7 @@ public class FXMLDefectDetailsController implements Initializable
       }
       public void receiveData()
       {
-            SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
+            SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
             idDefect = instance.getIdSelected();
       }
       @FXML private void changeToDefaultCursor(MouseEvent event)

@@ -1,6 +1,7 @@
 package projectmanagementlisof.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -19,7 +20,9 @@ import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.dao.ProjectDAO;
 import projectmanagementlisof.model.dao.ProjectManagerDAO;
 import projectmanagementlisof.model.pojo.Developer;
+import projectmanagementlisof.model.pojo.Project;
 import projectmanagementlisof.model.pojo.ProjectManager;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLLogInController implements Initializable
@@ -135,14 +138,25 @@ public class FXMLLogInController implements Initializable
           int projects = (int) daoResponse.get("projects");
           switch (projects){
             case 0:
-                Utilities.showSimpleAlert("Error", "No se han encobtrado projectos a su cargo. Porfavor comuniquese con el director de carrera", Alert.AlertType.WARNING);
+                Utilities.showSimpleAlert("Error", "No se han encontrado proyectos a su cargo. Porfavor comuniquese con el director de carrera", Alert.AlertType.WARNING);
             break;
-            case 1:
-            Utilities.goTolanding(currentStage, manager.getFullName(), manager.getManagerLogin(), manager.getManagerId(),"gui/FXMLProjectManagerLanding.fxml", "Inicio");
+            case 1:    
+                setProjectt(idManager);
+                Utilities.goTolanding(currentStage, manager.getFullName(), manager.getManagerLogin(), manager.getManagerId(),"gui/FXMLProjectManagerLanding.fxml", "Inicio");
             break;
             case 2:
             Utilities.goTolanding(currentStage, manager.getFullName(), manager.getManagerLogin(), manager.getManagerId(),"gui/FXMLSelectProject.fxml", "Inicio");
             break;
           }
+      }
+      
+      private void setProjectt(int idManager){
+          HashMap<String, Object> daoProject = new HashMap<>();
+          daoProject = ProjectDAO.getManagerProjects(idManager);
+          ArrayList<Project> list = (ArrayList<Project>) daoProject.get("projects");
+          Project project = list.get(0);
+          int projectId = project.getIdProject() ;
+          SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+          instance.setIdSelectedProject(projectId);
       }
 }

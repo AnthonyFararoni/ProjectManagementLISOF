@@ -13,13 +13,18 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLProjectManagerLandingController implements Initializable
 {
       @FXML private AnchorPane apBackground;
 
-      @Override public void initialize(URL url, ResourceBundle rb) {}
+      @Override public void initialize(URL url, ResourceBundle rb) {
+          SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+          int idProject = instance.getIdSelectedProject();
+          System.out.println(idProject);
+      }
 
       @FXML private void btnLogOut(MouseEvent event)
       {

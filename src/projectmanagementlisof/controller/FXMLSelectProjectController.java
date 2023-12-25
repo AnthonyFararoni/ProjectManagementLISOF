@@ -21,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ProjectDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.Project;
@@ -66,6 +67,8 @@ public class FXMLSelectProjectController implements Initializable {
 
     @FXML
     private void access(ActionEvent event) {
+        Stage currentStage = (Stage) btnSelectProject.getScene().getWindow();
+        Utilities.goTolandingFromAProject(currentStage, projectId, "gui/FXMLProjectManagerLanding.fxml", "Inicio");
     }
     
     private void getData(){

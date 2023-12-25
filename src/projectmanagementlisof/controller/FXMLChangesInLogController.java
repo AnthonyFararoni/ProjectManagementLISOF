@@ -69,7 +69,7 @@ public class FXMLChangesInLogController implements Initializable
 
       public void receiveData()
       {
-            SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
+            SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
             idDeveloper = instance.getIdSelected();
       }
 

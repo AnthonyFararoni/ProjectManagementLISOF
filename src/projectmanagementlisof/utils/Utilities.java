@@ -256,7 +256,7 @@ public class Utilities
     }
     
     public static void showDetails(int id, String fxmlPath, String title) {
-        SelectedItemSingleton instance = SelectedItemSingleton.getInstace();
+        SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
         instance.setIdSelected(id);
 
         try {
@@ -277,6 +277,25 @@ public class Utilities
     public static void goTolanding(Stage currentStage, String userFullName, String userLogin, int userId, String fxmlPath, String title) {
         LoggedUserSingleton instance = LoggedUserSingleton.getInstance();
         instance.setUserData(userFullName, userLogin, userId);
+        try {
+            FXMLLoader loader = loadView(fxmlPath);
+            Parent view = loader.load();
+            Scene scene = new Scene(view);
+            Stage stage = new Stage();
+
+            currentStage.setScene(scene);
+            currentStage.setTitle(title);
+            currentStage.show();
+            currentStage.centerOnScreen();
+        } catch (java.io.IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+    
+        
+    public static void goTolandingFromAProject(Stage currentStage, int projectId, String fxmlPath, String title) {
+        SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+        instance.setIdSelectedProject(projectId);
         try {
             FXMLLoader loader = loadView(fxmlPath);
             Parent view = loader.load();
