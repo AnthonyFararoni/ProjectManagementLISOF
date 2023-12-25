@@ -59,10 +59,7 @@ public class FXMLDevelopersOptionController implements Initializable
         
     }
     
-    private void initializeInformation()
-    {
-            
-    }
+
     
     private void btnRefreshTableDevelopers(MouseEvent event) {
         getDevelopersForTable();
@@ -119,9 +116,9 @@ public class FXMLDevelopersOptionController implements Initializable
             FXMLLoader loader = Utilities.loadView("gui/FXMLDeveloperLog.fxml");
             Parent view = loader.load();
             Scene scene = new Scene(view);
-            FXMLDeveloperLogController controller = loader.getController();
-            
+            FXMLDeveloperLogController controller = loader.getController();           
             controller.initializeInformation(idDeveloper, developerName, developerLogin);
+            
             Stage stage = new Stage();
 
             stage.setScene(scene);

@@ -34,6 +34,19 @@ public class ChangeRequest
             this.projectManagerName = projectManagerName;
             this.idDefect = idDefect;
       }
+      
+      public ChangeRequest(Integer idChangeRequest, String justification, String description,Integer idStatus,
+          String status, String creationDate, Integer idDeveloper, String developerName)
+      {
+            this.idChangeRequest = idChangeRequest;
+            this.justification = justification;
+            this.description = description;
+            this.idStatus = idStatus;
+            this.status = status;
+            this.creationDate = creationDate;
+            this.idDeveloper = idDeveloper;
+            this.developerName = developerName;
+      }
 
       public Integer getIdChangeRequest()
       {

@@ -190,7 +190,7 @@ public class ChangeRequestDAO
             }
       }
       
-    public static HashMap<String, Object> getAllChangeRequests()
+    public static HashMap<String, Object> getAssignedChangeRequests()
     {
         HashMap<String, Object> answer = new LinkedHashMap<>();
         answer.put("error", true);
@@ -242,6 +242,55 @@ public class ChangeRequestDAO
         return answer;
     }
     
+    public static HashMap<String, Object> getChangeRequestsPending()
+    {
+        HashMap<String, Object> answer = new LinkedHashMap<>();
+        answer.put("error", true);
+        Connection connectionBD = ConnectionDB.getConnection();
+        if (connectionBD != null)
+        {
+            try
+            {
+                String query = "SELECT c.idChangeRequest, c.justification, c.description, c.status, "
+                        + "cs.status as statusName, c.creationDate, c.idDeveloper,"
+                        + " d.name as developerName FROM changeRequest c "
+                        + "INNER JOIN developer d ON c.idDeveloper = d.idDeveloper "
+                        + "INNER JOIN changerequeststatus cs on c.status = cs.idChangeRequestStatus "
+                        + "where c.status = 1";
+                PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                ResultSet changeRequestList = preparedStatement.executeQuery();
+                ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
+                while (changeRequestList.next())
+                {
+                    ChangeRequest changeRequest = new ChangeRequest();
+                    changeRequest.setIdChangeRequest(changeRequestList.getInt("idChangeRequest"));
+                    changeRequest.setJustification(changeRequestList.getString("justification"));
+                    changeRequest.setDescription(changeRequestList.getString("description"));
+                    changeRequest.setIdStatus(changeRequestList.getInt("status"));
+                    changeRequest.setStatus(changeRequestList.getString("statusName"));
+                    changeRequest.setCreationDate(changeRequestList.getString("creationDate"));
+                    changeRequest.setIdDeveloper(changeRequestList.getInt("idDeveloper"));
+                    changeRequest.setDeveloperName(changeRequestList.getString("developerName"));  
+                    changeRequests.add(changeRequest);
+                }
+                connectionBD.close();
+                answer.put("error", false);
+                answer.put("changeRequests", changeRequests);
+            }
+            catch (SQLException ex)
+            {
+                answer.put("message", "Error: " + ex.getMessage());
+            }
+        }
+        else
+        {
+              answer.put("message",
+                  "Hubo un error al intentar conectar con la base de datos. Intente "
+                      + "de nuevo más tarde");
+        }
+        return answer;
+    }
+    
      public static HashMap<String, Object> searchChangeRequestByJustification(String justification)
     {
         HashMap<String, Object> answer = new LinkedHashMap<>();
@@ -255,9 +304,9 @@ public class ChangeRequestDAO
                         + "cs.status as statusName, c.creationDate, c.reviewDate, c.idDeveloper, c.idProjectManager,"
                         + " d.name as developerName, p.name as projectManagerName FROM changeRequest c "
                         + "INNER JOIN developer d ON c.idDeveloper = d.idDeveloper "
-                        + "INNER JOIN projectmanager p ON c.idProjectManager = p.idProjectManager"
+                        + "INNER JOIN projectmanager p ON c.idProjectManager = p.idProjectManager "
                         + "INNER JOIN changerequeststatus cs on c.status = cs.idChangeRequestStatus "
-                        + "WHERE justification like ?";   
+                        + "WHERE c.justification like ?;";   
                 PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                 preparedStatement.setString(1, justification + "%");  
                 ResultSet changeRequestList = preparedStatement.executeQuery();
@@ -268,20 +317,19 @@ public class ChangeRequestDAO
                     changeRequest.setIdChangeRequest(changeRequestList.getInt("idChangeRequest"));
                     changeRequest.setJustification(changeRequestList.getString("justification"));
                     changeRequest.setDescription(changeRequestList.getString("description"));
-                    changeRequest.setIdChangeRequest(changeRequestList.getInt("status"));
-                    changeRequest.setIdStatus(changeRequestList.getInt("idStatus"));
+                    changeRequest.setIdStatus(changeRequestList.getInt("status"));
                     changeRequest.setStatus(changeRequestList.getString("statusName"));
                     changeRequest.setCreationDate(changeRequestList.getString("creationDate"));
                     changeRequest.setReviewDate(changeRequestList.getString("reviewDate"));
                     changeRequest.setIdDeveloper(changeRequestList.getInt("idDeveloper"));
-                    changeRequest.setDeveloperName(changeRequestList.getString("developerName"));
                     changeRequest.setIdProjectManager(changeRequestList.getInt("idProjectManager"));
+                    changeRequest.setDeveloperName(changeRequestList.getString("developerName"));  
                     changeRequest.setProjectManagerName(changeRequestList.getString("projectmanagerName"));
                     changeRequests.add(changeRequest);
                 }
                 connectionBD.close();
                 answer.put("error", false);
-                answer.put("changeRequests", changeRequests);
+                answer.put("changerequests", changeRequests);
             }
             catch (SQLException ex)
             {

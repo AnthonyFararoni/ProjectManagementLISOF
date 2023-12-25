@@ -29,7 +29,7 @@
 
                   </columns>
             </TableView>
-            <Button fx:id="btnShowChangeRequestDetails" layoutX="307.0" layoutY="549.0" mnemonicParsing="false" onAction="#btnShowChangeRequestDetails" stylesheets="@../css/Style.css" text="Ver detalles">
+            <Button fx:id="btnShowChangeRequestDetails" disable="true" layoutX="307.0" layoutY="549.0" mnemonicParsing="false" onAction="#btnShowChangeRequestDetails" stylesheets="@../css/Style.css" text="Ver detalles">
                   <font>
                         <Font name="System Bold" size="17.0" />
                   </font>
