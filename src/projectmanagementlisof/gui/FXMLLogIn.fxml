@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
@@ -12,7 +17,11 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
+<<<<<<< Updated upstream
 <AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLLogInController">
+=======
+<AnchorPane id="AnchorPane" prefHeight="450.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLLogInController">
+>>>>>>> Stashed changes
    <children>
       <GridPane layoutX="45.0" layoutY="38.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -39,23 +48,35 @@
                         <Image url="@../images/UVLogo.png" />
                      </image>
                   </ImageView>
+<<<<<<< Updated upstream
                   <TextField fx:id="tfLoginUser" layoutX="58.0" layoutY="207.0" prefHeight="25.0" prefWidth="215.0" promptText="Matricula / Num. personal" />
+=======
+                  <TextField fx:id="txUser" layoutX="58.0" layoutY="207.0" prefHeight="25.0" prefWidth="215.0" promptText="Matricula / Num. personal" />
+>>>>>>> Stashed changes
                   <Label layoutX="62.0" layoutY="183.0" text="Usuario:">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
-                  <Label layoutX="63.0" layoutY="251.0" text="Contraseña:">
+                  <Label layoutX="65.0" layoutY="269.0" text="Contraseña:">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Label>
+<<<<<<< Updated upstream
                   <PasswordField fx:id="tfPassword" layoutX="58.0" layoutY="275.0" prefHeight="25.0" prefWidth="215.0" promptText="Ej. t$PaTd9c." />
                   <Button layoutX="106.0" layoutY="341.0" mnemonicParsing="false" onAction="#btnLogIn" stylesheets="@../css/Style.css" text="Iniciar sesión">
+=======
+                  <PasswordField fx:id="pswPassword" layoutX="60.0" layoutY="293.0" prefHeight="25.0" prefWidth="215.0" promptText="Ej. t$PaTd9c." />
+                  <Button layoutX="106.0" layoutY="349.0" mnemonicParsing="false" onAction="#btnLogIn" stylesheets="@../css/Style.css" text="Iniciar sesión">
+>>>>>>> Stashed changes
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
+                  <Label fx:id="lbUserDontExist" layoutX="63.0" layoutY="241.0" text="Usuario no encontrado" textFill="RED" visible="false" />
+                  <Label fx:id="lbWrongPassword" layoutX="59.0" layoutY="326.0" text="Contraseña incorrecta" textFill="RED" visible="false" />
+                  <Label fx:id="lbEmptyFields" alignment="CENTER" layoutX="30.0" layoutY="388.0" prefHeight="39.0" prefWidth="271.0" text="Por favor llena los campos marcados" textAlignment="CENTER" textFill="RED" visible="false" wrapText="true" />
                </children>
             </AnchorPane>
          </children>
