@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 import javax.jws.soap.SOAPBinding.Use;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
-import projectmanagementlisof.utils.UserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLNewChangeRequestFormController implements Initializable

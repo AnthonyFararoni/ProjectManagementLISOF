@@ -312,4 +312,156 @@ public class DeveloperDAO
             }
             return answer;
       }
+
+      public static HashMap<String, Object> getDeveloperByCredentials(String user, String password)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query =
+                            "SELECT * FROM developer WHERE developerLogin = ? AND password = ?";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setString(1, user);
+                        preparedStatement.setString(2, password);
+
+                        ResultSet developerResult = preparedStatement.executeQuery();
+
+                        if (developerResult.next())
+                        {
+                              Developer developer = new Developer();
+                              developer.setIdDeveloper(developerResult.getInt("idDeveloper"));
+                              developer.setDeveloperLogin(
+                                  developerResult.getString("developerLogin"));
+                              developer.setName(developerResult.getString("name"));
+                              developer.setLastName(developerResult.getString("lastname"));
+                              developer.setSecondLastName(
+                                  developerResult.getString("secondlastname"));
+                              developer.setEmail(developerResult.getString("email"));
+                              developer.setEnrollment(developerResult.getBoolean("enrollment"));
+                              developer.setIdProject(developerResult.getInt("idProject"));
+
+                              connectionBD.close();
+                              answer.put("error", false);
+                              answer.put("developer", developer);
+                        }
+                        else
+                        {
+                              answer.put("message",
+                                  "No se encontró ningún desarrollador con las credenciales proporcionadas.");
+                        }
+                  }
+                  catch (SQLException ex)
+                  {
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message",
+                      "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde.");
+            }
+
+            return answer;
+      }
+
+      public static HashMap<String, Object> checkDeveloper(String user)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            int exists = 0;
+            Connection connectionBD = ConnectionDB.getConnection();
+
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query =
+                            "SELECT COUNT(*) AS count FROM developer WHERE developerLogin = ?";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setString(1, user);
+                        ResultSet result = preparedStatement.executeQuery();
+
+                        if (result.next())
+                        {
+                              int count = result.getInt("count");
+                              exists = (count > 0) ? 1 : 0;
+                              answer.put("error", false);
+                        }
+
+                        connectionBD.close();
+                  }
+                  catch (SQLException ex)
+                  {
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message", "No ha sido posible conectar con la base de datos.");
+            }
+
+            answer.put("exists", exists);
+            return answer;
+      }
+
+      public static HashMap<String, Object> checkDeveloperLogIn(String user, String password)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            HashMap<String, Object> userExist = new HashMap<>();
+            answer.put("error", true);
+            int result = 0;
+            Connection connectionBD = ConnectionDB.getConnection();
+            if (connectionBD != null)
+            {
+                  userExist = checkDeveloper(user);
+                  int exists = (int) userExist.get("exists");
+                  if (exists == 1)
+                  {
+                        result = 1;
+                        try
+                        {
+                              String query =
+                                  "SELECT COUNT(*) AS count FROM developer WHERE developerLogin = ? AND password = ?";
+                              PreparedStatement preparedStatement =
+                                  connectionBD.prepareStatement(query);
+                              preparedStatement.setString(1, user);
+                              preparedStatement.setString(2, password);
+
+                              ResultSet resultSet = preparedStatement.executeQuery();
+
+                              if (resultSet.next())
+                              {
+                                    int count = resultSet.getInt("count");
+                                    if (count > 0)
+                                    {
+                                          result = 2;
+                                          answer.put("error", false);
+                                    }
+                              }
+                              connectionBD.close();
+                        }
+                        catch (SQLException ex)
+                        {
+                              answer.put("message", "Error: " + ex.getMessage());
+                        }
+                  }
+                  else
+                  {
+                        answer.put("error", false);
+                        answer.put("message", "Usuario no existe");
+                  }
+            }
+            else
+            {
+                  answer.put("message", "No ha sido posible conectar con la base de datos.");
+            }
+
+            answer.put("result", result);
+            return answer;
+      }
 }

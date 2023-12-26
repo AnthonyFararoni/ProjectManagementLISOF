@@ -5,6 +5,10 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -22,11 +26,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
+import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.ChangeRequest;
+import projectmanagementlisof.observer.DeveloperObserver;
+import projectmanagementlisof.utils.Utilities;
 
-public class FXMLDeveloperChangeRequestsOptionController implements Initializable
+public class FXMLDeveloperChangeRequestsOptionController implements Initializable, DeveloperObserver
 {
       @FXML private AnchorPane apDeveloperChangeRequestOptions;
 
@@ -39,6 +47,10 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
 
       private ObservableList<ChangeRequest> masterData = FXCollections.observableArrayList();
       private FilteredList<ChangeRequest> filteredData;
+
+      private Integer idChangeRequest;
+      private Integer selectedDeveloperId;
+      private String selectedDeveloperName;
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
@@ -123,5 +135,61 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
             {
                   e.printStackTrace();
             }
+      }
+
+      private void showSelectedChangeRequest()
+      {
+            tvChangeRequests.getSelectionModel().selectedItemProperty().addListener(
+                new ChangeListener<ChangeRequest>() {
+                      @Override
+                      public void changed(ObservableValue<? extends ChangeRequest> observable,
+                          ChangeRequest oldValue, ChangeRequest newValue)
+                      {
+                            if (newValue != null)
+                            {
+                                  // btnShowAssignedActivityDetails.setDisable(false);
+                                  // btnEditAssignedActivity.setDisable(false);
+                                  // btnDeleteAssignedActivity.setDisable(false);
+                                  int selectedPosition =
+                                      tvChangeRequests.getSelectionModel().getSelectedIndex();
+                                  ChangeRequest selectedChangeRequest =
+                                      changeRequests.get(selectedPosition);
+                                  idChangeRequest = selectedChangeRequest.getIdChangeRequest();
+                            }
+                      }
+                });
+      }
+
+      @FXML private void loadFXMLChangeRequestDetails(ActionEvent event)
+      {
+            try
+            {
+                  FXMLLoader loader =
+                      Utilities.loadView("gui/FXMLDeveloperChangeRequestDetails.fxml");
+                  Parent view = loader.load();
+                  Scene scene = new Scene(view);
+                  FXMLDeveloperChangeRequestDetailsController controller = loader.getController();
+                  ChangeRequest selectedChangeRequest =
+                      tvChangeRequests.getSelectionModel().getSelectedItem();
+                  controller.initializeInformation(idChangeRequest, this, selectedChangeRequest);
+
+                  Stage stage = new Stage();
+
+                  stage.setScene(scene);
+                  stage.setTitle("Detalles de solicitud de cambio");
+                  stage.initModality(Modality.APPLICATION_MODAL);
+                  stage.showAndWait();
+            }
+            catch (Exception ex)
+            {
+                  Logger.getLogger(FXMLDeveloperChangeRequestsOptionController.class.getName())
+                      .log(Level.SEVERE, null, ex);
+            }
+      }
+
+      @Override public void developerSelected(Integer idDeveloper, String developerName)
+      {
+            this.selectedDeveloperId = idDeveloper;
+            this.selectedDeveloperName = developerName;
       }
 }

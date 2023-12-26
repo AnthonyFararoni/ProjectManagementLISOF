@@ -25,7 +25,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DefectDAO;
 import projectmanagementlisof.model.pojo.Defect;
-import projectmanagementlisof.utils.UserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 /**
  * FXML Controller class
@@ -115,7 +115,7 @@ public class FXMLDeveloperDefectsOptionController implements Initializable
             if (selectedDefect != null)
             {
                   int idDefect = selectedDefect.getIdDefect();
-                  UserSingleton instance = UserSingleton.getInstace();
+                  SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
                   instance.setIdSelected(idDefect);
 
                   try

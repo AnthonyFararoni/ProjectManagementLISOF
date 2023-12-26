@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import projectmanagementlisof.model.ConnectionDB;
 import projectmanagementlisof.model.pojo.ChangeRequest;
+import projectmanagementlisof.model.pojo.Developer;
 
 public class ChangeRequestDAO
 {
@@ -320,6 +321,126 @@ public class ChangeRequestDAO
                   answer.put("message",
                       "Hubo un error al intentar conectar con la base de datos. Intente "
                           + "de nuevo más tarde");
+            }
+            return answer;
+      }
+
+      public static HashMap<String, Object> getCompleteDeveloperName(int idDeveloper)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query =
+                            "select name, lastName, secondLastname from developer where idDeveloper = ?";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idDeveloper);
+                        ResultSet developerResult = preparedStatement.executeQuery();
+
+                        if (developerResult.next())
+                        {
+                              Developer developer = new Developer();
+                              developer.setName(developerResult.getString("name"));
+                              developer.setLastName(developerResult.getString("lastName"));
+                              developer.setSecondLastName(
+                                  developerResult.getString("secondLastname"));
+
+                              connectionBD.close();
+                              answer.put("error", false);
+                              answer.put("developer", developer);
+                        }
+                        else
+                        {
+                              answer.put(
+                                  "message", "No se encontró ningún desarrollador con ese ID.");
+                        }
+                  }
+                  catch (SQLException ex)
+                  {
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message",
+                      "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde");
+            }
+            return answer;
+      }
+
+      public static HashMap<String, Object> approveChangeRequest(Integer idChangeRequest)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query =
+                            "update ChangeRequest set status = 2 where idChangeRequest = ?";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idChangeRequest);
+                        int affectedRows = preparedStatement.executeUpdate();
+                        connectionBD.close();
+                        if (affectedRows > 0)
+                        {
+                              answer.put("error", false);
+                              answer.put("message", "Solicitud de cambio aprobada.");
+                        }
+                        else
+                        {
+                              answer.put("message", "Error en la base de datos.");
+                        }
+                  }
+                  catch (SQLException ex)
+                  {
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message", "Error en la conexion a la base de datos.");
+            }
+            return answer;
+      }
+
+      public static HashMap<String, Object> rejectChangeRequest(Integer idChangeRequest)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query =
+                            "update ChangeRequest set status = 3 where idChangeRequest = ?";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idChangeRequest);
+                        int affectedRows = preparedStatement.executeUpdate();
+                        connectionBD.close();
+                        if (affectedRows > 0)
+                        {
+                              answer.put("error", false);
+                              answer.put("message", "Solicitud de cambio rechazada.");
+                        }
+                        else
+                        {
+                              answer.put("message", "Error en la base de datos.");
+                        }
+                  }
+                  catch (SQLException ex)
+                  {
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message", "Error en la conexion a la base de datos.");
             }
             return answer;
       }

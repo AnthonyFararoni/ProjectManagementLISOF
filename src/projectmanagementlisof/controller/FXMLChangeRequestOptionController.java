@@ -9,13 +9,18 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -23,9 +28,14 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
+import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.model.pojo.Developer;
+import projectmanagementlisof.observer.DeveloperObserver;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -33,7 +43,7 @@ import projectmanagementlisof.utils.Utilities;
  *
  * @author nando
  */
-public class FXMLChangeRequestOptionController implements Initializable
+public class FXMLChangeRequestOptionController implements Initializable, DeveloperObserver
 {
       private ObservableList<ChangeRequest> changeRequests;
       private ChangeRequest changeRequest;
@@ -44,6 +54,10 @@ public class FXMLChangeRequestOptionController implements Initializable
       @FXML private TableColumn colCreationDate;
       @FXML private TableColumn colStatus;
       @FXML private Button btnShowChangeRequestDetails;
+
+      private Integer idChangeRequest;
+      private Integer selectedDeveloperId;
+      private String selectedDeveloperName;
 
       /**
        * Initializes the controller class.
@@ -63,27 +77,6 @@ public class FXMLChangeRequestOptionController implements Initializable
             this.colJustification.setCellValueFactory(new PropertyValueFactory("justification"));
             this.colCreationDate.setCellValueFactory(new PropertyValueFactory("creationDate"));
             this.colStatus.setCellValueFactory(new PropertyValueFactory("status"));
-            showChangeRequestSelected();
-      }
-
-      private void showChangeRequestSelected()
-      {
-            tvChangeRequest.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<ChangeRequest>() {
-                      @Override
-                      public void changed(ObservableValue<? extends ChangeRequest> observable,
-                          ChangeRequest oldValue, ChangeRequest newValue)
-                      {
-                            if (newValue != null)
-                            {
-                                  btnShowChangeRequestDetails.setDisable(false);
-                                  int selectedPosition =
-                                      tvChangeRequest.getSelectionModel().getSelectedIndex();
-                                  ChangeRequest selectedDeveloper =
-                                      changeRequests.get(selectedPosition);
-                            }
-                      }
-                });
       }
 
       private void getChangeRequestForTable()
@@ -104,20 +97,35 @@ public class FXMLChangeRequestOptionController implements Initializable
             }
       }
 
-      private void showChangeRequests(HashMap<String, Object> answer)
+      @FXML private void loadFXMLChangeRequestDetails(ActionEvent event)
       {
-            if (!(boolean) answer.get("error"))
+            try
             {
-                  changeRequests = FXCollections.observableArrayList();
-                  ArrayList<ChangeRequest> list =
-                      (ArrayList<ChangeRequest>) answer.get("changeRequests");
-                  changeRequests.addAll(list);
-                  tvChangeRequest.setItems(changeRequests);
+                  FXMLLoader loader = Utilities.loadView("gui/FXMLChangeRequestDetails.fxml");
+                  Parent view = loader.load();
+                  Scene scene = new Scene(view);
+                  FXMLChangeRequestDetailsController controller = loader.getController();
+                  ChangeRequest selectedChangeRequest =
+                      tvChangeRequest.getSelectionModel().getSelectedItem();
+                  controller.initializeInformation(idChangeRequest, this, selectedChangeRequest);
+
+                  Stage stage = new Stage();
+
+                  stage.setScene(scene);
+                  stage.setTitle("Detalles de solicitud de cambio");
+                  stage.initModality(Modality.APPLICATION_MODAL);
+                  stage.show();
             }
-            else
+            catch (Exception ex)
             {
-                  Utilities.showSimpleAlert(
-                      "Error de carga", (String) answer.get("mensaje"), Alert.AlertType.ERROR);
+                  Logger.getLogger(FXMLDeveloperChangeRequestsOptionController.class.getName())
+                      .log(Level.SEVERE, null, ex);
             }
+      }
+
+      @Override public void developerSelected(Integer idDeveloper, String developerName)
+      {
+            this.selectedDeveloperId = idDeveloper;
+            this.selectedDeveloperName = developerName;
       }
 }

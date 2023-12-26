@@ -34,7 +34,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.pojo.Activity;
-import projectmanagementlisof.utils.UserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -120,7 +120,7 @@ public class FXMLDeveloperActivitiesController implements Initializable
             if (selectedActivity != null)
             {
                   int idActivity = selectedActivity.getIdActivity();
-                  UserSingleton instance = UserSingleton.getInstace();
+                  SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
                   instance.setIdSelected(idActivity);
             }
             try

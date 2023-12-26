@@ -8,15 +8,15 @@ package projectmanagementlisof.utils;
  *
  * @author nando
  */
-public class UserSingleton
+public class SelectedItemSingleton
 {
-      private final static UserSingleton INSTANCE = new UserSingleton();
+      private final static SelectedItemSingleton INSTANCE = new SelectedItemSingleton();
 
       private Integer idSelected;
 
-      private UserSingleton() {}
+      private SelectedItemSingleton() {}
 
-      public static UserSingleton getInstace()
+      public static SelectedItemSingleton getInstance()
       {
             return INSTANCE;
       }
@@ -25,7 +25,7 @@ public class UserSingleton
       {
             return idSelected;
       }
-
+      
       public void setIdSelected(Integer idSelected)
       {
             this.idSelected = idSelected;

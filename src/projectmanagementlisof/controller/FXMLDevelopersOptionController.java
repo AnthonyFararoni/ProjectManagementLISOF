@@ -27,7 +27,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Developer;
-import projectmanagementlisof.utils.UserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLDevelopersOptionController implements Initializable
@@ -84,7 +84,8 @@ public class FXMLDevelopersOptionController implements Initializable
                                       tvDevelopers.getSelectionModel().getSelectedIndex();
                                   Developer selectedDeveloper = developers.get(selectedPosition);
                                   idDeveloper = selectedDeveloper.getIdDeveloper();
-                                  UserSingleton instance = UserSingleton.getInstace();
+                                  SelectedItemSingleton instance =
+                                      SelectedItemSingleton.getInstance();
                                   instance.setIdSelected(idDeveloper);
                                   developerName = selectedDeveloper.getFullName();
                                   developerLogin = selectedDeveloper.getDeveloperLogin();

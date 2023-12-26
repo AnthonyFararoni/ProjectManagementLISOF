@@ -18,7 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DefectDAO;
 import projectmanagementlisof.model.pojo.Defect;
-import projectmanagementlisof.utils.UserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -48,7 +48,7 @@ public class FXMLDefectDetailsController implements Initializable
       }
       public void receiveData()
       {
-            UserSingleton instance = UserSingleton.getInstace();
+            SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
             idDefect = instance.getIdSelected();
       }
       @FXML private void changeToDefaultCursor(MouseEvent event)

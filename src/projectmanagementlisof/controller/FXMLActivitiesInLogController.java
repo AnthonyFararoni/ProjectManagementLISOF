@@ -37,7 +37,7 @@ import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.observer.DeveloperObserver;
-import projectmanagementlisof.utils.UserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -76,14 +76,17 @@ public class FXMLActivitiesInLogController implements Initializable, DeveloperOb
             System.out.println(idDeveloper);
       }
 
-    @FXML private void btnShowAssignedActivityDetailsclick(ActionEvent event) {
-        Activity selectedActivity = tvAssignedActivities.getSelectionModel().getSelectedItem();
-        if (selectedActivity != null) {
-            int idActivity = selectedActivity.getIdActivity();
-            Utilities.showDetails(idActivity, "gui/FXMLActivityDetails.fxml", "Detalles de la actividad");
-        }
-    }
-    
+      @FXML private void btnShowAssignedActivityDetailsclick(ActionEvent event)
+      {
+            Activity selectedActivity = tvAssignedActivities.getSelectionModel().getSelectedItem();
+            if (selectedActivity != null)
+            {
+                  int idActivity = selectedActivity.getIdActivity();
+                  Utilities.showDetails(
+                      idActivity, "gui/FXMLActivityDetails.fxml", "Detalles de la actividad");
+            }
+      }
+
       @Override public void developerSelected(Integer id, String name)
       {
             this.selectedDeveloperId = id;
@@ -92,7 +95,7 @@ public class FXMLActivitiesInLogController implements Initializable, DeveloperOb
 
       public void receiveData()
       {
-            UserSingleton instance = UserSingleton.getInstace();
+            SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
             idDeveloper = instance.getIdSelected();
       }
 

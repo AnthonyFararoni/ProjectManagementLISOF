@@ -28,7 +28,7 @@ import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.observer.DeveloperObserver;
-import projectmanagementlisof.utils.UserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLEditAssignedActivityDetailsController implements Initializable, DeveloperObserver
