@@ -28,6 +28,8 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.observer.DeveloperObserver;
+import projectmanagementlisof.utils.LoggedUserSingleton;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -38,6 +40,8 @@ import projectmanagementlisof.utils.Utilities;
 public class FXMLCreateActivityController implements DeveloperObserver, Initializable
 {
       private Integer idDeveloper;
+      private Integer idProject;
+      private Integer idProjectManager;
       private String developerName;
       private Utilities utilities = new Utilities();
 
@@ -54,6 +58,10 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
+            SelectedProjectSingleton projectInstance = SelectedProjectSingleton.getInstance();
+            idProject = projectInstance.getIdSelectedProject();
+            LoggedUserSingleton userInstance = LoggedUserSingleton.getInstance();
+            idProjectManager = userInstance.getUserId();
             btnCreateActivity.setDisable(true);
             tfActivityName.textProperty().addListener(
                 (observable, oldValue, newValue) -> checkEnableButton());
@@ -119,6 +127,8 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
             activity.setStatus(2);
             activity.setStartDate(dpStartDate.getValue().toString());
             activity.setEndDate(dpEndDate.getValue().toString());
+            activity.setIdProjectManager(idProjectManager);
+            activity.setIdProject(idProject);
 
             HashMap<String, Object> answer = ActivityDAO.registerAssignedActivity(activity);
             if (!(boolean) answer.get("error"))
@@ -141,6 +151,8 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
             activity.setStatus(1);
             activity.setStartDate(dpStartDate.getValue().toString());
             activity.setEndDate(dpEndDate.getValue().toString());
+            activity.setIdProjectManager(idProjectManager);
+            activity.setIdProject(idProject);
 
             HashMap<String, Object> answer = ActivityDAO.registerUnassignedActivity(activity);
             if (!(boolean) answer.get("error"))

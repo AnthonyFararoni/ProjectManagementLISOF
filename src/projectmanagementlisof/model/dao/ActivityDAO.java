@@ -31,8 +31,8 @@ public class ActivityDAO
                   {
                         String statement =
                             "insert into activity (name, description, status, startDate, "
-                            + "endDate, idDeveloper) "
-                            + "values(?, ?, ?, ?, ?, ?)";
+                            + "endDate, idDeveloper, idProjectManager, idProject) "
+                            + "values(?, ?, ?, ?, ?, ?, ?, ?)";
                         PreparedStatement prepareStatement =
                             connectionBD.prepareStatement(statement);
                         prepareStatement.setString(1, activity.getName());
@@ -41,6 +41,8 @@ public class ActivityDAO
                         prepareStatement.setString(4, activity.getStartDate());
                         prepareStatement.setString(5, activity.getEndDate());
                         prepareStatement.setInt(6, activity.getIdDeveloper());
+                        prepareStatement.setInt(7, activity.getIdProjectManager());
+                        prepareStatement.setInt(8, activity.getIdProject());
                         int affectedRows = prepareStatement.executeUpdate();
                         connectionBD.close();
                         if (affectedRows > 0)
@@ -75,8 +77,8 @@ public class ActivityDAO
                   try
                   {
                         String statement =
-                            "insert into activity (name, description, status, startDate, endDate) "
-                            + "values(?, ?, ?, ?, ?)";
+                            "insert into activity (name, description, status, startDate, endDate, idProjectManager, idProject) "
+                            + "values(?, ?, ?, ?, ?, ?, ?)";
                         PreparedStatement prepareStatement =
                             connectionBD.prepareStatement(statement);
                         prepareStatement.setString(1, activity.getName());
@@ -84,6 +86,8 @@ public class ActivityDAO
                         prepareStatement.setInt(3, activity.getStatus());
                         prepareStatement.setString(4, activity.getStartDate());
                         prepareStatement.setString(5, activity.getEndDate());
+                        prepareStatement.setInt(6, activity.getIdProjectManager());
+                        prepareStatement.setInt(7, activity.getIdProject());
                         int affectedRows = prepareStatement.executeUpdate();
                         connectionBD.close();
                         if (affectedRows > 0)
@@ -119,7 +123,7 @@ public class ActivityDAO
                   {
                         String query =
                             "select a.idActivity, a.name, a.description, a.status , s.status as statusName, "
-                            + "a.startDate, a.endDate, a.idDeveloper, a.idProjectManager from activity a "
+                            + "a.startDate, a.endDate, a.idDeveloper, a.idProjectManager, a.idProject from activity a "
                             + "inner join status s on a.status = s.idStatus "
                             + "where a.idDeveloper = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
@@ -139,6 +143,7 @@ public class ActivityDAO
                               activity.setIdDeveloper(activitiesList.getInt("idDeveloper"));
                               activity.setIdProjectManager(
                                   activitiesList.getInt("idProjectManager"));
+                              activity.setIdProject(activitiesList.getInt("idProject"));
                               activities.add(activity);
                         }
                         connectionBD.close();
@@ -159,7 +164,7 @@ public class ActivityDAO
             return answer;
       }
 
-      public static HashMap<String, Object> getUnassignedActivities()
+      public static HashMap<String, Object> getUnassignedActivities(Integer idProject)
       {
             HashMap<String, Object> answer = new HashMap<>();
             answer.put("error", true);
@@ -170,10 +175,11 @@ public class ActivityDAO
                   {
                         String query =
                             "select a.idActivity, a.name, a.description, a.status , s.status as statusName, "
-                            + "a.startDate, a.endDate, a.idDeveloper, a.idProjectManager from activity a "
+                            + "a.startDate, a.endDate, a.idDeveloper, a.idProjectManager, a.idProject from activity a "
                             + "inner join status s on a.status = s.idStatus "
-                            + "where a.status = 1";
+                            + "where a.status = 1 and a.idProject = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idProject);
                         ResultSet activitiesList = preparedStatement.executeQuery();
                         ArrayList<Activity> activities = new ArrayList<>();
                         while (activitiesList.next())
@@ -189,6 +195,7 @@ public class ActivityDAO
                               activity.setIdDeveloper(activitiesList.getInt("idDeveloper"));
                               activity.setIdProjectManager(
                                   activitiesList.getInt("idProjectManager"));
+                              activity.setIdProject(activitiesList.getInt("idProject"));
                               activities.add(activity);
                         }
                         connectionBD.close();
@@ -260,7 +267,8 @@ public class ActivityDAO
                   {
                         String query =
                             "select a.idActivity, a.name, a.description, a.status , s.status as statusName, "
-                            + "a.startDate, a.endDate, a.idDeveloper, a.idProjectManager from activity a "
+                            + "a.startDate, a.endDate, a.idDeveloper, a.idProjectManager, a.idProject "
+                            + "from activity a "
                             + "inner join status s on a.status = s.idStatus "
                             + "where a.name like ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
@@ -280,6 +288,8 @@ public class ActivityDAO
                               activity.setIdDeveloper(activitiesList.getInt("idDeveloper"));
                               activity.setIdProjectManager(
                                   activitiesList.getInt("idProjectManager"));
+                              activity.setIdProject(activitiesList.getInt("idProject"));
+                              activity.setIdProject(activitiesList.getInt("idProject"));
                               activities.add(activity);
                         }
                         connectionBD.close();
@@ -311,7 +321,8 @@ public class ActivityDAO
                   {
                         String query =
                             "select a.idActivity, a.name, a.description, a.status , s.status as statusName, "
-                            + "a.startDate, a.endDate, a.idDeveloper, a.idProjectManager from activity a "
+                            + "a.startDate, a.endDate, a.idDeveloper, a.idProjectManager, a.idProject "
+                            + "from activity a "
                             + "inner join status s on a.status = s.idStatus "
                             + "where a.idActivity = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
@@ -331,7 +342,7 @@ public class ActivityDAO
                               activity.setIdDeveloper(activityResult.getInt("idDeveloper"));
                               activity.setIdProjectManager(
                                   activityResult.getInt("idProjectManager"));
-
+                              activity.setIdProject(activityResult.getInt("idProject"));
                               connectionBD.close();
                               answer.put("error", false);
                               answer.put("activity", activity);
@@ -411,7 +422,8 @@ public class ActivityDAO
                   {
                         String query = "UPDATE activity SET status = ? WHERE idActivity = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
-                        preparedStatement.setInt(1, 3); // Cambia el estado a 3
+                        /* Cambia el estado a terminado */
+                        preparedStatement.setInt(1, 3);
                         preparedStatement.setInt(2, idActivity);
                         int rowsAffected = preparedStatement.executeUpdate();
 

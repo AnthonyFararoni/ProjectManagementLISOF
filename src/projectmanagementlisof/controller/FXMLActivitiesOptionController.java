@@ -33,6 +33,7 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.observer.DeveloperObserver;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -43,6 +44,7 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
 {
       private ObservableList<Activity> activities;
       private Integer idActivity;
+      Integer idProject;
 
       @FXML private TextField tfSearchActivity;
       @FXML private TableView<Activity> tvUnassignedActivities;
@@ -56,8 +58,10 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
 
       @Override public void initialize(URL location, ResourceBundle resources)
       {
-            configureUnassignedActivitiesTable();
-            getUnassignedActivitiesForTable();
+          SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+          idProject = instance.getIdSelectedProject();  
+          configureUnassignedActivitiesTable();
+          getUnassignedActivitiesForTable();
       }
 
       @FXML private void btnShowCreateActivity(ActionEvent event)
@@ -154,7 +158,7 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
 
       private void getUnassignedActivitiesForTable()
       {
-            HashMap<String, Object> answer = ActivityDAO.getUnassignedActivities();
+            HashMap<String, Object> answer = ActivityDAO.getUnassignedActivities(idProject);
             if (!(boolean) answer.get("error"))
             {
                   activities = FXCollections.observableArrayList();

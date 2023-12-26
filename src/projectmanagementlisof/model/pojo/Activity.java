@@ -21,12 +21,13 @@ public class Activity
       private String endDate;
       private Integer idDeveloper;
       private Integer idProjectManager;
+      private Integer idProject;
 
       public Activity() {}
 
       public Activity(Integer idActivity, String name, String description, Integer status,
           String statusName, String startDate, String endDate, Integer idDeveloper,
-          Integer idProjectManager)
+          Integer idProjectManager, Integer idProject)
       {
             this.idActivity = idActivity;
             this.name = name;
@@ -37,6 +38,7 @@ public class Activity
             this.endDate = endDate;
             this.idDeveloper = idDeveloper;
             this.idProjectManager = idProjectManager;
+            this.idProject = idProject;
       }
 
       public Integer getIdActivity()
@@ -127,5 +129,15 @@ public class Activity
       public void setIdProjectManager(Integer idProjectManager)
       {
             this.idProjectManager = idProjectManager;
+      }
+      
+      public Integer getIdProject()
+      {
+            return idProject;
+      }
+
+      public void setIdProject(Integer idProject)
+      {
+            this.idProject = idProject;
       }
 }
