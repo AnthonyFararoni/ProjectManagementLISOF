@@ -15,6 +15,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,15 +28,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
-import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.ChangeRequest;
-import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.observer.DeveloperObserver;
-import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -46,18 +45,21 @@ import projectmanagementlisof.utils.Utilities;
 public class FXMLChangeRequestOptionController implements Initializable, DeveloperObserver
 {
       private ObservableList<ChangeRequest> changeRequests;
-      private ChangeRequest changeRequest;
+      private ChangeRequest changeRequestObject;
 
       @FXML private TextField tfSearchChangeRequest;
       @FXML private TableView<ChangeRequest> tvChangeRequest;
-      @FXML private TableColumn colJustification;
-      @FXML private TableColumn colCreationDate;
-      @FXML private TableColumn colStatus;
+      @FXML private TableColumn<String, String> colJustification;
+      @FXML private TableColumn<String, String> colCreationDate;
+      @FXML private TableColumn<String, String> colStatus;
       @FXML private Button btnShowChangeRequestDetails;
 
       private Integer idChangeRequest;
       private Integer selectedDeveloperId;
       private String selectedDeveloperName;
+
+      private ObservableList<ChangeRequest> masterData = FXCollections.observableArrayList();
+      private FilteredList<ChangeRequest> filteredData;
 
       /**
        * Initializes the controller class.
@@ -89,6 +91,7 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
                       (ArrayList<ChangeRequest>) answer.get("changeRequests");
                   changeRequests.addAll(list);
                   tvChangeRequest.setItems(changeRequests);
+                  masterData.addAll(changeRequests);
             }
             else
             {
@@ -127,5 +130,49 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
       {
             this.selectedDeveloperId = idDeveloper;
             this.selectedDeveloperName = developerName;
+      }
+
+      @FXML private void clickSearchChangeRequest(KeyEvent event)
+      {
+            searchChangeRequest();
+      }
+
+      private void searchChangeRequest()
+      {
+            String filter = tfSearchChangeRequest.getText();
+
+            if (filter == null || filter.length() == 0)
+            {
+                  filteredData = new FilteredList<>(masterData, p -> true);
+            }
+            else
+            {
+                  filteredData = new FilteredList<>(masterData, p -> true);
+
+                  filteredData.setPredicate(changeRequest -> {
+                        if (filter == null || filter.isEmpty())
+                        {
+                              return true;
+                        }
+                        String lowerCaseFilter = filter.toLowerCase();
+                        if (changeRequest.getJustification().toLowerCase().contains(
+                                lowerCaseFilter))
+                        {
+                              return true;
+                        }
+                        else if (changeRequest.getCreationDate().toLowerCase().contains(
+                                     lowerCaseFilter))
+                        {
+                              return true;
+                        }
+                        else if (changeRequest.getStatus().toLowerCase().contains(lowerCaseFilter))
+                        {
+                              return true;
+                        }
+                        return false;
+                  });
+            }
+
+            tvChangeRequest.setItems(filteredData);
       }
 }

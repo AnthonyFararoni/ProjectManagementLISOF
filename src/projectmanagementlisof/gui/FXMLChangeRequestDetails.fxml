@@ -94,7 +94,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="tfApproveBy" editable="false" layoutX="50.0" layoutY="184.0" prefHeight="31.0" prefWidth="619.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css">
+                  <TextField fx:id="tfReviewedBy" editable="false" layoutX="50.0" layoutY="184.0" prefHeight="31.0" prefWidth="619.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css">
                      <font>
                         <Font size="14.0" />
                      </font>
