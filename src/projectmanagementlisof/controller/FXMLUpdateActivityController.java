@@ -30,6 +30,8 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.observer.DeveloperObserver;
+import projectmanagementlisof.utils.LoggedUserSingleton;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -41,6 +43,8 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
 {
       private Integer idDeveloper;
       private Integer idActivity;
+      private Integer idProject;
+      private Integer idProjectManager;
       private Activity updateActivity;
       private DeveloperObserver observer;
       private Utilities utilities = new Utilities();
@@ -58,6 +62,10 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
+            SelectedProjectSingleton projectInstance = SelectedProjectSingleton.getInstance();
+            idProject = projectInstance.getIdSelectedProject();
+            LoggedUserSingleton userInstance = LoggedUserSingleton.getInstance();
+            idProjectManager = userInstance.getUserId();
             btnUpdateActivity.setDisable(true);
             tfActivityName.textProperty().addListener(
                 (observable, oldValue, newValue) -> checkEnableButton());
@@ -121,6 +129,8 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
             activity.setDescription(taActivityDescription.getText());
             activity.setStartDate(dpStartDate.getValue().toString());
             activity.setEndDate(dpEndDate.getValue().toString());
+            activity.setIdProjectManager(idProjectManager);
+            activity.setIdProject(idProject);
             activity.setIdActivity(idActivity);
 
             HashMap<String, Object> answer = ActivityDAO.updateUnassignedActivity(activity);
@@ -143,9 +153,11 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
             activity.setDescription(taActivityDescription.getText());
             activity.setStartDate(dpStartDate.getValue().toString());
             activity.setEndDate(dpEndDate.getValue().toString());
+            activity.setStatus(2); //Cambia el estado a asignado
             activity.setIdDeveloper(idDeveloper);
+            activity.setIdProjectManager(idProjectManager);
+            activity.setIdProject(idProject);
             activity.setIdActivity(idActivity);
-
             HashMap<String, Object> answer = ActivityDAO.updateAssignedActivity(activity);
             if (!(boolean) answer.get("error"))
             {

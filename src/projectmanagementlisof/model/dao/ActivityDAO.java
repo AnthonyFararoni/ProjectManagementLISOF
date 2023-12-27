@@ -507,7 +507,7 @@ public class ActivityDAO
                   {
                         String statement =
                             "update activity set name = ?, description = ?, startDate = ?, "
-                            + "endDate = ?, idDeveloper = ? where idActivity = ?";
+                            + "endDate = ?, idDeveloper = ?, status = ? where idActivity = ?";
                         PreparedStatement prepareStatement =
                             connectionBD.prepareStatement(statement);
                         prepareStatement.setString(1, activity.getName());
@@ -515,7 +515,8 @@ public class ActivityDAO
                         prepareStatement.setString(3, activity.getStartDate());
                         prepareStatement.setString(4, activity.getEndDate());
                         prepareStatement.setInt(5, activity.getIdDeveloper());
-                        prepareStatement.setInt(6, activity.getIdActivity());
+                        prepareStatement.setInt(6, activity.getStatus());
+                        prepareStatement.setInt(7, activity.getIdActivity());
                         int affectedRows = prepareStatement.executeUpdate();
                         connectionBD.close();
                         if (affectedRows > 0)
