@@ -50,27 +50,42 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
 
       private void loadChangeRequestInformation()
       {
-            tfJustification.setText(this.updateChangeRequest.getJustification());
-            taChangeDescription.setText(this.updateChangeRequest.getDescription());
-            tfDateCreated.setText(this.updateChangeRequest.getCreationDate().toString());
-            tfDateReviewed.setText(this.updateChangeRequest.getReviewDate().toString());
-
-            this.idDeveloper = this.updateChangeRequest.getIdDeveloper();
-
-            HashMap<String, Object> changeRequestInformation =
-                ChangeRequestDAO.getCompleteDeveloperName(
-                    this.updateChangeRequest.getIdDeveloper());
-
-            if (!(boolean) changeRequestInformation.get("error"))
+            try
             {
-                  Developer developer = (Developer) changeRequestInformation.get("developer");
-                  developerNameString = developer.getFullName();
-                  tfRequestedBy.setText(developerNameString);
+                  tfJustification.setText(this.updateChangeRequest.getJustification());
+                  taChangeDescription.setText(this.updateChangeRequest.getDescription());
+
+                  this.idDeveloper = this.updateChangeRequest.getIdDeveloper();
+
+                  HashMap<String, Object> changeRequestInformation =
+                      ChangeRequestDAO.getCompleteDeveloperName(
+                          this.updateChangeRequest.getIdDeveloper());
+
+                  tfDateCreated.setText(this.updateChangeRequest.getCreationDate().toString());
+
+                  if (this.updateChangeRequest.getReviewDate() != null)
+                  {
+                        tfDateReviewed.setText(this.updateChangeRequest.getReviewDate().toString());
+                  }
+
+                  if (!(boolean) changeRequestInformation.get("error"))
+                  {
+                        Developer developer = (Developer) changeRequestInformation.get("developer");
+                        developerNameString = developer.getFullName();
+                        tfRequestedBy.setText(developerNameString);
+                  }
+                  else
+                  {
+                        Utilities.showSimpleAlert("Error de carga",
+                            (String) changeRequestInformation.get("message"),
+                            Alert.AlertType.ERROR);
+                  }
             }
-            else
+            catch (Exception e)
             {
                   Utilities.showSimpleAlert("Error de carga",
-                      (String) changeRequestInformation.get("message"), Alert.AlertType.ERROR);
+                      "Error al cargar la información de la solicitud de cambio",
+                      Alert.AlertType.ERROR);
             }
       }
 

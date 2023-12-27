@@ -19,9 +19,12 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javax.jws.soap.SOAPBinding.Use;
+import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
+import projectmanagementlisof.utils.LoggedUserSingleton;
 import projectmanagementlisof.utils.SelectedItemSingleton;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLNewChangeRequestFormController implements Initializable
@@ -38,6 +41,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
       @Override public void initialize(URL url, ResourceBundle rb)
       {
             setDate();
+            setRequestedBy();
             Utilities.limitTextFieldCharacters(tfJustification, 50);
             Utilities.limitTextAreaCharacters(taChangeDescription, 65535);
       }
@@ -61,27 +65,36 @@ public class FXMLNewChangeRequestFormController implements Initializable
             dpDate.setValue(LocalDate.now());
       }
 
+      private void setRequestedBy()
+      {
+            tfRequestedBy.setText(LoggedUserSingleton.getInstance().getUserFullName());
+      }
+
       private void createChangeRequest()
       {
             ChangeRequest changeRequest = new ChangeRequest();
             changeRequest.setJustification(tfJustification.getText());
             changeRequest.setDescription(taChangeDescription.getText());
-            changeRequest.setStatus(1);
-            changeRequest.setCreationDate(LocalDate.now().toString());
-            changeRequest.setIdDeveloper(1); // TODO change this to the real id
-            changeRequest.setIdProjectManager(1);
-            changeRequest.setIdDefect(1);
+            changeRequest.setCreationDate(dpDate.getValue().toString());
+            changeRequest.setDeveloperName(tfRequestedBy.getText());
+            changeRequest.setIdDeveloper(LoggedUserSingleton.getInstance().getUserId());
+            changeRequest.setIdStatus(2);
 
             HashMap<String, Object> answer = ChangeRequestDAO.createChangeRequest(changeRequest);
-            if ((boolean) answer.get("error"))
+
+            if (!(boolean) answer.get("error"))
             {
                   Utilities.showSimpleAlert(
-                      "Error", (String) answer.get("message"), Alert.AlertType.ERROR);
+                      "Éxito", "Solicitud de cambio creada", Alert.AlertType.INFORMATION);
+                  Stage currentStage = (Stage) apNewChangeRequestForm.getScene().getWindow();
+                  Utilities.loadFXMLInAnchorPaneAndCloseCurrent(currentStage,
+                      "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
+                      "/projectmanagementlisof/gui/FXMLDeveloperChangeRequestsOption.fxml");
             }
             else
             {
                   Utilities.showSimpleAlert(
-                      "Éxito", "Solicitud de cambio registrada", Alert.AlertType.INFORMATION);
+                      "Error", "No se pudo crear la solicitud de cambio", Alert.AlertType.ERROR);
             }
       }
 

@@ -89,11 +89,11 @@ public class ChangeRequestDAO
                               changeRequest.setDescription(resultSet.getString("description"));
                               if (resultSet.getInt("status") == 1)
                               {
-                                    changeRequest.setStatus("Pendiente");
+                                    changeRequest.setStatus("Aprobada");
                               }
                               else if (resultSet.getInt("status") == 2)
                               {
-                                    changeRequest.setStatus("Aprobada");
+                                    changeRequest.setStatus("Pendiente");
                               }
                               else if (resultSet.getInt("status") == 3)
                               {
@@ -203,6 +203,7 @@ public class ChangeRequestDAO
                         preparedStatement.executeUpdate();
                         connectionBD.close();
                         answer.put("error", false);
+                        answer.put("message", "changeRequest");
                   }
                   catch (SQLException ex)
                   {
