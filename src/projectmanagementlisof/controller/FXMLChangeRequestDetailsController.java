@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+import javafx.collections.ListChangeListener.Change;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,9 +15,14 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
+import projectmanagementlisof.model.dao.ProjectDAO;
+import projectmanagementlisof.model.dao.ProjectManagerDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.model.pojo.Developer;
+import projectmanagementlisof.model.pojo.Project;
+import projectmanagementlisof.model.pojo.ProjectManager;
 import projectmanagementlisof.observer.DeveloperObserver;
+import projectmanagementlisof.utils.LoggedUserSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLChangeRequestDetailsController implements Initializable, DeveloperObserver
@@ -26,12 +32,14 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
       @FXML private TextField tfRequestedBy;
       @FXML private TextArea taChangeDescription;
       @FXML private TextField tfDateReviewed;
+      @FXML private TextField tfReviewedBy;
 
       private DeveloperObserver observer;
       private Integer idChangeRequest;
       private ChangeRequest updateChangeRequest;
       private Integer idDeveloper;
       private String developerNameString;
+      private Integer idProjectManager;
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
@@ -80,12 +88,58 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
                             (String) changeRequestInformation.get("message"),
                             Alert.AlertType.ERROR);
                   }
+
+                  try
+                  {
+                        HashMap<String, Object> changeRequest2 =
+                            ChangeRequestDAO.getChangeRequestsById(this.idChangeRequest);
+
+                        if (changeRequest2 != null && changeRequest2.containsKey("changeRequest")
+                            && changeRequest2.get("changeRequest") instanceof ChangeRequest)
+                        {
+                              ChangeRequest changeRequestObject =
+                                  (ChangeRequest) changeRequest2.get("changeRequest");
+
+                              HashMap<String, Object> projectManagerInformation =
+                                  ProjectManagerDAO.getProjectManagerById(
+                                      changeRequestObject.getIdProjectManager());
+
+                              if (projectManagerInformation != null
+                                  && projectManagerInformation.containsKey("projectManager")
+                                  && projectManagerInformation.get("projectManager")
+                                          instanceof ProjectManager)
+                              {
+                                    ProjectManager projectManager =
+                                        (ProjectManager) projectManagerInformation.get(
+                                            "projectManager");
+                                    if (projectManager != null)
+                                    {
+                                          tfReviewedBy.setText(projectManager.getFullName());
+                                    }
+                                    else
+                                    {
+                                          System.out.println("Project Manager is null");
+                                    }
+                              }
+                              else
+                              {
+                                    System.out.println("Project Manager Information is null");
+                              }
+                        }
+                        else
+                        {
+                              System.out.println("Change Request Information is null");
+                        }
+                  }
+                  catch (Exception e)
+                  {
+                        System.out.println("Error: " + e.getMessage());
+                  }
             }
             catch (Exception e)
             {
-                  Utilities.showSimpleAlert("Error de carga",
-                      "Error al cargar la información de la solicitud de cambio",
-                      Alert.AlertType.ERROR);
+                  Utilities.showSimpleAlert(
+                      "Error de carga", e.getMessage(), Alert.AlertType.ERROR);
             }
       }
 
@@ -109,6 +163,16 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
 
       @FXML private void btnAproveChangeRequest(ActionEvent event)
       {
+            HashMap<String, Object> answer2 =
+                ChangeRequestDAO.getChangeRequestsById(this.idChangeRequest);
+
+            ChangeRequest changeRequestAnswer = (ChangeRequest) answer2.get("changeRequest");
+
+            changeRequestAnswer.setIdProjectManager(LoggedUserSingleton.getInstance().getUserId());
+            changeRequestAnswer.setReviewDate(LocalDate.now().toString());
+
+            ChangeRequestDAO.updateIdProjectManagerAndReviewDate(changeRequestAnswer);
+
             HashMap<String, Object> answer =
                 ChangeRequestDAO.approveChangeRequest(this.idChangeRequest);
 
@@ -129,6 +193,16 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
 
       @FXML private void btnRejectChangeRequest(ActionEvent event)
       {
+            HashMap<String, Object> answer2 =
+                ChangeRequestDAO.getChangeRequestsById(this.idChangeRequest);
+
+            ChangeRequest changeRequestAnswer = (ChangeRequest) answer2.get("changeRequest");
+
+            changeRequestAnswer.setIdProjectManager(LoggedUserSingleton.getInstance().getUserId());
+            changeRequestAnswer.setReviewDate(LocalDate.now().toString());
+
+            ChangeRequestDAO.updateIdProjectManagerAndReviewDate(changeRequestAnswer);
+
             HashMap<String, Object> answer =
                 ChangeRequestDAO.rejectChangeRequest(this.idChangeRequest);
 
