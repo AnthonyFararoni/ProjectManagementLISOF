@@ -6,57 +6,95 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javax.jws.soap.SOAPBinding.Use;
+import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
+import projectmanagementlisof.utils.LoggedUserSingleton;
+import projectmanagementlisof.utils.SelectedItemSingleton;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLNewChangeRequestFormController implements Initializable
 {
-      private Utilities utilities = new Utilities();
+      @FXML private AnchorPane apNewChangeRequestForm;
       @FXML private TextField tfRequestedBy;
       @FXML private DatePicker dpDate;
       @FXML private TextField tfJustification;
       @FXML private TextField tfRequestNumber;
-      @FXML private TextField tfChangeDescription;
+      @FXML private TextArea taChangeDescription;
+      private ChangeRequest developerName;
+      private Integer idDeveloper;
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-            // btnRegisterChangeRequest.setCursor(Cursor.HAND);
+            setDate();
+            setRequestedBy();
+            Utilities.limitTextFieldCharacters(tfJustification, 50);
+            Utilities.limitTextAreaCharacters(taChangeDescription, 65535);
       }
 
       @FXML private void btnCreateChangeRequest(ActionEvent event)
       {
             if (validateFields())
-            {
                   createChangeRequest();
-            }
+      }
+
+      @FXML private void clickImageReturn(MouseEvent event)
+      {
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Utilities.loadFXMLInAnchorPaneAndCloseCurrent(currentStage,
+                "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
+                "/projectmanagementlisof/gui/FXMLDeveloperChangeRequestsOption.fxml");
+      }
+
+      private void setDate()
+      {
+            dpDate.setValue(LocalDate.now());
+      }
+
+      private void setRequestedBy()
+      {
+            tfRequestedBy.setText(LoggedUserSingleton.getInstance().getUserFullName());
       }
 
       private void createChangeRequest()
       {
             ChangeRequest changeRequest = new ChangeRequest();
             changeRequest.setJustification(tfJustification.getText());
-            changeRequest.setDescription(tfChangeDescription.getText());
-            changeRequest.setStatus(1);
-            changeRequest.setCreationDate(LocalDate.now().toString());
-            changeRequest.setIdDeveloper(1);
-            changeRequest.setIdProjectManager(1);
-            changeRequest.setIdDefect(1);
+            changeRequest.setDescription(taChangeDescription.getText());
+            changeRequest.setCreationDate(dpDate.getValue().toString());
+            changeRequest.setDeveloperName(tfRequestedBy.getText());
+            changeRequest.setIdDeveloper(LoggedUserSingleton.getInstance().getUserId());
+            changeRequest.setIdStatus(2);
 
             HashMap<String, Object> answer = ChangeRequestDAO.createChangeRequest(changeRequest);
-            if ((boolean) answer.get("error"))
+
+            if (!(boolean) answer.get("error"))
             {
                   Utilities.showSimpleAlert(
-                      "Error", (String) answer.get("message"), Alert.AlertType.ERROR);
+                      "Éxito", "Solicitud de cambio creada", Alert.AlertType.INFORMATION);
+                  Stage currentStage = (Stage) apNewChangeRequestForm.getScene().getWindow();
+                  Utilities.loadFXMLInAnchorPaneAndCloseCurrent(currentStage,
+                      "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
+                      "/projectmanagementlisof/gui/FXMLDeveloperChangeRequestsOption.fxml");
             }
             else
             {
                   Utilities.showSimpleAlert(
-                      "Éxito", "Solicitud de cambio registrada", Alert.AlertType.INFORMATION);
+                      "Error", "No se pudo crear la solicitud de cambio", Alert.AlertType.ERROR);
             }
       }
 
@@ -70,7 +108,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
                       "Error", "Debe ingresar una justificación", Alert.AlertType.ERROR);
                   isValid = false;
             }
-            else if (tfChangeDescription.getText().isEmpty())
+            else if (taChangeDescription.getText().isEmpty())
             {
                   Utilities.showSimpleAlert(
                       "Error", "Debe ingresar una descripción del cambio", Alert.AlertType.ERROR);

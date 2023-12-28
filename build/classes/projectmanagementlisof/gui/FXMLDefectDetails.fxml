@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLDefectDetailsController">
+   <children>
+      <Pane prefHeight="91.0" prefWidth="954.0" style="-fx-background-color: Black;">
+         <children>
+            <Label layoutX="260.0" layoutY="12.0" text="Detalles del Defecto" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="46.0" />
+               </font>
+            </Label>
+            <ImageView fx:id="imgBackButton" fitHeight="68.0" fitWidth="65.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#goBackToLanding" onMouseEntered="#changeToHandCursor" onMouseExited="#changeToDefaultCursor" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/ReturnIcon2.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Pane layoutY="91.0" prefHeight="531.0" prefWidth="954.0">
+         <children>
+            <Label layoutX="93.0" layoutY="90.0" text="No. Defecto">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="244.0" layoutY="90.0" text="Fecha de hallazgo">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="467.0" layoutY="90.0" text="Esfuerzo">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="627.0" layoutY="90.0" text="Tipo">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="87.0" layoutY="180.0" text="Descripción del defecto">
+               <font>
+                  <Font name="System Bold" size="25.0" />
+               </font>
+            </Label>
+            <TextField fx:id="tfFoundDate" editable="false" focusTraversable="false" layoutX="244.0" layoutY="126.0" prefHeight="44.0" prefWidth="216.0" promptText="Fecha de hallazgo">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="tfIdDefect" editable="false" focusTraversable="false" layoutX="93.0" layoutY="126.0" prefHeight="44.0" prefWidth="141.0" promptText="No. Defecto" styleClass="lower-gray-text-area" stylesheets="@../css/Style.css">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="tfTimeCost" editable="false" focusTraversable="false" layoutX="467.0" layoutY="126.0" prefHeight="44.0" prefWidth="155.0" promptText="Esfuerzo">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextField fx:id="tfType" editable="false" focusTraversable="false" layoutX="627.0" layoutY="126.0" prefHeight="44.0" prefWidth="234.0" promptText="Tipo">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextField>
+            <TextArea fx:id="taDescription" editable="false" focusTraversable="false" layoutX="93.0" layoutY="219.0" prefHeight="200.0" prefWidth="774.0" promptText="Descripcion del defecto">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </TextArea>
+         </children>
+      </Pane>
+   </children>
+   <stylesheets>
+      <URL value="@/projectmanagementlisof/css/Style.css" />
+   </stylesheets>
+</AnchorPane>

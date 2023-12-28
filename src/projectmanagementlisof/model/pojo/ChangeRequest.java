@@ -5,7 +5,6 @@ public class ChangeRequest
       private Integer idChangeRequest;
       private String justification;
       private String description;
-      private Integer idStatus;
       private String status;
       private String creationDate;
       private String reviewDate;
@@ -14,6 +13,7 @@ public class ChangeRequest
       private Integer idProjectManager;
       private String projectManagerName;
       private Integer idDefect;
+      private Integer idStatus;
 
       public ChangeRequest() {}
 
@@ -33,6 +33,7 @@ public class ChangeRequest
             this.idProjectManager = idProjectManager;
             this.projectManagerName = projectManagerName;
             this.idDefect = idDefect;
+            this.idStatus = idStatus;
       }
 
       public Integer getIdChangeRequest()
@@ -134,6 +135,11 @@ public class ChangeRequest
             this.idDeveloper = idDeveloper;
       }
 
+    
+
+    
+      
+
       public Integer getIdProjectManager()
       {
             return idProjectManager;
@@ -142,7 +148,7 @@ public class ChangeRequest
       public void setIdProjectManager(Integer idProjectManager)
       {
             this.idProjectManager = idProjectManager;
-      }
+      }  
 
       public Integer getIdDefect()
       {
