@@ -110,6 +110,10 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
                         {
                               return true;
                         }
+                        else if (changeRequest.getStatus().toLowerCase().contains(lowerCaseFilter))
+                        {
+                              return true;
+                        }
                         return false;
                   });
             });
