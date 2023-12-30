@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -48,16 +49,31 @@ public class FXMLNewChangeRequestFormController implements Initializable
 
       @FXML private void btnCreateChangeRequest(ActionEvent event)
       {
-            if (validateFields())
-                  createChangeRequest();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "¿Está seguro de crear esta solicitud de cambio?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES)
+            {
+                  if (validateFields())
+                        createChangeRequest();
+            }
       }
 
       @FXML private void clickImageReturn(MouseEvent event)
       {
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Utilities.loadFXMLInAnchorPaneAndCloseCurrent(currentStage,
-                "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
-                "/projectmanagementlisof/gui/FXMLDeveloperChangeRequestsOption.fxml");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "¿Está seguro de cancelar el proceso de registro de la solicitud de cambio?",
+                ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES)
+            {
+                  Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                  Utilities.loadFXMLInAnchorPaneAndCloseCurrent(currentStage,
+                      "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
+                      "/projectmanagementlisof/gui/FXMLDeveloperChangeRequestsOption.fxml");
+            }
       }
 
       private void setDate()
