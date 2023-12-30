@@ -514,7 +514,16 @@ public class ActivityDAO
                         prepareStatement.setString(2, activity.getDescription());
                         prepareStatement.setString(3, activity.getStartDate());
                         prepareStatement.setString(4, activity.getEndDate());
-                        prepareStatement.setInt(5, activity.getIdDeveloper());
+
+                        if (activity.getIdDeveloper() == null)
+                        {
+                              prepareStatement.setNull(5, java.sql.Types.INTEGER);
+                        }
+                        else
+                        {
+                              prepareStatement.setInt(5, activity.getIdDeveloper());
+                        }
+
                         prepareStatement.setInt(6, activity.getIdActivity());
                         int affectedRows = prepareStatement.executeUpdate();
                         connectionBD.close();
