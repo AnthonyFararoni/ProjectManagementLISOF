@@ -44,9 +44,6 @@ public class FXMLLogInController implements Initializable
                         event.consume();
                   }
             });
-
-            txUser.setText("mcorck1");
-            pswPassword.setText("tT2*q`f)");
       }
 
       @FXML private void btnLogIn(ActionEvent event)
