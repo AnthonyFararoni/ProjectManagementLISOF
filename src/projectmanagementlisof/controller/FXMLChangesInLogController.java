@@ -75,7 +75,7 @@ public class FXMLChangesInLogController implements Initializable
 
       private void configureChangesTable()
       {
-            colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+            colType.setCellValueFactory(new PropertyValueFactory<>("typeName"));
             colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
             colDate.setCellValueFactory(new PropertyValueFactory<>("dateCreated"));
       }

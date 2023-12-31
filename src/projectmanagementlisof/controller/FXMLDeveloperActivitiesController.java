@@ -62,17 +62,7 @@ public class FXMLDeveloperActivitiesController implements Initializable
             colActivityName.setCellValueFactory(new PropertyValueFactory<>("name"));
             colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
             colEndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-            colStatus.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<Activity, String>,
-                    ObservableValue<String>>() {
-                      @Override
-                      public ObservableValue<String> call(
-                          TableColumn.CellDataFeatures<Activity, String> param)
-                      {
-                            return new SimpleStringProperty(
-                                convertStatusToString(param.getValue().getStatus()));
-                      }
-                });
+            colStatus.setCellValueFactory(new PropertyValueFactory<>("statusName"));
             fillAssignedActivitiesToDeveloper();
 
             btnViewDetails.setDisable(true);
@@ -97,20 +87,6 @@ public class FXMLDeveloperActivitiesController implements Initializable
                             btnEndActivity.setDisable(true);
                       }
                 });
-      }
-      private String convertStatusToString(int status)
-      {
-            switch (status)
-            {
-                  case 1:
-                        return "No asignada";
-                  case 2:
-                        return "Pendiente";
-                  case 3:
-                        return "Concluida";
-                  default:
-                        return "Desconocido";
-            }
       }
       @FXML private void btnSearchActivity(MouseEvent event) {}
 

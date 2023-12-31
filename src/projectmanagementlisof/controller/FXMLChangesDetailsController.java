@@ -58,7 +58,7 @@ public class FXMLChangesDetailsController implements Initializable
             {
                   Change change = (Change) result.get("change");
                   tfFoundDate.setText(change.getDateCreated());
-                  tfChangeType.setText(String.valueOf(change.getType()));
+                  tfChangeType.setText(change.getTypeName());
                   taDescription.setText(change.getDescription());
             }
             else

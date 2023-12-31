@@ -70,10 +70,10 @@ public class ChangeDAO
             {
                   try
                   {
-                        String query = "SELECT *\n"
-                            + "FROM `change` c\n"
-                            + "INNER JOIN type t ON c.type = t.idtype\n"
-                            + "WHERE c.idDeveloper = ?";
+                    String query = "SELECT c.idChange, c.description, c.dateCreated, c.idDeveloper, c.type, t.type AS typeName\n"
+                                + "FROM `change` c\n"
+                                + "INNER JOIN type t ON c.type = t.idType\n"
+                                + "WHERE c.idDeveloper = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idDeveloper);
                         ResultSet activitiesList = preparedStatement.executeQuery();
@@ -85,6 +85,7 @@ public class ChangeDAO
                               change.setType(activitiesList.getInt("type"));
                               change.setDescription(activitiesList.getString("description"));
                               change.setDateCreated(activitiesList.getString("dateCreated"));
+                              change.setTypeName(activitiesList.getString("typeName"));
 
                               changes.add(change);
                         }
@@ -115,7 +116,10 @@ public class ChangeDAO
             {
                   try
                   {
-                        String query = "SELECT * FROM `change` WHERE idChange = ?";
+                        String query = "SELECT c.idChange, c.description, c.dateCreated, c.idDeveloper, c.type, t.type AS typeName\n"
+                                + "FROM `change` c\n"
+                                + "INNER JOIN type t ON c.type = t.idType\n"
+                                + "WHERE c.idChange = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idChange);
                         ResultSet changeResult = preparedStatement.executeQuery();
@@ -128,6 +132,8 @@ public class ChangeDAO
                               change.setDescription(changeResult.getString("description"));
                               change.setDateCreated(changeResult.getString("dateCreated"));
                               change.setIdDeveloper(changeResult.getInt("idDeveloper"));
+                              change.setTypeName(changeResult.getString("typeName"));
+                              
 
                               connectionBD.close();
                               answer.put("error", false);
