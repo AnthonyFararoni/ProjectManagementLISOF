@@ -139,6 +139,7 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
             activity.setDescription(taActivityDescription.getText());
             activity.setStartDate(dpStartDate.getValue().toString());
             activity.setEndDate(dpEndDate.getValue().toString());
+            activity.setStatus(2);
 
             if (this.idDeveloper != null)
             {
