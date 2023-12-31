@@ -29,7 +29,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
-import projectmanagementlisof.model.pojo.Activity;
 import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.observer.DeveloperObserver;
 import projectmanagementlisof.utils.Utilities;
@@ -108,6 +107,10 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
                         }
                         else if (changeRequest.getDescription().toLowerCase().contains(
                                      lowerCaseFilter))
+                        {
+                              return true;
+                        }
+                        else if (changeRequest.getStatus().toLowerCase().contains(lowerCaseFilter))
                         {
                               return true;
                         }

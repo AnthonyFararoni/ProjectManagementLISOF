@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -68,8 +69,16 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
 
       @FXML private void clickImageReturn(MouseEvent event)
       {
-            Stage currentStage = (Stage) taActivityName.getScene().getWindow();
-            Utilities.closeWindow(currentStage);
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "¿Está seguro de volver? Los cambios no guardados se perderán.", ButtonType.YES,
+                ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES)
+            {
+                  Stage currentStage = (Stage) taActivityName.getScene().getWindow();
+                  Utilities.closeWindow(currentStage);
+            }
       }
 
       @FXML private void clickChooseDeveloper(ActionEvent event)
@@ -96,12 +105,30 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
 
       @FXML private void clickDeassignDeveloper(ActionEvent event)
       {
-            tfAssignedDeveloper.setText("");
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "¿Está seguro de desasignar el desarrollador?", ButtonType.YES, ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES)
+            {
+                  tfAssignedDeveloper.setText("");
+                  this.idDeveloper = null;
+            }
       }
 
       @FXML private void btnEditAssignedActivity(ActionEvent event)
       {
-            updateAssignedActivity();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
+                "¿Está seguro de guardar los detalles de la actividad?", ButtonType.YES,
+                ButtonType.NO);
+            alert.showAndWait();
+
+            if (alert.getResult() == ButtonType.YES)
+            {
+                  updateAssignedActivity();
+                  Stage currentStage = (Stage) taActivityName.getScene().getWindow();
+                  Utilities.closeWindow(currentStage);
+            }
       }
 
       private void updateAssignedActivity()
@@ -112,10 +139,17 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
             activity.setDescription(taActivityDescription.getText());
             activity.setStartDate(dpStartDate.getValue().toString());
             activity.setEndDate(dpEndDate.getValue().toString());
-            activity.setIdDeveloper(this.idDeveloper);
+            activity.setStatus(2);
+
+            if (this.idDeveloper != null)
+            {
+                  activity.setIdDeveloper(this.idDeveloper);
+            }
+
             activity.setIdActivity(idActivity);
 
             HashMap<String, Object> answer = ActivityDAO.updateAssignedActivity(activity);
+
             if (!(boolean) answer.get("error"))
             {
                   Utilities.showSimpleAlert("Cambios Guardados", (String) answer.get("message"),

@@ -506,16 +506,25 @@ public class ActivityDAO
                   try
                   {
                         String statement =
-                            "update activity set name = ?, description = ?, startDate = ?, "
-                            + "endDate = ?, idDeveloper = ?, status = ? where idActivity = ?";
+                            "update activity set name = ?, description = ?, status = ?, startDate = ?, "
+                            + "endDate = ?, idDeveloper = ? where idActivity = ?";
                         PreparedStatement prepareStatement =
                             connectionBD.prepareStatement(statement);
                         prepareStatement.setString(1, activity.getName());
                         prepareStatement.setString(2, activity.getDescription());
-                        prepareStatement.setString(3, activity.getStartDate());
-                        prepareStatement.setString(4, activity.getEndDate());
-                        prepareStatement.setInt(5, activity.getIdDeveloper());
-                        prepareStatement.setInt(6, activity.getStatus());
+                        prepareStatement.setInt(3, activity.getStatus());
+                        prepareStatement.setString(4, activity.getStartDate());
+                        prepareStatement.setString(5, activity.getEndDate());
+
+                        if (activity.getIdDeveloper() == null)
+                        {
+                              prepareStatement.setNull(6, java.sql.Types.INTEGER);
+                        }
+                        else
+                        {
+                              prepareStatement.setInt(6, activity.getIdDeveloper());
+                        }
+
                         prepareStatement.setInt(7, activity.getIdActivity());
                         int affectedRows = prepareStatement.executeUpdate();
                         connectionBD.close();

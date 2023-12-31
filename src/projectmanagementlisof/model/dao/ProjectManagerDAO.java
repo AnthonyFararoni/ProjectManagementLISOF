@@ -16,13 +16,14 @@ import projectmanagementlisof.model.pojo.ProjectManager;
  *
  * @author edmun
  */
-public class ProjectManagerDAO {
-    
-    public static HashMap<String, Object> checkProjectManager(String user) {
-        HashMap<String, Object> answer = new HashMap<>();
-        answer.put("error", true);
-        int exists = 0;
-        Connection connectionBD = ConnectionDB.getConnection();
+public class ProjectManagerDAO
+{
+      public static HashMap<String, Object> checkProjectManager(String user)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            int exists = 0;
+            Connection connectionBD = ConnectionDB.getConnection();
 
             if (connectionBD != null)
             {
@@ -144,6 +145,102 @@ public class ProjectManagerDAO {
                               connectionBD.close();
                               answer.put("error", false);
                               answer.put("projectManager", manager);
+                        }
+                        else
+                        {
+                              answer.put("message",
+                                  "No se encontró ningún responsable del proyecto con las credenciales proporcionadas.");
+                        }
+                  }
+                  catch (SQLException ex)
+                  {
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message",
+                      "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde.");
+            }
+            return answer;
+      }
+
+      public static HashMap<String, Object> getProjectManagerById(int idProjectManager)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query = "SELECT * FROM projectmanager WHERE idProjectManager = ?";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idProjectManager);
+
+                        ResultSet managerResult = preparedStatement.executeQuery();
+
+                        if (managerResult.next())
+                        {
+                              ProjectManager manager = new ProjectManager();
+                              manager.setName(managerResult.getString("name"));
+                              manager.setLastName(managerResult.getString("lastname"));
+                              manager.setSecondLastname(managerResult.getString("secondLastname"));
+                              manager.setFullName();
+                              manager.setManagerLogin(managerResult.getString("managerLogin"));
+                              manager.setManagerId(managerResult.getInt("idProjectManager"));
+
+                              connectionBD.close();
+                              answer.put("error", false);
+                              answer.put("projectManager", manager);
+                        }
+                        else
+                        {
+                              answer.put("message",
+                                  "No se encontró ningún responsable del proyecto con las credenciales proporcionadas.");
+                        }
+                  }
+                  catch (SQLException ex)
+                  {
+                        answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message",
+                      "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde.");
+            }
+            return answer;
+      }
+
+      public static HashMap<String, Object> getCompleteProjectManagerName(int idProjectManager)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query =
+                            "SELECT name, lastname, secondLastname FROM projectmanager WHERE idProjectManager = ?";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idProjectManager);
+
+                        ResultSet managerResult = preparedStatement.executeQuery();
+
+                        if (managerResult.next())
+                        {
+                              String name = managerResult.getString("name");
+                              String lastName = managerResult.getString("lastname");
+                              String secondLastName = managerResult.getString("secondLastname");
+                              String fullName = name + " " + lastName + " " + secondLastName;
+
+                              connectionBD.close();
+                              answer.put("error", false);
+                              answer.put("fullName", fullName);
                         }
                         else
                         {

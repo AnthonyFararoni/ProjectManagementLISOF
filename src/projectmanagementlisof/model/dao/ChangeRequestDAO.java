@@ -89,11 +89,11 @@ public class ChangeRequestDAO
                               changeRequest.setDescription(resultSet.getString("description"));
                               if (resultSet.getInt("status") == 1)
                               {
-                                    changeRequest.setStatus("Pendiente");
+                                    changeRequest.setStatus("Aprobada");
                               }
                               else if (resultSet.getInt("status") == 2)
                               {
-                                    changeRequest.setStatus("Aprobada");
+                                    changeRequest.setStatus("Pendiente");
                               }
                               else if (resultSet.getInt("status") == 3)
                               {
@@ -129,49 +129,44 @@ public class ChangeRequestDAO
       public static HashMap<String, Object> getChangeRequestsById(Integer idChangeRequest)
       {
             HashMap<String, Object> answer = new LinkedHashMap<>();
-            answer.put("error", true);
+            ChangeRequest changeRequest = new ChangeRequest();
             Connection connectionBD = ConnectionDB.getConnection();
 
             if (connectionBD != null)
             {
                   try
                   {
-                        String query = "SELECT c.idChangeRequest, c.justification, c.description, "
-                            + "c.status, c.creationDate, c.reviewDate, FROM ChangeRequest c, "
-                            + "INNER JOIN Developer d ON c.idDeveloper = d.idDeveloper "
-                            + "WHERE c.idChangeRequest = " + idChangeRequest + ";";
-
+                        String query = "SELECT * FROM ChangeRequest WHERE idChangeRequest = ?;";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
-                        ResultSet changeRequestList = preparedStatement.executeQuery();
-                        ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
+                        preparedStatement.setInt(1, idChangeRequest);
+                        ResultSet resultSet = preparedStatement.executeQuery();
 
-                        while (changeRequestList.next())
+                        if (resultSet.next())
                         {
-                              ChangeRequest changeRequest = new ChangeRequest();
-                              changeRequest.setIdChangeRequest(
-                                  changeRequestList.getInt("idChangeRequest"));
-                              changeRequest.setJustification(
-                                  changeRequestList.getString("justification"));
-                              changeRequest.setDescription(
-                                  changeRequestList.getString("description"));
-                              // changeRequest.setStatus(changeRequestList.getInt("status"));
-                              changeRequest.setCreationDate(
-                                  changeRequestList.getString("creationDate"));
-                              changeRequest.setReviewDate(
-                                  changeRequestList.getString("reviewDate"));
-                              changeRequests.add(changeRequest);
+                              changeRequest.setIdChangeRequest(resultSet.getInt("idChangeRequest"));
+                              changeRequest.setJustification(resultSet.getString("justification"));
+                              changeRequest.setDescription(resultSet.getString("description"));
+                              changeRequest.setStatus(resultSet.getInt("status"));
+                              changeRequest.setCreationDate(resultSet.getString("creationDate"));
+                              changeRequest.setReviewDate(resultSet.getString("reviewDate"));
+                              changeRequest.setIdDeveloper(resultSet.getInt("idDeveloper"));
+                              changeRequest.setIdProjectManager(
+                                  resultSet.getInt("idProjectManager"));
                         }
+
                         connectionBD.close();
                         answer.put("error", false);
-                        answer.put("changeRequests", changeRequests);
+                        answer.put("changeRequest", changeRequest);
                   }
                   catch (SQLException ex)
                   {
+                        answer.put("error", true);
                         answer.put("message", "Error: " + ex.getMessage());
                   }
             }
             else
             {
+                  answer.put("error", true);
                   answer.put("message",
                       "Hubo un error al intentar conectar con la base de datos. Intente "
                           + "de nuevo más tarde");
@@ -203,6 +198,7 @@ public class ChangeRequestDAO
                         preparedStatement.executeUpdate();
                         connectionBD.close();
                         answer.put("error", false);
+                        answer.put("message", "changeRequest");
                   }
                   catch (SQLException ex)
                   {
@@ -381,7 +377,7 @@ public class ChangeRequestDAO
                   try
                   {
                         String query =
-                            "update ChangeRequest set status = 2 where idChangeRequest = ?";
+                            "update ChangeRequest set status = 1 where idChangeRequest = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idChangeRequest);
                         int affectedRows = preparedStatement.executeUpdate();
@@ -436,6 +432,48 @@ public class ChangeRequestDAO
                   catch (SQLException ex)
                   {
                         answer.put("message", "Error: " + ex.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message", "Error en la conexion a la base de datos.");
+            }
+            return answer;
+      }
+
+      public static HashMap<String, Object> updateIdProjectManagerAndReviewDate(
+          ChangeRequest changeRequest)
+      {
+            HashMap<String, Object> answer = new HashMap();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String statement =
+                            "update changerequest set idProjectManager = ?, reviewDate = ? "
+                            + "where idChangeRequest = ?";
+                        PreparedStatement prepareStatement =
+                            connectionBD.prepareStatement(statement);
+                        prepareStatement.setInt(1, changeRequest.getIdProjectManager());
+                        prepareStatement.setString(2, changeRequest.getReviewDate());
+                        prepareStatement.setInt(3, changeRequest.getIdChangeRequest());
+                        int affectedRows = prepareStatement.executeUpdate();
+                        connectionBD.close();
+                        if (affectedRows > 0)
+                        {
+                              answer.put("error", false);
+                              answer.put("message", "Cambio Guardado.");
+                        }
+                        else
+                        {
+                              answer.put("message", "Error en la base de datos.");
+                        }
+                  }
+                  catch (SQLException e)
+                  {
+                        answer.put("message", "Error: " + e.getMessage());
                   }
             }
             else

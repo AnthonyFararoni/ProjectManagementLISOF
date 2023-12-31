@@ -27,20 +27,14 @@ import projectmanagementlisof.utils.Utilities;
 
 public class FXMLLogInController implements Initializable
 {
+      @FXML private TextField txUser;
+      @FXML private PasswordField pswPassword;
+      @FXML private Label lbUserDontExist;
+      @FXML private Label lbWrongPassword;
+      @FXML private Label lbEmptyFields;
+      private String user;
+      private String password;
 
-    @FXML
-    private TextField txUser;
-    @FXML
-    private PasswordField pswPassword;
-    @FXML
-    private Label lbUserDontExist;
-    @FXML
-    private Label lbWrongPassword;
-    @FXML
-    private Label lbEmptyFields;
-    private String user;
-    private String password;
-    
       @Override public void initialize(URL url, ResourceBundle rb)
       {
             pswPassword.setOnKeyPressed(event -> {
@@ -52,21 +46,24 @@ public class FXMLLogInController implements Initializable
             });
       }
 
-      @FXML private void btnLogIn(ActionEvent event) {
-          user = txUser.getText();
-          password = pswPassword.getText();
-          lbWrongPassword.setVisible(false);
-          lbUserDontExist.setVisible(false);
-          lbEmptyFields.setVisible(false);
-          Utilities.noBoder(txUser);
-          Utilities.noBoder(pswPassword);
-          if(filledFields()){
-            int developerExits = checkDeveloperInDB();
-            int managerExists = checkProjectManagerInDB();
-            if(developerExits == 0 && managerExists == 0){
-              lbUserDontExist.setVisible(true);
-            }   
-          }
+      @FXML private void btnLogIn(ActionEvent event)
+      {
+            user = txUser.getText();
+            password = pswPassword.getText();
+            lbWrongPassword.setVisible(false);
+            lbUserDontExist.setVisible(false);
+            lbEmptyFields.setVisible(false);
+            Utilities.noBoder(txUser);
+            Utilities.noBoder(pswPassword);
+            if (filledFields())
+            {
+                  int developerExits = checkDeveloperInDB();
+                  int managerExists = checkProjectManagerInDB();
+                  if (developerExits == 0 && managerExists == 0)
+                  {
+                        lbUserDontExist.setVisible(true);
+                  }
+            }
       }
 
       private int checkDeveloperInDB()
@@ -92,22 +89,27 @@ public class FXMLLogInController implements Initializable
             }
             return methodResponse;
       }
-      
-      private int checkProjectManagerInDB(){
-          HashMap<String, Object> answer = ProjectManagerDAO.checkProjectManagerLogIn(user, password);
-          int  managerResult = (int) answer.get("result");
-          int response = 0;
-          if(managerResult == 2){
-              response = 1;
-               HashMap<String, Object> loggedManager = ProjectManagerDAO.getProjectManagerByCredentials(user, password);
-               ProjectManager manager = (ProjectManager) loggedManager.get("projectManager");
-               managerFollowUp(manager);
-          } 
-          else if (managerResult == 1){
-              response = 1;
-              lbWrongPassword.setVisible(true);
-          }
-          return response;
+
+      private int checkProjectManagerInDB()
+      {
+            HashMap<String, Object> answer =
+                ProjectManagerDAO.checkProjectManagerLogIn(user, password);
+            int managerResult = (int) answer.get("result");
+            int response = 0;
+            if (managerResult == 2)
+            {
+                  response = 1;
+                  HashMap<String, Object> loggedManager =
+                      ProjectManagerDAO.getProjectManagerByCredentials(user, password);
+                  ProjectManager manager = (ProjectManager) loggedManager.get("projectManager");
+                  managerFollowUp(manager);
+            }
+            else if (managerResult == 1)
+            {
+                  response = 1;
+                  lbWrongPassword.setVisible(true);
+            }
+            return response;
       }
 
       private boolean filledFields()
@@ -128,35 +130,44 @@ public class FXMLLogInController implements Initializable
                   lbEmptyFields.setVisible(true);
             }
             return filledFields;
-        }
-      
-      private void managerFollowUp(ProjectManager manager){
-          int idManager = manager.getManagerId();
-          Stage currentStage = (Stage) txUser.getScene().getWindow();
-          HashMap<String, Object> daoResponse = new HashMap<>();
-          daoResponse = ProjectDAO.isInMoreProjects(idManager);
-          int projects = (int) daoResponse.get("projects");
-          switch (projects){
-            case 0:
-                Utilities.showSimpleAlert("Error", "No se han encontrado proyectos a su cargo. Porfavor comuniquese con el director de carrera", Alert.AlertType.WARNING);
-            break;
-            case 1:    
-                setProjectt(idManager);
-                Utilities.goTolanding(currentStage, manager.getFullName(), manager.getManagerLogin(), manager.getManagerId(),"gui/FXMLProjectManagerLanding.fxml", "Inicio");
-            break;
-            case 2:
-            Utilities.goTolanding(currentStage, manager.getFullName(), manager.getManagerLogin(), manager.getManagerId(),"gui/FXMLSelectProject.fxml", "Inicio");
-            break;
-          }
       }
-      
-      private void setProjectt(int idManager){
-          HashMap<String, Object> daoProject = new HashMap<>();
-          daoProject = ProjectDAO.getManagerProjects(idManager);
-          ArrayList<Project> list = (ArrayList<Project>) daoProject.get("projects");
-          Project project = list.get(0);
-          int projectId = project.getIdProject() ;
-          SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
-          instance.setIdSelectedProject(projectId);
+
+      private void managerFollowUp(ProjectManager manager)
+      {
+            int idManager = manager.getManagerId();
+            Stage currentStage = (Stage) txUser.getScene().getWindow();
+            HashMap<String, Object> daoResponse = new HashMap<>();
+            daoResponse = ProjectDAO.isInMoreProjects(idManager);
+            int projects = (int) daoResponse.get("projects");
+            switch (projects)
+            {
+                  case 0:
+                        Utilities.showSimpleAlert("Error",
+                            "No se han encontrado proyectos a su cargo. Porfavor comuniquese con el director de carrera",
+                            Alert.AlertType.WARNING);
+                        break;
+                  case 1:
+                        setProjectt(idManager);
+                        Utilities.goTolanding(currentStage, manager.getFullName(),
+                            manager.getManagerLogin(), manager.getManagerId(),
+                            "gui/FXMLProjectManagerLanding.fxml", "Inicio");
+                        break;
+                  case 2:
+                        Utilities.goTolanding(currentStage, manager.getFullName(),
+                            manager.getManagerLogin(), manager.getManagerId(),
+                            "gui/FXMLSelectProject.fxml", "Inicio");
+                        break;
+            }
+      }
+
+      private void setProjectt(int idManager)
+      {
+            HashMap<String, Object> daoProject = new HashMap<>();
+            daoProject = ProjectDAO.getManagerProjects(idManager);
+            ArrayList<Project> list = (ArrayList<Project>) daoProject.get("projects");
+            Project project = list.get(0);
+            int projectId = project.getIdProject();
+            SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+            instance.setIdSelectedProject(projectId);
       }
 }
