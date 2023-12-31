@@ -45,6 +45,7 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
       private String developerNameString;
       private Integer idDeveloper;
       private Integer idActivity;
+      private Integer status;
       private Activity updateActivity;
       private DeveloperObserver observer;
       private Activity activity;
@@ -139,7 +140,15 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
             activity.setDescription(taActivityDescription.getText());
             activity.setStartDate(dpStartDate.getValue().toString());
             activity.setEndDate(dpEndDate.getValue().toString());
-            activity.setStatus(2);
+
+            if (tfAssignedDeveloper.getText().isEmpty())
+            {
+                  activity.setStatus(1);
+            }
+            else
+            {
+                  activity.setStatus(2);
+            }
 
             if (this.idDeveloper != null)
             {
