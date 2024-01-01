@@ -1,5 +1,6 @@
 package projectmanagementlisof.model.dao;
 
+import com.sun.org.apache.bcel.internal.generic.Select;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -7,31 +8,36 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import projectmanagementlisof.model.ConnectionDB;
 import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.model.pojo.Developer;
+import projectmanagementlisof.utils.LoggedUserSingleton;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 
 public class ChangeRequestDAO
 {
-      public static HashMap<String, Object> getChangeRequests(Integer idDeveloper)
+      public static HashMap<String, Object> getChangeRequestsByDeveloper(Integer idDeveloper)
       {
             HashMap<String, Object> answer = new LinkedHashMap<>();
             answer.put("error", true);
             Connection connectionBD = ConnectionDB.getConnection();
-
             if (connectionBD != null)
             {
                   try
                   {
-                        String query = "SELECT c.idChangeRequest, c.justification, c.description, "
-                            + "c.status, c.creationDate, c.reviewDate, FROM ChangeRequest c, "
-                            + "INNER JOIN Developer d ON c.idDeveloper = d.idDeveloper "
-                            + "WHERE c.idDeveloper = " + idDeveloper + ";";
-
+                        String query =
+                            "SELECT c.idChangeRequest, c.justification, c.description, c.status, "
+                            + "cs.status as statusName, c.creationDate, c.reviewDate, c.idDeveloper, c.idProjectManager,"
+                            + " d.name as developerName, p.name as projectManagerName FROM changeRequest c "
+                            + "INNER JOIN developer d ON c.idDeveloper = d.idDeveloper "
+                            + "INNER JOIN projectmanager p ON c.idProjectManager = p.idProjectManager "
+                            + "INNER JOIN changerequeststatus cs on c.status = cs.idChangeRequestStatus "
+                            + "WHERE c.idDeveloper = ?;";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idDeveloper);
                         ResultSet changeRequestList = preparedStatement.executeQuery();
                         ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
-
                         while (changeRequestList.next())
                         {
                               ChangeRequest changeRequest = new ChangeRequest();
@@ -41,11 +47,19 @@ public class ChangeRequestDAO
                                   changeRequestList.getString("justification"));
                               changeRequest.setDescription(
                                   changeRequestList.getString("description"));
-                              changeRequest.setStatus(changeRequestList.getInt("status"));
+                              changeRequest.setIdChangeRequest(changeRequestList.getInt("status"));
+                              changeRequest.setStatus(changeRequestList.getString("statusName"));
                               changeRequest.setCreationDate(
                                   changeRequestList.getString("creationDate"));
                               changeRequest.setReviewDate(
                                   changeRequestList.getString("reviewDate"));
+                              changeRequest.setIdDeveloper(changeRequestList.getInt("idDeveloper"));
+                              changeRequest.setDeveloperName(
+                                  changeRequestList.getString("developerName"));
+                              changeRequest.setIdProjectManager(
+                                  changeRequestList.getInt("idProjectManager"));
+                              changeRequest.setProjectManagerName(
+                                  changeRequestList.getString("projectmanagerName"));
                               changeRequests.add(changeRequest);
                         }
                         connectionBD.close();
@@ -63,66 +77,73 @@ public class ChangeRequestDAO
                       "Hubo un error al intentar conectar con la base de datos. Intente "
                           + "de nuevo más tarde");
             }
-
             return answer;
       }
 
-      public static HashMap<String, Object> getAllChangeRequests()
+      public static HashMap<String, Object> getChangeRequestsAccordingIdProjectSelected()
       {
             HashMap<String, Object> answer = new LinkedHashMap<>();
-            ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
+            answer.put("error", true);
             Connection connectionBD = ConnectionDB.getConnection();
-
             if (connectionBD != null)
             {
                   try
                   {
-                        String query = "SELECT * FROM ChangeRequest;"; // TODO change query
+                        String query =
+                            "SELECT c.idChangeRequest, c.justification, c.description, c.status, "
+                            + "cs.status as statusName, c.creationDate, c.reviewDate, c.idDeveloper, c.idProjectManager"
+                            + " FROM changeRequest c "
+                            + "INNER JOIN Developer d ON c.idDeveloper = d.idDeveloper "
+                            + "INNER JOIN ChangeRequestStatus cs on c.status = cs.idChangeRequestStatus "
+                            + "INNER JOIN ProjectManagerResponsible pmr ON c.idProjectManager = pmr.idProjectManager "
+                            + "WHERE pmr.idProject = ?;";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
-                        ResultSet resultSet = preparedStatement.executeQuery();
+                        preparedStatement.setInt(
+                            1, SelectedProjectSingleton.getInstance().getIdSelectedProject());
 
-                        while (resultSet.next())
+                        System.out.println(">>>>>>>>>>>>>>>>>>>>> ID PROJECT MANAGER"
+                            + LoggedUserSingleton.getInstance().getUserId());
+
+                        ResultSet changeRequestList = preparedStatement.executeQuery();
+                        ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
+                        while (changeRequestList.next())
                         {
                               ChangeRequest changeRequest = new ChangeRequest();
-                              changeRequest.setIdChangeRequest(resultSet.getInt("idChangeRequest"));
-                              changeRequest.setJustification(resultSet.getString("justification"));
-                              changeRequest.setDescription(resultSet.getString("description"));
-                              if (resultSet.getInt("status") == 1)
-                              {
-                                    changeRequest.setStatus("Aprobada");
-                              }
-                              else if (resultSet.getInt("status") == 2)
-                              {
-                                    changeRequest.setStatus("Pendiente");
-                              }
-                              else if (resultSet.getInt("status") == 3)
-                              {
-                                    changeRequest.setStatus("Rechazada");
-                              }
-                              changeRequest.setCreationDate(resultSet.getString("creationDate"));
-                              changeRequest.setReviewDate(resultSet.getString("reviewDate"));
-                              changeRequest.setIdDeveloper(resultSet.getInt("idDeveloper"));
+                              changeRequest.setIdChangeRequest(
+                                  changeRequestList.getInt("idChangeRequest"));
+                              changeRequest.setJustification(
+                                  changeRequestList.getString("justification"));
+                              changeRequest.setDescription(
+                                  changeRequestList.getString("description"));
+                              changeRequest.setIdStatus(changeRequestList.getInt("status"));
+                              changeRequest.setStatus(changeRequestList.getString("statusName"));
+                              changeRequest.setCreationDate(
+                                  changeRequestList.getString("creationDate"));
+                              changeRequest.setReviewDate(
+                                  changeRequestList.getString("reviewDate"));
+                              changeRequest.setIdDeveloper(changeRequestList.getInt("idDeveloper"));
+                              changeRequest.setIdProjectManager(
+                                  changeRequestList.getInt("idProjectManager"));
                               changeRequests.add(changeRequest);
-                        }
 
+                              System.out.println(">>>>>>>>>>>>>>>>>>>>> CHANGE REQUEST"
+                                  + changeRequest.toString());
+                        }
                         connectionBD.close();
                         answer.put("error", false);
                         answer.put("changeRequests", changeRequests);
                   }
                   catch (SQLException ex)
                   {
-                        answer.put("error", true);
                         answer.put("message", "Error: " + ex.getMessage());
                   }
             }
             else
             {
-                  answer.put("error", true);
                   answer.put("message",
                       "Hubo un error al intentar conectar con la base de datos. Intente "
                           + "de nuevo más tarde");
             }
-
             return answer;
       }
 
@@ -215,45 +236,40 @@ public class ChangeRequestDAO
             return answer;
       }
 
-      public static HashMap<String, Object> updateChangeRequestStatus(ChangeRequest changeRequest)
+      public static HashMap<String, Object> updateChangeRequestStatus(
+          Integer idChangeRequest, Integer idChangeRequestStatus)
       {
-            HashMap<String, Object> answer = new HashMap();
+            HashMap<String, Object> answer = new LinkedHashMap<>();
             answer.put("error", true);
             Connection connectionBD = ConnectionDB.getConnection();
+
             if (connectionBD != null)
             {
                   try
                   {
-                        String statement =
-                            "update changerequest set status = ?, reviewDate = ?, idProjectManager = ?, "
-                            + "where idChangeRequest = ?";
-                        PreparedStatement prepareStatement =
-                            connectionBD.prepareStatement(statement);
-                        prepareStatement.setInt(1, changeRequest.getIdStatus());
-                        prepareStatement.setString(2, changeRequest.getReviewDate());
-                        prepareStatement.setInt(3, changeRequest.getIdProjectManager());
-                        prepareStatement.setInt(4, changeRequest.getIdChangeRequest());
-                        int affectedRows = prepareStatement.executeUpdate();
+                        String query =
+                            "UPDATE ChangeRequest SET status = ? WHERE idChangeRequest = ?;";
+
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idChangeRequestStatus);
+                        preparedStatement.setInt(2, idChangeRequest);
+                        preparedStatement.executeUpdate();
                         connectionBD.close();
-                        if (affectedRows > 0)
-                        {
-                              answer.put("error", false);
-                              answer.put("message", "Cambio Guardado.");
-                        }
-                        else
-                        {
-                              answer.put("message", "Error en la base de datos.");
-                        }
+                        answer.put("error", false);
+                        answer.put("message", "changeRequest");
                   }
-                  catch (SQLException e)
+                  catch (SQLException ex)
                   {
-                        answer.put("message", "Error: " + e.getMessage());
+                        answer.put("message", "Error: " + ex.getMessage());
                   }
             }
             else
             {
-                  answer.put("message", "Error en la conexion a la base de datos.");
+                  answer.put("message",
+                      "Hubo un error al intentar conectar con la base de datos. Intente "
+                          + "de nuevo más tarde");
             }
+
             return answer;
       }
 
@@ -367,80 +383,6 @@ public class ChangeRequestDAO
             return answer;
       }
 
-      public static HashMap<String, Object> approveChangeRequest(Integer idChangeRequest)
-      {
-            HashMap<String, Object> answer = new HashMap<>();
-            answer.put("error", true);
-            Connection connectionBD = ConnectionDB.getConnection();
-            if (connectionBD != null)
-            {
-                  try
-                  {
-                        String query =
-                            "update ChangeRequest set status = 1 where idChangeRequest = ?";
-                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
-                        preparedStatement.setInt(1, idChangeRequest);
-                        int affectedRows = preparedStatement.executeUpdate();
-                        connectionBD.close();
-                        if (affectedRows > 0)
-                        {
-                              answer.put("error", false);
-                              answer.put("message", "Solicitud de cambio aprobada.");
-                        }
-                        else
-                        {
-                              answer.put("message", "Error en la base de datos.");
-                        }
-                  }
-                  catch (SQLException ex)
-                  {
-                        answer.put("message", "Error: " + ex.getMessage());
-                  }
-            }
-            else
-            {
-                  answer.put("message", "Error en la conexion a la base de datos.");
-            }
-            return answer;
-      }
-
-      public static HashMap<String, Object> rejectChangeRequest(Integer idChangeRequest)
-      {
-            HashMap<String, Object> answer = new HashMap<>();
-            answer.put("error", true);
-            Connection connectionBD = ConnectionDB.getConnection();
-            if (connectionBD != null)
-            {
-                  try
-                  {
-                        String query =
-                            "update ChangeRequest set status = 3 where idChangeRequest = ?";
-                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
-                        preparedStatement.setInt(1, idChangeRequest);
-                        int affectedRows = preparedStatement.executeUpdate();
-                        connectionBD.close();
-                        if (affectedRows > 0)
-                        {
-                              answer.put("error", false);
-                              answer.put("message", "Solicitud de cambio rechazada.");
-                        }
-                        else
-                        {
-                              answer.put("message", "Error en la base de datos.");
-                        }
-                  }
-                  catch (SQLException ex)
-                  {
-                        answer.put("message", "Error: " + ex.getMessage());
-                  }
-            }
-            else
-            {
-                  answer.put("message", "Error en la conexion a la base de datos.");
-            }
-            return answer;
-      }
-
       public static HashMap<String, Object> updateIdProjectManagerAndReviewDate(
           ChangeRequest changeRequest)
       {
@@ -470,6 +412,49 @@ public class ChangeRequestDAO
                         {
                               answer.put("message", "Error en la base de datos.");
                         }
+                  }
+                  catch (SQLException e)
+                  {
+                        answer.put("message", "Error: " + e.getMessage());
+                  }
+            }
+            else
+            {
+                  answer.put("message", "Error en la conexion a la base de datos.");
+            }
+            return answer;
+      }
+
+      public static HashMap<String, Object> selectAllFromChangeRequest()
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = ConnectionDB.getConnection();
+            if (connectionBD != null)
+            {
+                  try
+                  {
+                        String query = "select * from changerequest";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+                        ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
+                        while (resultSet.next())
+                        {
+                              ChangeRequest changeRequest = new ChangeRequest();
+                              changeRequest.setIdChangeRequest(resultSet.getInt("idChangeRequest"));
+                              changeRequest.setJustification(resultSet.getString("justification"));
+                              changeRequest.setDescription(resultSet.getString("description"));
+                              changeRequest.setIdStatus(resultSet.getInt("status"));
+                              changeRequest.setCreationDate(resultSet.getString("creationDate"));
+                              changeRequest.setReviewDate(resultSet.getString("reviewDate"));
+                              changeRequest.setIdDeveloper(resultSet.getInt("idDeveloper"));
+                              changeRequest.setIdProjectManager(
+                                  resultSet.getInt("idProjectManager"));
+                              changeRequests.add(changeRequest);
+                        }
+                        connectionBD.close();
+                        answer.put("error", false);
+                        answer.put("changeRequests", changeRequests);
                   }
                   catch (SQLException e)
                   {

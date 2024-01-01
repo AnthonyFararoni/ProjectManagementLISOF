@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Optional;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javafx.collections.ObservableList;
@@ -31,9 +33,12 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
 import javafx.util.converter.IntegerStringConverter;
+import projectmanagementlisof.controller.FXMLChangeRequestDetailsController;
 import projectmanagementlisof.controller.FXMLDeveloperLandingController;
 import projectmanagementlisof.controller.FXMLNewChangeRequestFormController;
+import projectmanagementlisof.controller.FXMLProjectManagerLandingController;
 import projectmanagementlisof.model.dao.CatalogDAO;
+import projectmanagementlisof.model.pojo.ChangeRequest;
 
 public class Utilities
 {
@@ -104,7 +109,7 @@ public class Utilities
             }
       }
 
-      public static void closeCurrentWindowAndOpenAnotherOne(
+      public static <T> T closeCurrentWindowAndOpenAnotherOne(
           String fxmlPath, Stage currentStage, ActionEvent event)
       {
             try
@@ -112,16 +117,20 @@ public class Utilities
                   FXMLLoader loader = new FXMLLoader(Utilities.class.getResource(fxmlPath));
                   Parent root = loader.load();
 
+                  T controller = loader.getController();
+
                   Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                   stage.setScene(new Scene(root));
 
                   currentStage.close();
 
                   stage.show();
+
+                  return controller;
             }
             catch (IOException e)
             {
-                  e.printStackTrace();
+                  throw new RuntimeException("Failed to load FXML file", e);
             }
       }
 
@@ -161,7 +170,7 @@ public class Utilities
             }
       }
 
-      public static void loadFXMLInAnchorPaneAndCloseCurrent(
+      public static void loadFXMLInAnchorPaneAndCloseCurrentForDeveloper(
           Stage currentStage, String landingFxmlPath, String contentFxmlPath)
       {
             try
@@ -177,6 +186,39 @@ public class Utilities
                   Parent contentRoot = contentLoader.load();
 
                   FXMLDeveloperLandingController landingController = landingLoader.getController();
+
+                  AnchorPane apBackground = landingController.getApBackground();
+
+                  apBackground.getChildren().clear();
+                  apBackground.getChildren().add(contentRoot);
+
+                  Stage stage = new Stage();
+                  stage.setScene(new Scene(landingRoot));
+                  stage.show();
+            }
+            catch (IOException ex)
+            {
+                  ex.printStackTrace();
+            }
+      }
+
+      public static void loadFXMLInAnchorPaneAndCloseCurrentForProjectManager(
+          Stage currentStage, String landingFxmlPath, String contentFxmlPath)
+      {
+            try
+            {
+                  currentStage.close();
+
+                  FXMLLoader landingLoader =
+                      new FXMLLoader(Utilities.class.getResource(landingFxmlPath));
+                  Parent landingRoot = landingLoader.load();
+
+                  FXMLLoader contentLoader =
+                      new FXMLLoader(Utilities.class.getResource(contentFxmlPath));
+                  Parent contentRoot = contentLoader.load();
+
+                  FXMLProjectManagerLandingController landingController =
+                      landingLoader.getController();
 
                   AnchorPane apBackground = landingController.getApBackground();
 
@@ -227,6 +269,14 @@ public class Utilities
             comboBox.setItems(items);
       }
 
+      public static <T> void setItemsInComboBoxStatuses(
+          ObservableList<T> items, ComboBox<T> comboBox)
+      {
+            List<T> result = (List<T>) CatalogDAO.getStatuses();
+            items.addAll(result);
+            comboBox.setItems(items);
+      }
+
       public static void onlyNumbers(TextField textField)
       {
             TextFormatter<Integer> formatter =
@@ -238,99 +288,146 @@ public class Utilities
                       }
                       return null;
                 });
-        textField.setTextFormatter(formatter);
-    }
-    public static void limitTextFieldCharacters(TextField textField, int maxCharacters) {
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null && newValue.length() > maxCharacters) {
-                textField.setText(oldValue);
+            textField.setTextFormatter(formatter);
+      }
+      public static void limitTextFieldCharacters(TextField textField, int maxCharacters)
+      {
+            textField.textProperty().addListener((observable, oldValue, newValue) -> {
+                  if (newValue != null && newValue.length() > maxCharacters)
+                  {
+                        textField.setText(oldValue);
+                  }
+            });
+      }
+      public static void limitTextAreaCharacters(TextArea textArea, int maxCharacters)
+      {
+            textArea.textProperty().addListener((observable, oldValue, newValue) -> {
+                  if (newValue != null && newValue.length() > maxCharacters)
+                  {
+                        textArea.setText(oldValue);
+                  }
+            });
+      }
+
+      public static void showDetails(int id, String fxmlPath, String title)
+      {
+            SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
+            instance.setIdSelected(id);
+
+            try
+            {
+                  FXMLLoader loader = loadView(fxmlPath);
+                  Parent view = loader.load();
+                  Scene scene = new Scene(view);
+                  Stage stage = new Stage();
+
+                  stage.setScene(scene);
+                  stage.setTitle(title);
+                  stage.initModality(Modality.APPLICATION_MODAL);
+                  stage.showAndWait();
             }
-        });
-    }
-    public static void limitTextAreaCharacters(TextArea textArea, int maxCharacters) {
-        textArea.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null && newValue.length() > maxCharacters) {
-                textArea.setText(oldValue);
+            catch (java.io.IOException ex)
+            {
+                  ex.printStackTrace();
             }
-        });
-    }
-    
-    public static void showDetails(int id, String fxmlPath, String title) {
-        SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
-        instance.setIdSelected(id);
+      }
 
-        try {
-            FXMLLoader loader = loadView(fxmlPath);
-            Parent view = loader.load();
-            Scene scene = new Scene(view);
-            Stage stage = new Stage();
+      public static void showDetailsChangeRequest(
+          int selectedPosition, String fxmlPath, String title, ChangeRequest selectedChangeRequest)
+      {
+            try
+            {
+                  FXMLLoader loader = new FXMLLoader(Utilities.class.getResource(fxmlPath));
+                  Parent root = (Parent) loader.load();
 
-            stage.setScene(scene);
-            stage.setTitle(title);
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.showAndWait();
-        } catch (java.io.IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public static void goTolanding(Stage currentStage, String userFullName, String userLogin, int userId, String fxmlPath, String title) {
-        LoggedUserSingleton instance = LoggedUserSingleton.getInstance();
-        instance.setUserData(userFullName, userLogin, userId);
-        try {
-            FXMLLoader loader = loadView(fxmlPath);
-            Parent view = loader.load();
-            Scene scene = new Scene(view);
-            Stage stage = new Stage();
+                  FXMLChangeRequestDetailsController controller = loader.getController();
+                  controller.setSelectedChangeRequest(selectedChangeRequest);
 
-            currentStage.setScene(scene);
-            currentStage.setTitle(title);
-            currentStage.show();
-            currentStage.centerOnScreen();
-        } catch (java.io.IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-        
-    public static void goTolandingFromAProject(Stage currentStage, int projectId, String fxmlPath, String title) {
-        SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
-        instance.setIdSelectedProject(projectId);
-        try {
-            FXMLLoader loader = loadView(fxmlPath);
-            Parent view = loader.load();
-            Scene scene = new Scene(view);
-            Stage stage = new Stage();
+                  Scene scene = new Scene(root);
+                  Stage stage = new Stage();
+                  stage.initModality(Modality.APPLICATION_MODAL);
+                  stage.setScene(scene);
+                  stage.setTitle(title);
+                  stage.show();
+            }
+            catch (IOException ex)
+            {
+                  Logger.getLogger(Utilities.class.getName()).log(Level.SEVERE, null, ex);
+            }
+      }
 
-            currentStage.setScene(scene);
-            currentStage.setTitle(title);
-            currentStage.show();
-            currentStage.centerOnScreen();
-        } catch (java.io.IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
-    public static void redBorder(Control field) {
-        field.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
-    }
-    
-    public static void noBoder(Control field) {
-        field.setStyle(null);
-    }
-    
-    public static void backToLogIn(MouseEvent event) {
-        try {
-            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Parent newView = FXMLLoader.load(Utilities.class.getResource("/projectmanagementlisof/gui/FXMLLogIn.fxml"));
-            Scene scene = new Scene(newView);
-            currentStage.setScene(scene);
-            currentStage.setTitle("Iniciar sesión");
-            currentStage.show();
-            centerStage(currentStage);
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-    }
-    
+      public static void goTolanding(Stage currentStage, String userFullName, String userLogin,
+          int userId, String fxmlPath, String title)
+      {
+            LoggedUserSingleton instance = LoggedUserSingleton.getInstance();
+            instance.setUserData(userFullName, userLogin, userId);
+            try
+            {
+                  FXMLLoader loader = loadView(fxmlPath);
+                  Parent view = loader.load();
+                  Scene scene = new Scene(view);
+                  Stage stage = new Stage();
+
+                  currentStage.setScene(scene);
+                  currentStage.setTitle(title);
+                  currentStage.show();
+                  currentStage.centerOnScreen();
+            }
+            catch (java.io.IOException ex)
+            {
+                  ex.printStackTrace();
+            }
+      }
+
+      public static void goTolandingFromAProject(
+          Stage currentStage, int projectId, String fxmlPath, String title)
+      {
+            SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+            instance.setIdSelectedProject(projectId);
+            try
+            {
+                  FXMLLoader loader = loadView(fxmlPath);
+                  Parent view = loader.load();
+                  Scene scene = new Scene(view);
+                  Stage stage = new Stage();
+
+                  currentStage.setScene(scene);
+                  currentStage.setTitle(title);
+                  currentStage.show();
+                  currentStage.centerOnScreen();
+            }
+            catch (java.io.IOException ex)
+            {
+                  ex.printStackTrace();
+            }
+      }
+
+      public static void redBorder(Control field)
+      {
+            field.setStyle("-fx-border-color: red; -fx-border-width: 2px;");
+      }
+
+      public static void noBoder(Control field)
+      {
+            field.setStyle(null);
+      }
+
+      public static void backToLogIn(MouseEvent event)
+      {
+            try
+            {
+                  Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                  Parent newView = FXMLLoader.load(
+                      Utilities.class.getResource("/projectmanagementlisof/gui/FXMLLogIn.fxml"));
+                  Scene scene = new Scene(newView);
+                  currentStage.setScene(scene);
+                  currentStage.setTitle("Iniciar sesión");
+                  currentStage.show();
+                  centerStage(currentStage);
+            }
+            catch (IOException ex)
+            {
+                  ex.printStackTrace();
+            }
+      }
 }

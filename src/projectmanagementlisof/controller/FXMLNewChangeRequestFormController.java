@@ -70,7 +70,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
             if (alert.getResult() == ButtonType.YES)
             {
                   Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                  Utilities.loadFXMLInAnchorPaneAndCloseCurrent(currentStage,
+                  Utilities.loadFXMLInAnchorPaneAndCloseCurrentForDeveloper(currentStage,
                       "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
                       "/projectmanagementlisof/gui/FXMLDeveloperChangeRequestsOption.fxml");
             }
@@ -103,7 +103,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
                   Utilities.showSimpleAlert(
                       "Éxito", "Solicitud de cambio creada", Alert.AlertType.INFORMATION);
                   Stage currentStage = (Stage) apNewChangeRequestForm.getScene().getWindow();
-                  Utilities.loadFXMLInAnchorPaneAndCloseCurrent(currentStage,
+                  Utilities.loadFXMLInAnchorPaneAndCloseCurrentForDeveloper(currentStage,
                       "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
                       "/projectmanagementlisof/gui/FXMLDeveloperChangeRequestsOption.fxml");
             }

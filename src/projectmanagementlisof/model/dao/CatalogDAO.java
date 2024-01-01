@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import projectmanagementlisof.model.ConnectionDB;
+import projectmanagementlisof.model.pojo.ChangeRequestStatus;
 import projectmanagementlisof.model.pojo.CorrectionType;
 
 /**
@@ -79,5 +80,34 @@ public class CatalogDAO
                   }
             }
             return result;
+      }
+
+      public static List<ChangeRequestStatus> getStatuses()
+      {
+            List<ChangeRequestStatus> statusList = new ArrayList<>();
+            Connection conexionBD = ConnectionDB.getConnection();
+            if (conexionBD != null)
+            {
+                  try
+                  {
+                        String query = "Select * From changerequeststatus";
+                        PreparedStatement preparedStatement = conexionBD.prepareStatement(query);
+                        ResultSet statuses = preparedStatement.executeQuery(query);
+                        while (statuses.next())
+                        {
+                              ChangeRequestStatus status = new ChangeRequestStatus();
+                              status.setIdChangeRequestStatus(
+                                  statuses.getInt("idChangeRequestStatus"));
+                              status.setStatus(statuses.getString("status"));
+                              statusList.add(status);
+                        }
+                        conexionBD.close();
+                  }
+                  catch (SQLException e)
+                  {
+                        e.printStackTrace();
+                  }
+            }
+            return statusList;
       }
 }

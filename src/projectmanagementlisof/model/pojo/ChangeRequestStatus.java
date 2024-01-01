@@ -40,4 +40,9 @@ public class ChangeRequestStatus
       {
             this.status = status;
       }
+
+      @Override public String toString()
+      {
+            return this.status;
+      }
 }

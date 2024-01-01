@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.observer.DeveloperObserver;
+import projectmanagementlisof.utils.LoggedUserSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLDeveloperChangeRequestsOptionController implements Initializable, DeveloperObserver
@@ -59,7 +60,8 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
 
       private void loadChangeRequests()
       {
-            HashMap<String, Object> answer = ChangeRequestDAO.getAllChangeRequests();
+            HashMap<String, Object> answer = ChangeRequestDAO.getChangeRequestsByDeveloper(
+                LoggedUserSingleton.getInstance().getUserId());
 
             if (!(boolean) answer.get("error"))
             {

@@ -20,6 +20,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -35,6 +36,7 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.observer.DeveloperObserver;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -76,19 +78,33 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
 
       private void configureChangeRequestTable()
       {
-            this.colJustification.setCellValueFactory(new PropertyValueFactory("justification"));
-            this.colCreationDate.setCellValueFactory(new PropertyValueFactory("creationDate"));
-            this.colStatus.setCellValueFactory(new PropertyValueFactory("status"));
+            colJustification.setCellValueFactory(new PropertyValueFactory<>("justification"));
+            colCreationDate.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
+            colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+            getChangeRequestForTable();
       }
 
       private void getChangeRequestForTable()
       {
-            HashMap<String, Object> answer = ChangeRequestDAO.getAllChangeRequests();
+            HashMap<String, Object> answer =
+                ChangeRequestDAO.getChangeRequestsAccordingIdProjectSelected();
+
             if (!(boolean) answer.get("error"))
             {
                   changeRequests = FXCollections.observableArrayList();
-                  ArrayList<ChangeRequest> list =
-                      (ArrayList<ChangeRequest>) answer.get("changeRequests");
+                  ArrayList<?> rawList = (ArrayList<?>) answer.get("changeRequests");
+                  ArrayList<ChangeRequest> list = new ArrayList<>();
+
+                  for (Object obj : rawList)
+                  {
+                        if (obj instanceof ChangeRequest)
+                        {
+                              list.add((ChangeRequest) obj);
+                              System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ ChangeRequest: " + obj);
+                        }
+                  }
+
                   changeRequests.addAll(list);
                   tvChangeRequest.setItems(changeRequests);
                   masterData.addAll(changeRequests);
@@ -102,27 +118,25 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
 
       @FXML private void loadFXMLChangeRequestDetails(ActionEvent event)
       {
-            try
+            ChangeRequest selectedChangeRequest =
+                tvChangeRequest.getSelectionModel().getSelectedItem();
+
+            if (selectedChangeRequest != null)
             {
-                  FXMLLoader loader = Utilities.loadView("gui/FXMLChangeRequestDetails.fxml");
-                  Parent view = loader.load();
-                  Scene scene = new Scene(view);
-                  FXMLChangeRequestDetailsController controller = loader.getController();
-                  ChangeRequest selectedChangeRequest =
-                      tvChangeRequest.getSelectionModel().getSelectedItem();
-                  controller.initializeInformation(idChangeRequest, this, selectedChangeRequest);
+                  Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                  Stage stage = new Stage();
+                  FXMLChangeRequestDetailsController detailsController =
+                      Utilities
+                          .<FXMLChangeRequestDetailsController>closeCurrentWindowAndOpenAnotherOne(
+                              "/projectmanagementlisof/gui/FXMLChangeRequestDetails.fxml", stage,
+                              event);
 
-                  stage.setScene(scene);
-                  stage.setTitle("Detalles de solicitud de cambio");
-                  stage.initModality(Modality.APPLICATION_MODAL);
-                  stage.show();
+                  detailsController.setSelectedChangeRequest(selectedChangeRequest);
             }
-            catch (Exception ex)
+            else
             {
-                  Logger.getLogger(FXMLDeveloperChangeRequestsOptionController.class.getName())
-                      .log(Level.SEVERE, null, ex);
+                  Utilities.showSimpleAlert("Error de selección",
+                      "Debe seleccionar una solicitud de cambio", Alert.AlertType.ERROR);
             }
       }
 

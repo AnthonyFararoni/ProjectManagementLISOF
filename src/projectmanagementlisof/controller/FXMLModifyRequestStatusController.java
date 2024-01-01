@@ -29,7 +29,7 @@ import projectmanagementlisof.utils.Utilities;
  */
 public class FXMLModifyRequestStatusController implements Initializable
 {
-      private Utilities utilities = new Utilities();
+      /*      private Utilities utilities = new Utilities();
       private ObservableList<ChangeRequestStatus> statuses = FXCollections.observableArrayList();
 
       @FXML private TextField tfJustification;
@@ -43,15 +43,14 @@ public class FXMLModifyRequestStatusController implements Initializable
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-            utilities.setItemsInComboBox(statuses, cbStatus);
+            // utilities.setItemsInComboBox(statuses, cbStatus);
       }
 
       @FXML private void btnSaveChange(ActionEvent event)
       {
-            registerChange();
+            // registerChange();
       }
-
-      private void registerChange()
+      /*       private void registerChange()
       {
             ChangeRequest changeRequest = new ChangeRequest();
             ChangeRequestStatus status = cbStatus.getSelectionModel().getSelectedItem();
@@ -70,4 +69,5 @@ public class FXMLModifyRequestStatusController implements Initializable
                       "Error al guardar", (String) answer.get("message"), Alert.AlertType.ERROR);
             }
       }
+*/
 }

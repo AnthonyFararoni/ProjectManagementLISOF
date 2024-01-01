@@ -20,10 +20,11 @@ public class FXMLProjectManagerLandingController implements Initializable
 {
       @FXML private AnchorPane apBackground;
 
-      @Override public void initialize(URL url, ResourceBundle rb) {
-          SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
-          int idProject = instance.getIdSelectedProject();
-          System.out.println(idProject);
+      @Override public void initialize(URL url, ResourceBundle rb)
+      {
+            SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+            int idProject = instance.getIdSelectedProject();
+            System.out.println(idProject);
       }
 
       @FXML private void btnLogOut(MouseEvent event)
@@ -85,5 +86,10 @@ public class FXMLProjectManagerLandingController implements Initializable
             {
                   ex.printStackTrace();
             }
+      }
+
+      public AnchorPane getApBackground()
+      {
+            return apBackground;
       }
 }

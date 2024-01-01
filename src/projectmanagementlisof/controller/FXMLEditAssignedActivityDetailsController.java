@@ -143,11 +143,11 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
 
             if (tfAssignedDeveloper.getText().isEmpty())
             {
-                  activity.setStatus(1);
+                  activity.setStatus(1); // Cambia el estado a Sin asignar
             }
             else
             {
-                  activity.setStatus(2);
+                  activity.setStatus(2); // Cambia el estado a asignada
             }
 
             if (this.idDeveloper != null)
