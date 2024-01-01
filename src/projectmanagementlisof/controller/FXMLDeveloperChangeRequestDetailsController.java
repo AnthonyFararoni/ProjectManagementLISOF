@@ -95,6 +95,8 @@ public class FXMLDeveloperChangeRequestDetailsController implements Initializabl
       @FXML private void clickImageReturn(MouseEvent event)
       {
             Stage currentStage = (Stage) tfJustification.getScene().getWindow();
-            Utilities.closeWindow(currentStage);
+            Utilities.loadFXMLInAnchorPaneAndCloseCurrentForDeveloper(currentStage,
+                "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
+                "/projectmanagementlisof/gui/FXMLDeveloperChangeRequestsOption.fxml");
       }
 }

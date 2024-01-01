@@ -260,4 +260,67 @@ public class ProjectManagerDAO
             }
             return answer;
       }
+
+      public static HashMap<String, Object> getProjectManagerByIdDeveloper(int idDeveloper)
+      {
+            HashMap<String, Object> answer = new HashMap<>();
+            answer.put("error", true);
+            Connection connectionBD = null;
+
+            try
+            {
+                  connectionBD = ConnectionDB.getConnection();
+
+                  if (connectionBD != null)
+                  {
+                        String query = "SELECT pmr.idProjectManager FROM Developer d "
+                            + "INNER JOIN Project p ON d.idProject = p.idProject "
+                            + "INNER JOIN ProjectManagerResponsible pmr ON p.idProject = pmr.idProject "
+                            + "WHERE d.idDeveloper = ?;";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idDeveloper);
+
+                        ResultSet managerResult = preparedStatement.executeQuery();
+
+                        if (managerResult.next())
+                        {
+                              ProjectManager manager = new ProjectManager();
+                              manager.setManagerId(managerResult.getInt("idProjectManager"));
+
+                              answer.put("error", false);
+                              answer.put("projectManager", manager);
+                        }
+                        else
+                        {
+                              answer.put("message",
+                                  "No se encontró ningún responsable del proyecto con las credenciales proporcionadas.");
+                        }
+                  }
+                  else
+                  {
+                        answer.put("message",
+                            "Hubo un error al intentar conectar con la base de datos. Intente de nuevo más tarde.");
+                  }
+            }
+            catch (SQLException ex)
+            {
+                  answer.put("message", "Error: " + ex.getMessage());
+            }
+            finally
+            {
+                  if (connectionBD != null)
+                  {
+                        try
+                        {
+                              connectionBD.close();
+                        }
+                        catch (SQLException ex)
+                        {
+                              // log the exception
+                        }
+                  }
+            }
+
+            return answer;
+      }
 }

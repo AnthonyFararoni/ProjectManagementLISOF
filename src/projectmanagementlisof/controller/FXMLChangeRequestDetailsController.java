@@ -2,6 +2,7 @@ package projectmanagementlisof.controller;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -37,6 +38,7 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
       @FXML private TextField tfReviewedBy;
       @FXML private ComboBox<ChangeRequestStatus> cbStatus;
       private ObservableList<ChangeRequestStatus> statuses = FXCollections.observableArrayList();
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
       private DeveloperObserver observer;
       private Integer idChangeRequest;
@@ -126,11 +128,15 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
                 ChangeRequestDAO.getCompleteDeveloperName(
                     this.selectedChangeRequest.getIdDeveloper());
 
-            tfDateCreated.setText(this.selectedChangeRequest.getCreationDate().toString());
+            LocalDate date2 = LocalDate.parse(this.selectedChangeRequest.getCreationDate());
+            String formattedDate2 = date2.format(formatter);
+            tfDateCreated.setText(formattedDate2);
 
             if (this.selectedChangeRequest.getReviewDate() != null)
             {
-                  tfDateReviewed.setText(this.selectedChangeRequest.getReviewDate().toString());
+                  LocalDate date = LocalDate.parse(this.selectedChangeRequest.getReviewDate());
+                  String formattedDate = date.format(formatter);
+                  tfDateReviewed.setText(formattedDate);
             }
 
             if (!(boolean) changeRequestInformation.get("error"))
@@ -150,7 +156,7 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
             {
                   HashMap<String, Object> projectManagerInformation =
                       ProjectManagerDAO.getProjectManagerById(
-                          this.selectedChangeRequest.getIdProjectManager());
+                          LoggedUserSingleton.getInstance().getUserId());
 
                   if (projectManagerInformation != null
                       && projectManagerInformation.containsKey("projectManager")

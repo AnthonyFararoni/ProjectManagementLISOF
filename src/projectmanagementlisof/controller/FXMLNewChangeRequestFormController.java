@@ -2,6 +2,7 @@ package projectmanagementlisof.controller;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -22,7 +23,11 @@ import javafx.stage.Stage;
 import javax.jws.soap.SOAPBinding.Use;
 import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
+import projectmanagementlisof.model.dao.DeveloperDAO;
+import projectmanagementlisof.model.dao.ProjectManagerDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
+import projectmanagementlisof.model.pojo.Developer;
+import projectmanagementlisof.model.pojo.ProjectManager;
 import projectmanagementlisof.utils.LoggedUserSingleton;
 import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.SelectedProjectSingleton;
@@ -94,7 +99,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
             changeRequest.setCreationDate(dpDate.getValue().toString());
             changeRequest.setDeveloperName(tfRequestedBy.getText());
             changeRequest.setIdDeveloper(LoggedUserSingleton.getInstance().getUserId());
-            changeRequest.setIdStatus(2);
+            changeRequest.setIdStatus(5);
 
             HashMap<String, Object> answer = ChangeRequestDAO.createChangeRequest(changeRequest);
 

@@ -6,7 +6,10 @@
 package projectmanagementlisof.controller;
 
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -25,6 +28,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -79,7 +83,38 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
       private void configureChangeRequestTable()
       {
             colJustification.setCellValueFactory(new PropertyValueFactory<>("justification"));
+
             colCreationDate.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
+
+            colCreationDate.setCellFactory(column -> {
+                  TableCell<String, String> cell = new TableCell<String, String>() {
+                        private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+                        @Override protected void updateItem(String item, boolean empty)
+                        {
+                              super.updateItem(item, empty);
+                              if (empty)
+                              {
+                                    setText(null);
+                              }
+                              else
+                              {
+                                    try
+                                    {
+                                          Date date =
+                                              new SimpleDateFormat("yyyy-MM-dd").parse(item);
+                                          setText(format.format(date));
+                                    }
+                                    catch (ParseException e)
+                                    {
+                                          setText(item);
+                                    }
+                              }
+                        }
+                  };
+                  return cell;
+            });
+
             colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
 
             getChangeRequestForTable();
@@ -136,7 +171,7 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
             else
             {
                   Utilities.showSimpleAlert("Error de selección",
-                      "Debe seleccionar una solicitud de cambio", Alert.AlertType.ERROR);
+                      "Debe seleccionar una solicitud de cambio.", Alert.AlertType.ERROR);
             }
       }
 

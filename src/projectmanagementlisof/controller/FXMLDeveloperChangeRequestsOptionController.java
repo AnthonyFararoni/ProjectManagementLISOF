@@ -2,7 +2,10 @@ package projectmanagementlisof.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -20,6 +23,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -55,32 +59,75 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
       @Override public void initialize(URL url, ResourceBundle rb)
       {
             // TODO
-            loadChangeRequests();
+            configureChangeRequestTable();
+            getChangeRequestForTable();
       }
 
-      private void loadChangeRequests()
+      private void configureChangeRequestTable()
+      {
+            colJustification.setCellValueFactory(new PropertyValueFactory<>("justification"));
+            colDate.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
+
+            colDate.setCellFactory(column -> {
+                  TableCell<String, String> cell = new TableCell<String, String>() {
+                        private SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+
+                        @Override protected void updateItem(String item, boolean empty)
+                        {
+                              super.updateItem(item, empty);
+                              if (empty)
+                              {
+                                    setText(null);
+                              }
+                              else
+                              {
+                                    try
+                                    {
+                                          Date date =
+                                              new SimpleDateFormat("yyyy-MM-dd").parse(item);
+                                          setText(format.format(date));
+                                    }
+                                    catch (ParseException e)
+                                    {
+                                          setText(item);
+                                    }
+                              }
+                        }
+                  };
+                  return cell;
+            });
+
+            colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+      }
+
+      private void getChangeRequestForTable()
       {
             HashMap<String, Object> answer = ChangeRequestDAO.getChangeRequestsByDeveloper(
                 LoggedUserSingleton.getInstance().getUserId());
 
             if (!(boolean) answer.get("error"))
             {
-                  ArrayList<ChangeRequest> changeRequestsList =
-                      (ArrayList<ChangeRequest>) answer.get("changeRequests");
-                  changeRequests = FXCollections.observableArrayList(changeRequestsList);
-                  masterData.addAll(changeRequests); // Add this line
+                  changeRequests = FXCollections.observableArrayList();
+                  ArrayList<?> rawList = (ArrayList<?>) answer.get("changeRequests");
+                  ArrayList<ChangeRequest> list = new ArrayList<>();
+
+                  for (Object obj : rawList)
+                  {
+                        if (obj instanceof ChangeRequest)
+                        {
+                              list.add((ChangeRequest) obj);
+                              System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ ChangeRequest: " + obj);
+                        }
+                  }
+
+                  changeRequests.addAll(list);
                   tvChangeRequests.setItems(changeRequests);
-                  colJustification.setCellValueFactory(new PropertyValueFactory<>("justification"));
-                  colDate.setCellValueFactory(new PropertyValueFactory<>("creationDate"));
-                  colStatus.setCellValueFactory(new PropertyValueFactory<>("status"));
+                  masterData.addAll(changeRequests);
             }
             else
             {
-                  Alert alert = new Alert(Alert.AlertType.ERROR);
-                  alert.setTitle("Error");
-                  alert.setHeaderText("Error al cargar las solicitudes de cambio");
-                  alert.setContentText((String) answer.get("message"));
-                  alert.showAndWait();
+                  Utilities.showSimpleAlert(
+                      "Error de carga", (String) answer.get("message"), Alert.AlertType.ERROR);
             }
       }
 
@@ -125,65 +172,46 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
 
       @FXML private void loadFXMLNewChangeRequestForm(ActionEvent event)
       {
-            try
-            {
-                  FXMLLoader loader = new FXMLLoader(getClass().getResource(
-                      "/projectmanagementlisof/gui/FXMLNewChangeRequestForm.fxml"));
-                  Parent root = loader.load();
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                  Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-                  stage.setScene(new Scene(root));
-
-                  stage.show();
-            }
-            catch (IOException e)
-            {
-                  e.printStackTrace();
-            }
-      }
-
-      private void showSelectedChangeRequest()
-      {
-            tvChangeRequests.getSelectionModel().selectedItemProperty().addListener(
-                new ChangeListener<ChangeRequest>() {
-                      @Override
-                      public void changed(ObservableValue<? extends ChangeRequest> observable,
-                          ChangeRequest oldValue, ChangeRequest newValue)
-                      {
-                            if (newValue != null)
-                            {
-                                  // btnShowAssignedActivityDetails.setDisable(false);
-                                  // btnEditAssignedActivity.setDisable(false);
-                                  // btnDeleteAssignedActivity.setDisable(false);
-                                  int selectedPosition =
-                                      tvChangeRequests.getSelectionModel().getSelectedIndex();
-                                  ChangeRequest selectedChangeRequest =
-                                      changeRequests.get(selectedPosition);
-                                  idChangeRequest = selectedChangeRequest.getIdChangeRequest();
-                            }
-                      }
-                });
+            Utilities.<FXMLNewChangeRequestFormController>closeCurrentWindowAndOpenAnotherOne(
+                "/projectmanagementlisof/gui/FXMLNewChangeRequestForm.fxml", stage, event);
       }
 
       @FXML private void loadFXMLChangeRequestDetails(ActionEvent event)
       {
             try
             {
-                  FXMLLoader loader =
-                      Utilities.loadView("gui/FXMLDeveloperChangeRequestDetails.fxml");
-                  Parent view = loader.load();
-                  Scene scene = new Scene(view);
-                  FXMLDeveloperChangeRequestDetailsController controller = loader.getController();
-                  ChangeRequest selectedChangeRequest =
-                      tvChangeRequests.getSelectionModel().getSelectedItem();
-                  controller.initializeInformation(idChangeRequest, this, selectedChangeRequest);
+                  ChangeRequest cr = tvChangeRequests.getSelectionModel().getSelectedItem();
 
-                  Stage stage = new Stage();
+                  if (cr != null)
+                  {
+                        Utilities.closeWindow(
+                            (Stage) ((Node) event.getSource()).getScene().getWindow());
 
-                  stage.setScene(scene);
-                  stage.setTitle("Detalles de solicitud de cambio");
-                  stage.initModality(Modality.APPLICATION_MODAL);
-                  stage.showAndWait();
+                        FXMLLoader loader =
+                            Utilities.loadView("gui/FXMLDeveloperChangeRequestDetails.fxml");
+                        Parent view = loader.load();
+                        Scene scene = new Scene(view);
+                        FXMLDeveloperChangeRequestDetailsController controller =
+                            loader.getController();
+                        ChangeRequest selectedChangeRequest =
+                            tvChangeRequests.getSelectionModel().getSelectedItem();
+                        controller.initializeInformation(
+                            idChangeRequest, this, selectedChangeRequest);
+
+                        Stage stage = new Stage();
+
+                        stage.setScene(scene);
+                        stage.setTitle("Detalles de solicitud de cambio");
+                        stage.initModality(Modality.APPLICATION_MODAL);
+                        stage.showAndWait();
+                  }
+                  else
+                  {
+                        Utilities.showSimpleAlert("Error de selección",
+                            "Debe seleccionar una solicitud de cambio.", Alert.AlertType.ERROR);
+                  }
             }
             catch (Exception ex)
             {

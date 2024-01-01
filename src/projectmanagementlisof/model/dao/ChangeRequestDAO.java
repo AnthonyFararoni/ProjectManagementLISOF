@@ -28,12 +28,11 @@ public class ChangeRequestDAO
                   {
                         String query =
                             "SELECT c.idChangeRequest, c.justification, c.description, c.status, "
-                            + "cs.status as statusName, c.creationDate, c.reviewDate, c.idDeveloper, c.idProjectManager,"
-                            + " d.name as developerName, p.name as projectManagerName FROM changeRequest c "
+                            + "cs.status as statusName, c.creationDate, c.reviewDate, c.idDeveloper,"
+                            + "d.name as developerName FROM changeRequest c "
                             + "INNER JOIN developer d ON c.idDeveloper = d.idDeveloper "
-                            + "INNER JOIN projectmanager p ON c.idProjectManager = p.idProjectManager "
                             + "INNER JOIN changerequeststatus cs on c.status = cs.idChangeRequestStatus "
-                            + "WHERE c.idDeveloper = ?;";
+                            + "WHERE c.idDeveloper = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idDeveloper);
                         ResultSet changeRequestList = preparedStatement.executeQuery();
@@ -54,12 +53,6 @@ public class ChangeRequestDAO
                               changeRequest.setReviewDate(
                                   changeRequestList.getString("reviewDate"));
                               changeRequest.setIdDeveloper(changeRequestList.getInt("idDeveloper"));
-                              changeRequest.setDeveloperName(
-                                  changeRequestList.getString("developerName"));
-                              changeRequest.setIdProjectManager(
-                                  changeRequestList.getInt("idProjectManager"));
-                              changeRequest.setProjectManagerName(
-                                  changeRequestList.getString("projectmanagerName"));
                               changeRequests.add(changeRequest);
                         }
                         connectionBD.close();
@@ -90,13 +83,14 @@ public class ChangeRequestDAO
                   try
                   {
                         String query =
-                            "SELECT c.idChangeRequest, c.justification, c.description, c.status, "
+                            "SELECT DISTINCT c.idChangeRequest, c.justification, c.description, c.status, "
                             + "cs.status as statusName, c.creationDate, c.reviewDate, c.idDeveloper, c.idProjectManager"
                             + " FROM changeRequest c "
                             + "INNER JOIN Developer d ON c.idDeveloper = d.idDeveloper "
                             + "INNER JOIN ChangeRequestStatus cs on c.status = cs.idChangeRequestStatus "
-                            + "INNER JOIN ProjectManagerResponsible pmr ON c.idProjectManager = pmr.idProjectManager "
-                            + "WHERE pmr.idProject = ?;";
+                            + "LEFT JOIN ProjectManagerResponsible pmr ON c.idProjectManager = pmr.idProjectManager "
+                            + "WHERE (pmr.idProject = ? OR c.idProjectManager IS NULL);";
+
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(
                             1, SelectedProjectSingleton.getInstance().getIdSelectedProject());
@@ -208,7 +202,7 @@ public class ChangeRequestDAO
                   {
                         String query =
                             "INSERT INTO ChangeRequest (justification, description, status, "
-                            + "creationDate, idDeveloper) VALUES (?, ?, ?, ?, ?);";
+                            + "creationDate, idDeveloper, idProjectManager) VALUES (?, ?, ?, ?, ?, ?);";
 
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setString(1, changeRequest.getJustification());
@@ -216,6 +210,16 @@ public class ChangeRequestDAO
                         preparedStatement.setInt(3, changeRequest.getIdStatus());
                         preparedStatement.setString(4, changeRequest.getCreationDate());
                         preparedStatement.setInt(5, changeRequest.getIdDeveloper());
+
+                        if (changeRequest.getIdProjectManager() == null)
+                        {
+                              preparedStatement.setNull(6, java.sql.Types.INTEGER);
+                        }
+                        else
+                        {
+                              preparedStatement.setInt(6, changeRequest.getIdProjectManager());
+                        }
+
                         preparedStatement.executeUpdate();
                         connectionBD.close();
                         answer.put("error", false);
