@@ -119,6 +119,20 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
 
       @FXML private void btnEditAssignedActivity(ActionEvent event)
       {
+            LocalDate startDate = dpStartDate.getValue();
+            LocalDate endDate = dpEndDate.getValue();
+
+            if (startDate != null && endDate != null)
+            {
+                  if (startDate.isAfter(endDate))
+                  {
+                        Utilities.showSimpleAlert("Fechas Inválidas",
+                            "La fecha de inicio no puede ser posterior a la fecha de fin.",
+                            Alert.AlertType.ERROR);
+                        return;
+                  }
+            }
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                 "¿Está seguro de guardar los detalles de la actividad?", ButtonType.YES,
                 ButtonType.NO);
@@ -188,7 +202,7 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate startDate = LocalDate.parse(this.updateActivity.getStartDate(), formatter);
             dpStartDate.setValue(startDate);
-            LocalDate endDate = LocalDate.parse(this.updateActivity.getStartDate(), formatter);
+            LocalDate endDate = LocalDate.parse(this.updateActivity.getEndDate(), formatter);
             dpEndDate.setValue(endDate);
 
             this.idDeveloper = this.updateActivity.getIdDeveloper();
