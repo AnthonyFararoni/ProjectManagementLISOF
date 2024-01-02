@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -142,6 +143,7 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
 
                   changeRequests.addAll(list);
                   tvChangeRequest.setItems(changeRequests);
+                  masterData.clear();
                   masterData.addAll(changeRequests);
             }
             else

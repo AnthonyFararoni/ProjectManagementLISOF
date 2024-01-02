@@ -2,16 +2,12 @@ package projectmanagementlisof.controller;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.DatePicker;
@@ -20,17 +16,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javax.jws.soap.SOAPBinding.Use;
-import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
-import projectmanagementlisof.model.dao.DeveloperDAO;
-import projectmanagementlisof.model.dao.ProjectManagerDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
-import projectmanagementlisof.model.pojo.Developer;
-import projectmanagementlisof.model.pojo.ProjectManager;
 import projectmanagementlisof.utils.LoggedUserSingleton;
-import projectmanagementlisof.utils.SelectedItemSingleton;
-import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLNewChangeRequestFormController implements Initializable
@@ -41,8 +29,6 @@ public class FXMLNewChangeRequestFormController implements Initializable
       @FXML private TextField tfJustification;
       @FXML private TextField tfRequestNumber;
       @FXML private TextArea taChangeDescription;
-      private ChangeRequest developerName;
-      private Integer idDeveloper;
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
