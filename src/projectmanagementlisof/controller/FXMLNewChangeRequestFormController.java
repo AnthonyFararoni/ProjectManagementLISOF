@@ -40,6 +40,17 @@ public class FXMLNewChangeRequestFormController implements Initializable
 
       @FXML private void btnCreateChangeRequest(ActionEvent event)
       {
+            LocalDate selectedDate = dpDate.getValue();
+            LocalDate currentDate = LocalDate.now();
+
+            if (selectedDate.isBefore(currentDate))
+            {
+                  Utilities.showSimpleAlert("Error en fecha de solicitud",
+                      "La fecha seleccionada no puede ser anterior a la fecha del día de hoy.",
+                      Alert.AlertType.ERROR);
+                  return;
+            }
+
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
                 "¿Está seguro de crear esta solicitud de cambio?", ButtonType.YES, ButtonType.NO);
             alert.showAndWait();
@@ -92,7 +103,7 @@ public class FXMLNewChangeRequestFormController implements Initializable
             if (!(boolean) answer.get("error"))
             {
                   Utilities.showSimpleAlert(
-                      "Éxito", "Solicitud de cambio creada", Alert.AlertType.INFORMATION);
+                      "Éxito", "Solicitud de cambio creada.", Alert.AlertType.INFORMATION);
                   Stage currentStage = (Stage) apNewChangeRequestForm.getScene().getWindow();
                   Utilities.loadFXMLInAnchorPaneAndCloseCurrentForDeveloper(currentStage,
                       "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
