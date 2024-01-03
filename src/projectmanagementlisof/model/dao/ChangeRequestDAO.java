@@ -67,7 +67,7 @@ public class ChangeRequestDAO
             return answer;
       }
 
-      public static HashMap<String, Object> getAllChangeRequests()
+      public static HashMap<String, Object> getAllChangeRequests(Integer idProject)
       {
             HashMap<String, Object> answer = new LinkedHashMap<>();
             ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
@@ -77,10 +77,15 @@ public class ChangeRequestDAO
             {
                   try
                   {
-                        String query = "SELECT * FROM ChangeRequest;"; // TODO change query
+                        String query = "SELECT cr.idChangeRequest, cr.justification, cr.status, cr.creationDate, cr.reviewDate, "
+                                + "cr.idDeveloper, cr.idProjectManager, cr.idDefect, cr.description "
+                                + "FROM changeRequest cr "
+                                + "JOIN Developer d ON cr.idDeveloper = d.idDeveloper "
+                                + "WHERE d.idProject = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idProject);
                         ResultSet resultSet = preparedStatement.executeQuery();
-
+                        
                         while (resultSet.next())
                         {
                               ChangeRequest changeRequest = new ChangeRequest();
@@ -99,7 +104,7 @@ public class ChangeRequestDAO
                               {
                                     changeRequest.setStatus("Rechazada");
                               }
-                              changeRequest.setCreationDate(resultSet.getString("creationDate"));
+                              changeRequest.setCreationDate(resultSet.getString("creationDate"));                             
                               changeRequest.setReviewDate(resultSet.getString("reviewDate"));
                               changeRequest.setIdDeveloper(resultSet.getInt("idDeveloper"));
                               changeRequests.add(changeRequest);

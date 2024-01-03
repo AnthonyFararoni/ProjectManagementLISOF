@@ -35,6 +35,7 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.observer.DeveloperObserver;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -55,6 +56,7 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
       @FXML private Button btnShowChangeRequestDetails;
 
       private Integer idChangeRequest;
+      private Integer idProjectSelected;
       private Integer selectedDeveloperId;
       private String selectedDeveloperName;
 
@@ -66,6 +68,8 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
+           SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+            idProjectSelected = instance.getIdSelectedProject();
             configureChangeRequestTable();
             getChangeRequestForTable();
       }
@@ -83,7 +87,7 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
 
       private void getChangeRequestForTable()
       {
-            HashMap<String, Object> answer = ChangeRequestDAO.getAllChangeRequests();
+            HashMap<String, Object> answer = ChangeRequestDAO.getAllChangeRequests(idProjectSelected);
             if (!(boolean) answer.get("error"))
             {
                   changeRequests = FXCollections.observableArrayList();

@@ -178,7 +178,7 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
             String searchActivity = tfSearchActivity.getText();
             if (Utilities.validateStringsFields(searchActivity))
             {
-                  HashMap<String, Object> answer = ActivityDAO.searchActivity(searchActivity);
+                  HashMap<String, Object> answer = ActivityDAO.searchActivity(searchActivity, idProject);
                   if (!(boolean) answer.get("error"))
                   {
                         activities = FXCollections.observableArrayList();

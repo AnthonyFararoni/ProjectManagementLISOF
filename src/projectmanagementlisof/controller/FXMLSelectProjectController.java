@@ -53,9 +53,9 @@ public class FXMLSelectProjectController implements Initializable {
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        getData();
-        configureTable();
+    public void initialize(URL url, ResourceBundle rb) {    
+        getData();   
+        configureTable();       
         getProjects();
          
     }
@@ -79,10 +79,13 @@ public class FXMLSelectProjectController implements Initializable {
     
     private void getProjects()
       {
+         
             HashMap<String, Object> answer = ProjectDAO.getManagerProjects(idManager);
             if (!(boolean) answer.get("error"))
             {
+                
                   projects = FXCollections.observableArrayList();
+                  projects.clear();
                   ArrayList<Project> list = (ArrayList<Project>) answer.get("projects");
                   projects.addAll(list);
                   tvProjects.setItems(projects);

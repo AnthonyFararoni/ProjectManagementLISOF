@@ -256,7 +256,7 @@ public class ActivityDAO
             return answer;
       }
 
-      public static HashMap<String, Object> searchActivity(String activityName)
+      public static HashMap<String, Object> searchActivity(String activityName, int idProject)
       {
             HashMap<String, Object> answer = new HashMap<>();
             answer.put("error", true);
@@ -270,9 +270,10 @@ public class ActivityDAO
                             + "a.startDate, a.endDate, a.idDeveloper, a.idProjectManager, a.idProject "
                             + "from activity a "
                             + "inner join status s on a.status = s.idStatus "
-                            + "where a.name like ?";
+                            + "where a.name like ? and idProject = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setString(1, activityName + "%");
+                        preparedStatement.setInt(2, idProject);
                         ResultSet activitiesList = preparedStatement.executeQuery();
                         ArrayList<Activity> activities = new ArrayList<>();
                         while (activitiesList.next())

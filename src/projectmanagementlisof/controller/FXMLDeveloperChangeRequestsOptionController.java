@@ -31,6 +31,7 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
 import projectmanagementlisof.observer.DeveloperObserver;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLDeveloperChangeRequestsOptionController implements Initializable, DeveloperObserver
@@ -48,18 +49,20 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
       private FilteredList<ChangeRequest> filteredData;
 
       private Integer idChangeRequest;
+      private Integer idProjectSelected;
       private Integer selectedDeveloperId;
       private String selectedDeveloperName;
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-            // TODO
+            SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+            idProjectSelected = instance.getIdSelectedProject();
             loadChangeRequests();
       }
 
       private void loadChangeRequests()
       {
-            HashMap<String, Object> answer = ChangeRequestDAO.getAllChangeRequests();
+            HashMap<String, Object> answer = ChangeRequestDAO.getAllChangeRequests(idProjectSelected);
 
             if (!(boolean) answer.get("error"))
             {
