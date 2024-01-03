@@ -26,9 +26,10 @@ public class ChangeRequestDAO
                         String query = "SELECT c.idChangeRequest, c.justification, c.description, "
                             + "c.status, c.creationDate, c.reviewDate, FROM ChangeRequest c, "
                             + "INNER JOIN Developer d ON c.idDeveloper = d.idDeveloper "
-                            + "WHERE c.idDeveloper = " + idDeveloper + ";";
+                            + "WHERE c.idDeveloper = ?";
 
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idDeveloper);
                         ResultSet changeRequestList = preparedStatement.executeQuery();
                         ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
 
