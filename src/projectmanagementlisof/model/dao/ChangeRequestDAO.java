@@ -84,11 +84,11 @@ public class ChangeRequestDAO
                   try
                   {
                         String query = "SELECT cr.idChangeRequest, cr.justification, cr.status, "
-                                + "s.status AS statusName, cr.creationDate, cr.reviewDate, cr.idDeveloper, "
+                                + "crs.status AS statusName, cr.creationDate, cr.reviewDate, cr.idDeveloper, "
                                 + "cr.idProjectManager, cr.idDefect, cr.description "
                                 + "FROM changeRequest cr "
                                 + "JOIN Developer d ON cr.idDeveloper = d.idDeveloper "
-                                + "INNER JOIN status s on s.idStatus = cr.status "
+                                + "INNER JOIN changerequeststatus crs on crs.idChangeRequestStatus = cr.status "
                                 + "WHERE d.idProject = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idProject);
