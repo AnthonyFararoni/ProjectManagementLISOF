@@ -45,7 +45,7 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
 {
       private ObservableList<Activity> activities;
       private Integer idActivity;
-      Integer idProject;
+      private Integer idProjectSelected;
 
       @FXML private TextField tfSearchActivity;
       @FXML private TableView<Activity> tvUnassignedActivities;
@@ -60,7 +60,7 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
       @Override public void initialize(URL location, ResourceBundle resources)
       {
           SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
-          idProject = instance.getIdSelectedProject();  
+          idProjectSelected = instance.getIdSelectedProject();  
           configureUnassignedActivitiesTable();
           getUnassignedActivitiesForTable();
       }
@@ -149,7 +149,7 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
 
       private void getUnassignedActivitiesForTable()
       {
-            HashMap<String, Object> answer = ActivityDAO.getUnassignedActivities(idProject);
+            HashMap<String, Object> answer = ActivityDAO.getUnassignedActivities(idProjectSelected);
             if (!(boolean) answer.get("error"))
             {
                   activities = FXCollections.observableArrayList();
@@ -169,7 +169,7 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
             String searchActivity = tfSearchActivity.getText();
             if (Utilities.validateStringsFields(searchActivity))
             {
-                  HashMap<String, Object> answer = ActivityDAO.searchActivity(searchActivity);
+                  HashMap<String, Object> answer = ActivityDAO.searchActivity(searchActivity, idProjectSelected);
                   if (!(boolean) answer.get("error"))
                   {
                         activities = FXCollections.observableArrayList();

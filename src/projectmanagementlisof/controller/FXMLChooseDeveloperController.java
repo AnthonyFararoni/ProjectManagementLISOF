@@ -22,12 +22,14 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.observer.DeveloperObserver;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLChooseDeveloperController implements Initializable
 {
       private ObservableList<Developer> developers;
       private Integer idDeveloper;
+      private Integer idProjectSelected;
       private String developerName;
       private DeveloperObserver observer;
 
@@ -45,6 +47,8 @@ public class FXMLChooseDeveloperController implements Initializable
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
+          SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+          idProjectSelected = instance.getIdSelectedProject(); 
             configureDevelopersTable();
             getDevelopersForTable();
       }
@@ -101,7 +105,7 @@ public class FXMLChooseDeveloperController implements Initializable
 
       private void getDevelopersForTable()
       {
-            HashMap<String, Object> answer = DeveloperDAO.getDevelopers();
+            HashMap<String, Object> answer = DeveloperDAO.getDevelopers(idProjectSelected);
             if (!(boolean) answer.get("error"))
             {
                   developers = FXCollections.observableArrayList();
@@ -128,7 +132,7 @@ public class FXMLChooseDeveloperController implements Initializable
             else if (Utilities.validateStringsFields(searchDeveloper))
             {
                   HashMap<String, Object> answer =
-                      DeveloperDAO.searchDeveloperByName(searchDeveloper);
+                      DeveloperDAO.searchDeveloperByName(searchDeveloper, idProjectSelected);
                   showDevelopers(answer);
             }
             else

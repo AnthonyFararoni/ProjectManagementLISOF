@@ -73,71 +73,67 @@ public class ChangeRequestDAO
             return answer;
       }
 
-      public static HashMap<String, Object> getChangeRequestsAccordingIdProjectSelected()
+      public static HashMap<String, Object> getChangeRequestsAccordingIdProjectSelected(Integer idProject)
       {
             HashMap<String, Object> answer = new LinkedHashMap<>();
-            answer.put("error", true);
+            ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
             Connection connectionBD = ConnectionDB.getConnection();
+
             if (connectionBD != null)
             {
                   try
                   {
-                        String query =
-                            "SELECT DISTINCT c.idChangeRequest, c.justification, c.description, c.status, "
-                            + "cs.status as statusName, c.creationDate, c.reviewDate, c.idDeveloper, c.idProjectManager"
-                            + " FROM changeRequest c "
-                            + "INNER JOIN Developer d ON c.idDeveloper = d.idDeveloper "
-                            + "INNER JOIN ChangeRequestStatus cs on c.status = cs.idChangeRequestStatus "
-                            + "LEFT JOIN ProjectManagerResponsible pmr ON c.idProjectManager = pmr.idProjectManager "
-                            + "WHERE (pmr.idProject = ? OR c.idProjectManager IS NULL);";
-
+                        String query = "SELECT cr.idChangeRequest, cr.justification, cr.status, cr.creationDate, cr.reviewDate, "
+                                + "cr.idDeveloper, cr.idProjectManager, cr.idDefect, cr.description "
+                                + "FROM changeRequest cr "
+                                + "JOIN Developer d ON cr.idDeveloper = d.idDeveloper "
+                                + "WHERE d.idProject = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
-                        preparedStatement.setInt(
-                            1, SelectedProjectSingleton.getInstance().getIdSelectedProject());
-
-                        System.out.println(">>>>>>>>>>>>>>>>>>>>> ID PROJECT MANAGER"
-                            + LoggedUserSingleton.getInstance().getUserId());
-
-                        ResultSet changeRequestList = preparedStatement.executeQuery();
-                        ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
-                        while (changeRequestList.next())
+                        preparedStatement.setInt(1, idProject);
+                        ResultSet resultSet = preparedStatement.executeQuery();
+                        
+                        while (resultSet.next())
                         {
                               ChangeRequest changeRequest = new ChangeRequest();
-                              changeRequest.setIdChangeRequest(
-                                  changeRequestList.getInt("idChangeRequest"));
-                              changeRequest.setJustification(
-                                  changeRequestList.getString("justification"));
-                              changeRequest.setDescription(
-                                  changeRequestList.getString("description"));
-                              changeRequest.setIdStatus(changeRequestList.getInt("status"));
-                              changeRequest.setStatus(changeRequestList.getString("statusName"));
-                              changeRequest.setCreationDate(
-                                  changeRequestList.getString("creationDate"));
-                              changeRequest.setReviewDate(
-                                  changeRequestList.getString("reviewDate"));
-                              changeRequest.setIdDeveloper(changeRequestList.getInt("idDeveloper"));
-                              changeRequest.setIdProjectManager(
-                                  changeRequestList.getInt("idProjectManager"));
+                              changeRequest.setIdChangeRequest(resultSet.getInt("idChangeRequest"));
+                              changeRequest.setJustification(resultSet.getString("justification"));
+                              changeRequest.setDescription(resultSet.getString("description"));
+                              if (resultSet.getInt("status") == 1)
+                              {
+                                    changeRequest.setStatus("Aprobada");
+                              }
+                              else if (resultSet.getInt("status") == 2)
+                              {
+                                    changeRequest.setStatus("Pendiente");
+                              }
+                              else if (resultSet.getInt("status") == 3)
+                              {
+                                    changeRequest.setStatus("Rechazada");
+                              }
+                              changeRequest.setCreationDate(resultSet.getString("creationDate"));                             
+                              changeRequest.setReviewDate(resultSet.getString("reviewDate"));
+                              changeRequest.setIdDeveloper(resultSet.getInt("idDeveloper"));
                               changeRequests.add(changeRequest);
-
-                              System.out.println(">>>>>>>>>>>>>>>>>>>>> CHANGE REQUEST"
-                                  + changeRequest.toString());
                         }
+
                         connectionBD.close();
                         answer.put("error", false);
                         answer.put("changeRequests", changeRequests);
                   }
                   catch (SQLException ex)
                   {
+                        answer.put("error", true);
                         answer.put("message", "Error: " + ex.getMessage());
                   }
             }
             else
             {
+                  answer.put("error", true);
                   answer.put("message",
                       "Hubo un error al intentar conectar con la base de datos. Intente "
                           + "de nuevo más tarde");
             }
+
             return answer;
       }
 

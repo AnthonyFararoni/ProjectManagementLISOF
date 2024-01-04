@@ -22,7 +22,7 @@ import projectmanagementlisof.model.pojo.Developer;
  */
 public class DeveloperDAO
 {
-      public static HashMap<String, Object> getDevelopers()
+      public static HashMap<String, Object> getDevelopers(int idProject)
       {
             HashMap<String, Object> answer = new LinkedHashMap<>();
             answer.put("error", true);
@@ -37,9 +37,10 @@ public class DeveloperDAO
                             + "sp.endDate from developer d "
                             + "inner join project p on d.idProject = p.idProject "
                             + "inner join schoolperiod sp on sp.idSchoolPeriod = d.idSchoolPeriod "
-                            + "where d.enrollment = 1";
-                        PreparedStatement prepararSentencia = connectionBD.prepareStatement(query);
-                        ResultSet developersList = prepararSentencia.executeQuery();
+                            + "where d.enrollment = 1 and d.idProject = ?";
+                        PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
+                        preparedStatement.setInt(1, idProject);
+                        ResultSet developersList = preparedStatement.executeQuery();
                         ArrayList<Developer> developers = new ArrayList<>();
                         while (developersList.next())
                         {
@@ -141,7 +142,7 @@ public class DeveloperDAO
             return answer;
       }
 
-      public static HashMap<String, Object> searchDeveloperByName(String developerName)
+      public static HashMap<String, Object> searchDeveloperByName(String developerName, int idProject)
       {
             HashMap<String, Object> answer = new HashMap<>();
             answer.put("error", true);
@@ -155,9 +156,10 @@ public class DeveloperDAO
                             + "d.email, d.enrollment, d.idProject, p.name as projectName, d.idSchoolPeriod, sp.startDate,"
                             + " sp.endDate from developer d inner join project p on d.idProject = p.idProject "
                             + "inner join schoolperiod sp on sp.idSchoolPeriod = d.idSchoolPeriod "
-                            + "where d.name like ?;";
+                            + "where d.name like ? and d.idProject = ?;";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setString(1, developerName + "%");
+                        preparedStatement.setInt(2, idProject);
                         ResultSet developersList = preparedStatement.executeQuery();
                         ArrayList<Developer> developers = new ArrayList<>();
                         while (developersList.next())
@@ -197,6 +199,7 @@ public class DeveloperDAO
             }
             return answer;
       }
+
 
       public static HashMap<String, Object> searchDeveloperByDeveloperLogin(String developerLogin)
       {

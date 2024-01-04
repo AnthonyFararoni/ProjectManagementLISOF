@@ -28,11 +28,13 @@ import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DeveloperDAO;
 import projectmanagementlisof.model.pojo.Developer;
 import projectmanagementlisof.utils.SelectedItemSingleton;
+import projectmanagementlisof.utils.SelectedProjectSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 public class FXMLDevelopersOptionController implements Initializable
 {
       public Integer idDeveloper;
+      private Integer idProjectSelected;
       public String developerName;
       public String developerLogin;
       private ObservableList<Developer> developers;
@@ -48,6 +50,8 @@ public class FXMLDevelopersOptionController implements Initializable
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
+          SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+          idProjectSelected = instance.getIdSelectedProject(); 
             configureDevelopersTable();
             getDevelopersForTable();
       }
@@ -56,6 +60,7 @@ public class FXMLDevelopersOptionController implements Initializable
 
       private void btnRefreshTableDevelopers(MouseEvent event)
       {
+          
             getDevelopersForTable();
             tfSearchDeveloper.setText("");
       }
@@ -96,7 +101,7 @@ public class FXMLDevelopersOptionController implements Initializable
 
       private void getDevelopersForTable()
       {
-            HashMap<String, Object> answer = DeveloperDAO.getDevelopers();
+            HashMap<String, Object> answer = DeveloperDAO.getDevelopers(idProjectSelected);
             if (!(boolean) answer.get("error"))
             {
                   developers = FXCollections.observableArrayList();
@@ -185,7 +190,7 @@ public class FXMLDevelopersOptionController implements Initializable
             else if (Utilities.validateStringsFields(searchDeveloper))
             {
                   HashMap<String, Object> answer =
-                      DeveloperDAO.searchDeveloperByName(searchDeveloper);
+                      DeveloperDAO.searchDeveloperByName(searchDeveloper, idProjectSelected);
                   showDevelopers(answer);
             }
             else
