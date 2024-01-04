@@ -83,10 +83,12 @@ public class ChangeRequestDAO
             {
                   try
                   {
-                        String query = "SELECT cr.idChangeRequest, cr.justification, cr.status, cr.creationDate, cr.reviewDate, "
-                                + "cr.idDeveloper, cr.idProjectManager, cr.idDefect, cr.description "
+                        String query = "SELECT cr.idChangeRequest, cr.justification, cr.status, "
+                                + "s.status AS statusName, cr.creationDate, cr.reviewDate, cr.idDeveloper, "
+                                + "cr.idProjectManager, cr.idDefect, cr.description "
                                 + "FROM changeRequest cr "
                                 + "JOIN Developer d ON cr.idDeveloper = d.idDeveloper "
+                                + "INNER JOIN status s on s.idStatus = cr.status "
                                 + "WHERE d.idProject = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idProject);
@@ -98,18 +100,7 @@ public class ChangeRequestDAO
                               changeRequest.setIdChangeRequest(resultSet.getInt("idChangeRequest"));
                               changeRequest.setJustification(resultSet.getString("justification"));
                               changeRequest.setDescription(resultSet.getString("description"));
-                              if (resultSet.getInt("status") == 1)
-                              {
-                                    changeRequest.setStatus("Aprobada");
-                              }
-                              else if (resultSet.getInt("status") == 2)
-                              {
-                                    changeRequest.setStatus("Pendiente");
-                              }
-                              else if (resultSet.getInt("status") == 3)
-                              {
-                                    changeRequest.setStatus("Rechazada");
-                              }
+                              changeRequest.setStatus(resultSet.getString("statusName"));
                               changeRequest.setCreationDate(resultSet.getString("creationDate"));                             
                               changeRequest.setReviewDate(resultSet.getString("reviewDate"));
                               changeRequest.setIdDeveloper(resultSet.getInt("idDeveloper"));
