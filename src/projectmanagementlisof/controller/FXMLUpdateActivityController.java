@@ -85,7 +85,11 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
       @FXML private void btnReturn(MouseEvent event)
       {
             Stage currentStage = (Stage) tfActivityName.getScene().getWindow();
-            utilities.closeWindow(currentStage);
+            Utilities.closeWindow(currentStage);
+
+            Utilities.loadFXMLInAnchorPaneAndCloseCurrentForProjectManager(currentStage,
+                      "/projectmanagementlisof/gui/FXMLProjectManagerLanding.fxml",
+                      "/projectmanagementlisof/gui/FXMLActivitiesOption.fxml");
       }
 
       @FXML private void btnSelectDeveloper(ActionEvent event)
@@ -188,7 +192,7 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate startDate = LocalDate.parse(this.updateActivity.getStartDate(), formatter);
             dpStartDate.setValue(startDate);
-            LocalDate endDate = LocalDate.parse(this.updateActivity.getStartDate(), formatter);
+            LocalDate endDate = LocalDate.parse(this.updateActivity.getEndDate(), formatter);
             dpEndDate.setValue(endDate);
       }
 

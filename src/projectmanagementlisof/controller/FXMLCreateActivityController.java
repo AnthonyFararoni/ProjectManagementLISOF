@@ -185,7 +185,11 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
       @FXML private void btnReturn(MouseEvent event)
       {
             Stage currentStage = (Stage) tfActivityName.getScene().getWindow();
-            utilities.closeWindow(currentStage);
+            Utilities.closeWindow(currentStage);
+
+            Utilities.loadFXMLInAnchorPaneAndCloseCurrentForProjectManager(currentStage,
+                      "/projectmanagementlisof/gui/FXMLProjectManagerLanding.fxml",
+                      "/projectmanagementlisof/gui/FXMLActivitiesOption.fxml");
       }
 
       @FXML private void changeToDefaultCursor(MouseEvent event)

@@ -19,6 +19,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -66,48 +67,38 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
 
       @FXML private void btnShowCreateActivity(ActionEvent event)
       {
-            try
-            {
-                  FXMLLoader loader = Utilities.loadView("gui/FXMLCreateActivity.fxml");
-                  Parent view = loader.load();
-                  Scene scene = new Scene(view);
-                  FXMLCreateActivityController controller = loader.getController();
-                  Stage stage = new Stage();
+            
+                  Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                  stage.setScene(scene);
-                  stage.setTitle("Crear actividad");
-                  stage.initModality(Modality.APPLICATION_MODAL);
-                  stage.showAndWait();
-            }
-            catch (IOException ex)
-            {
-                  ex.printStackTrace();
-            }
+                  FXMLChangeRequestDetailsController createController =
+                      Utilities
+                          .<FXMLChangeRequestDetailsController>closeCurrentWindowAndOpenAnotherOne(
+                              "/projectmanagementlisof/gui/FXMLCreateActivity.fxml", stage,
+                              event);
+            
       }
 
       @FXML private void btnEditActivity(ActionEvent event)
       {
-            try
+          Activity selectedActivity =
+                tvUnassignedActivities.getSelectionModel().getSelectedItem();
+          if (selectedActivity != null)
             {
-                  FXMLLoader loader = Utilities.loadView("gui/FXMLUpdateActivity.fxml");
-                  Parent view = loader.load();
-                  Scene scene = new Scene(view);
-                  FXMLUpdateActivityController controller = loader.getController();
-                  Activity selectedActivity =
-                      tvUnassignedActivities.getSelectionModel().getSelectedItem();
-                  controller.initializeInformation(idActivity, this, selectedActivity);
-                  Stage stage = new Stage();
+                  Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
-                  stage.setScene(scene);
-                  stage.setTitle("Crear actividad");
-                  stage.initModality(Modality.APPLICATION_MODAL);
-                  stage.showAndWait();
+                  FXMLUpdateActivityController updateController =
+                      Utilities
+                          .<FXMLUpdateActivityController>closeCurrentWindowAndOpenAnotherOne(
+                              "/projectmanagementlisof/gui/FXMLUpdateActivity.fxml", stage,
+                              event);
+                  updateController.initializeInformation(idActivity, this, selectedActivity);
             }
-            catch (IOException ex)
+            else
             {
-                  Logger.getLogger(FXMLActivitiesOptionController.class.getName())
-                      .log(Level.SEVERE, null, ex);
-            }
+                  Utilities.showSimpleAlert("Error de selección",
+                      "Debe seleccionar una Actividad.", Alert.AlertType.ERROR);
+            }   
+            
       }
 
       @FXML private void btnSearchActivity(MouseEvent event)
