@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLChangeRequestDetailsController">
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLChangeRequestDetailsController">
    <children>
       <GridPane layoutX="143.0" layoutY="115.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
@@ -65,7 +65,7 @@
                         <Font size="14.0" />
                      </font>
                   </TextField>
-                  <TextField fx:id="tfDateCreated" layoutX="700.0" layoutY="119.0" prefHeight="31.0" prefWidth="191.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css">
+                  <TextField fx:id="tfDateCreated" editable="false" layoutX="700.0" layoutY="119.0" prefHeight="31.0" prefWidth="191.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -90,7 +90,7 @@
                         <Font size="17.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="tfDateReviewed" layoutX="701.0" layoutY="183.0" prefHeight="31.0" prefWidth="191.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css">
+                  <TextField fx:id="tfDateReviewed" editable="false" layoutX="701.0" layoutY="183.0" prefHeight="31.0" prefWidth="191.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

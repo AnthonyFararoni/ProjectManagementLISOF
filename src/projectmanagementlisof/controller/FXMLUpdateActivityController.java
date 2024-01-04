@@ -67,6 +67,12 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
             LoggedUserSingleton userInstance = LoggedUserSingleton.getInstance();
             idProjectManager = userInstance.getUserId();
             btnUpdateActivity.setDisable(true);
+            Utilities.restrictDates(dpStartDate, LocalDate.now());
+            dpStartDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Utilities.restrictDates(dpEndDate, newValue);
+            }
+            }); 
             tfActivityName.textProperty().addListener(
                 (observable, oldValue, newValue) -> checkEnableButton());
             dpStartDate.valueProperty().addListener(

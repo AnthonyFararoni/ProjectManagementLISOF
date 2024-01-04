@@ -7,6 +7,8 @@ package projectmanagementlisof.controller;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -62,7 +64,16 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
             idProject = projectInstance.getIdSelectedProject();
             LoggedUserSingleton userInstance = LoggedUserSingleton.getInstance();
             idProjectManager = userInstance.getUserId();
+            Utilities.restrictDates(dpStartDate, LocalDate.now());
+            dpStartDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                Utilities.restrictDates(dpEndDate, newValue);
+            }
+            });            
+            dpEndDate.setDisable(true);
             btnCreateActivity.setDisable(true);
+            dpStartDate.valueProperty().addListener(
+                (observable, oldValue, newValue) -> checkEnableEndDatePicker());
             tfActivityName.textProperty().addListener(
                 (observable, oldValue, newValue) -> checkEnableButton());
             dpStartDate.valueProperty().addListener(
@@ -166,6 +177,13 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
                       "Error al guardar", (String) answer.get("message"), Alert.AlertType.ERROR);
             }
       }
+      
+      private void checkEnableEndDatePicker()
+      {
+            boolean startDateSelected = dpStartDate.getValue() != null;
+            
+            dpEndDate.setDisable(!startDateSelected);
+      }
 
       private void checkEnableButton()
       {
@@ -179,7 +197,6 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
       @Override public void developerSelected(Integer idDeveloper, String developerName)
       {
             loadDeveloper(idDeveloper, developerName);
-            System.out.println(idDeveloper);
       }
 
       @FXML private void btnReturn(MouseEvent event)

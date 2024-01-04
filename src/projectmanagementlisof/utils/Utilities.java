@@ -23,6 +23,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -32,6 +34,7 @@ import javafx.stage.Modality;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.Window;
+import javafx.util.Callback;
 import javafx.util.converter.IntegerStringConverter;
 import projectmanagementlisof.controller.FXMLChangeRequestDetailsController;
 import projectmanagementlisof.controller.FXMLDeveloperLandingController;
@@ -411,6 +414,18 @@ public class Utilities
       {
             field.setStyle(null);
       }
+      
+      public static void restrictDates(DatePicker datePicker, LocalDate date) {        
+
+        Callback<DatePicker, DateCell> dayCellFactory = dp -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                setDisable(item.isBefore(date));
+            }
+        };
+         datePicker.setDayCellFactory(dayCellFactory);
+    }
 
       public static void backToLogIn(MouseEvent event)
       {
