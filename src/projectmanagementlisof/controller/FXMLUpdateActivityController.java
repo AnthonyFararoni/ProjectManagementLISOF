@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -90,7 +91,7 @@ public class FXMLUpdateActivityController implements Initializable, DeveloperObs
 
       @FXML private void btnReturn(MouseEvent event)
       {
-            Stage currentStage = (Stage) tfActivityName.getScene().getWindow();
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Utilities.closeWindow(currentStage);
 
             Utilities.loadFXMLInAnchorPaneAndCloseCurrentForProjectManager(currentStage,

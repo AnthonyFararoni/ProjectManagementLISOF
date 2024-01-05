@@ -18,6 +18,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -69,23 +70,9 @@ public class FXMLDeveloperChangesOptionController implements Initializable
 
       @FXML private void btnRegisterChange(ActionEvent event)
       {
-            try
-            {
-                  FXMLLoader loader = utilities.loadView("gui/FXMLRegisterChange.fxml");
-                  Parent view = loader.load();
-                  Scene scene = new Scene(view);
-                  FXMLRegisterChangeController controller = loader.getController();
-                  Stage stage = new Stage();
-
-                  stage.setScene(scene);
-                  stage.setTitle("Registrar cambio");
-                  stage.initModality(Modality.APPLICATION_MODAL);
-                  stage.showAndWait();
-            }
-            catch (IOException ex)
-            {
-                  ex.printStackTrace();
-            }
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Utilities.<FXMLChangeRequestDetailsController>closeCurrentWindowAndOpenAnotherOne(
+            "/projectmanagementlisof/gui/FXMLRegisterChange.fxml", stage,event);
       }
 
       private String convertTypeToString(int type)
@@ -93,15 +80,15 @@ public class FXMLDeveloperChangesOptionController implements Initializable
             switch (type)
             {
                   case 1:
-                        return "JavaScript";
-                  case 2:
                         return "Base de datos";
+                  case 2:
+                        return "Controladores";
                   case 3:
-                        return "Interfaz";
+                        return "Vistas";
                   case 4:
-                        return "Codigo";
+                        return "Archivos JavaScript";
                   default:
-                        return "Otros";
+                        return "Otros Archivos";
             }
       }
 

@@ -5,14 +5,11 @@
  */
 package projectmanagementlisof.controller;
 
-import static java.time.temporal.TemporalQueries.localDate;
+
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,6 +17,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -27,7 +25,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import projectmanagementlisof.model.dao.CatalogDAO;
 import projectmanagementlisof.model.dao.ChangeDAO;
 import projectmanagementlisof.model.pojo.Change;
 import projectmanagementlisof.model.pojo.CorrectionType;
@@ -53,6 +50,7 @@ public class FXMLRegisterChangeController implements Initializable
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
+          System.out.println(types);
             utilities.setItemsInComboBox(types, cbChangeType);
             btnRegisterChange.setDisable(true);
             taDescription.textProperty().addListener(
@@ -63,8 +61,12 @@ public class FXMLRegisterChangeController implements Initializable
 
       @FXML private void btnReturn(MouseEvent event)
       {
-            Stage currentStage = (Stage) taDescription.getScene().getWindow();
-            utilities.closeWindow(currentStage);
+            Stage currentStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Utilities.closeWindow(currentStage);
+
+            Utilities.loadFXMLInAnchorPaneAndCloseCurrentForDeveloper(currentStage,
+                      "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
+                      "/projectmanagementlisof/gui/FXMLDeveloperChangesOption.fxml");
       }
 
       @FXML private void btnRegisterChange(ActionEvent event)
@@ -80,7 +82,6 @@ public class FXMLRegisterChangeController implements Initializable
             change.setType(type.getIdType());
             change.setIdDeveloper(1);
             LocalDate date = LocalDate.now();
-            Date fechaComoDate = Date.from(date.atStartOfDay(ZoneId.systemDefault()).toInstant());
             change.setDateCreated(date.toString());
             System.out.println(date);
 
@@ -89,6 +90,8 @@ public class FXMLRegisterChangeController implements Initializable
             {
                   Utilities.showSimpleAlert("Cambio Registrado", (String) answer.get("message"),
                       Alert.AlertType.INFORMATION);
+                  taDescription.clear();
+                  cbChangeType.setValue(null);
             }
             else
             {

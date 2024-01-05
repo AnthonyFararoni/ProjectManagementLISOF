@@ -67,14 +67,9 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
 
       @FXML private void btnShowCreateActivity(ActionEvent event)
       {
-            
-                  Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-
-                  FXMLChangeRequestDetailsController createController =
-                      Utilities
-                          .<FXMLChangeRequestDetailsController>closeCurrentWindowAndOpenAnotherOne(
-                              "/projectmanagementlisof/gui/FXMLCreateActivity.fxml", stage,
-                              event);
+        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Utilities.<FXMLChangeRequestDetailsController>closeCurrentWindowAndOpenAnotherOne(
+        "/projectmanagementlisof/gui/FXMLCreateActivity.fxml", stage, event);
             
       }
 
