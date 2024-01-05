@@ -67,10 +67,11 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
             idProjectManager = userInstance.getUserId();
             Utilities.restrictDates(dpStartDate, LocalDate.now());
             dpStartDate.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) {
-                Utilities.restrictDates(dpEndDate, newValue);
-            }
-            });            
+                  if (newValue != null)
+                  {
+                        Utilities.restrictDates(dpEndDate, newValue);
+                  }
+            });
             dpEndDate.setDisable(true);
             btnCreateActivity.setDisable(true);
             dpStartDate.valueProperty().addListener(
@@ -178,11 +179,11 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
                       "Error al guardar", (String) answer.get("message"), Alert.AlertType.ERROR);
             }
       }
-      
+
       private void checkEnableEndDatePicker()
       {
             boolean startDateSelected = dpStartDate.getValue() != null;
-            
+
             dpEndDate.setDisable(!startDateSelected);
       }
 
@@ -206,8 +207,8 @@ public class FXMLCreateActivityController implements DeveloperObserver, Initiali
             Utilities.closeWindow(currentStage);
 
             Utilities.loadFXMLInAnchorPaneAndCloseCurrentForProjectManager(currentStage,
-                      "/projectmanagementlisof/gui/FXMLProjectManagerLanding.fxml",
-                      "/projectmanagementlisof/gui/FXMLActivitiesOption.fxml");
+                "/projectmanagementlisof/gui/FXMLProjectManagerLanding.fxml",
+                "/projectmanagementlisof/gui/FXMLActivitiesOption.fxml");
       }
 
       @FXML private void changeToDefaultCursor(MouseEvent event)

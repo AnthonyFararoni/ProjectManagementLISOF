@@ -142,7 +142,8 @@ public class DeveloperDAO
             return answer;
       }
 
-      public static HashMap<String, Object> searchDeveloperByName(String developerName, int idProject)
+      public static HashMap<String, Object> searchDeveloperByName(
+          String developerName, int idProject)
       {
             HashMap<String, Object> answer = new HashMap<>();
             answer.put("error", true);
@@ -199,7 +200,6 @@ public class DeveloperDAO
             }
             return answer;
       }
-
 
       public static HashMap<String, Object> searchDeveloperByDeveloperLogin(String developerLogin)
       {

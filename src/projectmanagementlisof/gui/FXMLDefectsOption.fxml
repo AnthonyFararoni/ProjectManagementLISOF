@@ -9,28 +9,39 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLDefectsOptionController">
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/19"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="projectmanagementlisof.controller.FXMLDefectsOptionController">
       <children>
-            <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+            <ImageView fitHeight="45.0" fitWidth="51.0" layoutX="53.0" layoutY="42.0"
+                  pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                   <image>
                         <Image url="@../images/SearchIcon.png" />
                   </image>
             </ImageView>
-            <TextField alignment="CENTER" layoutX="109.0" layoutY="41.0" prefHeight="34.0" prefWidth="366.0" promptText="Fecha" styleClass="search-text-field" stylesheets="@../css/Style.css">
+            <TextField alignment="CENTER" layoutX="109.0" layoutY="41.0" prefHeight="34.0"
+                  prefWidth="366.0" promptText="Fecha" styleClass="search-text-field"
+                  stylesheets="@../css/Style.css">
                   <font>
                         <Font name="System Bold" size="16.0" />
                   </font>
             </TextField>
-            <TableView layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0" stylesheets="@../css/Style.css">
+            <TableView layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0"
+                  stylesheets="@../css/Style.css">
                   <columns>
-                        <TableColumn maxWidth="199.59994888305664" prefWidth="99.19998550415039" text="No. Defecto" />
-                        <TableColumn maxWidth="265.9999694824219" prefWidth="157.6000213623047" text="Esfuerzo (minutos)" />
-                        <TableColumn maxWidth="341.5999755859375" prefWidth="118.0" text="Fecha de Hallazgo" />
-                        <TableColumn maxWidth="311.20001220703125" prefWidth="296.800048828125" text="Descripción" />
+                        <TableColumn maxWidth="199.59994888305664" prefWidth="99.19998550415039"
+                              text="No. Defecto" />
+                        <TableColumn maxWidth="265.9999694824219" prefWidth="157.6000213623047"
+                              text="Esfuerzo (minutos)" />
+                        <TableColumn maxWidth="341.5999755859375" prefWidth="118.0"
+                              text="Fecha de Hallazgo" />
+                        <TableColumn maxWidth="311.20001220703125" prefWidth="296.800048828125"
+                              text="Descripción" />
 
                   </columns>
             </TableView>
-            <Button layoutX="308.0" layoutY="548.0" mnemonicParsing="false" stylesheets="@../css/Style.css" text="Ver detalles">
+            <Button layoutX="308.0" layoutY="548.0" mnemonicParsing="false"
+                  stylesheets="@../css/Style.css" text="Ver detalles">
                   <font>
                         <Font name="System Bold" size="17.0" />
                   </font>

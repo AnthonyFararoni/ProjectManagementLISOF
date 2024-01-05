@@ -50,8 +50,8 @@ public class FXMLDevelopersOptionController implements Initializable
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-          SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
-          idProjectSelected = instance.getIdSelectedProject(); 
+            SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+            idProjectSelected = instance.getIdSelectedProject();
             configureDevelopersTable();
             getDevelopersForTable();
       }
@@ -60,7 +60,6 @@ public class FXMLDevelopersOptionController implements Initializable
 
       private void btnRefreshTableDevelopers(MouseEvent event)
       {
-          
             getDevelopersForTable();
             tfSearchDeveloper.setText("");
       }

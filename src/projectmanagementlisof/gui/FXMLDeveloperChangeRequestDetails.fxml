@@ -11,12 +11,20 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="apNewChangeRequestForm" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLDeveloperChangeRequestDetailsController">
+<AnchorPane id="AnchorPane" fx:id="apNewChangeRequestForm" prefHeight="622.0" prefWidth="952.0"
+      xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="projectmanagementlisof.controller.FXMLDeveloperChangeRequestDetailsController">
       <children>
-            <Pane layoutX="-8.0" layoutY="-5.0" prefHeight="85.0" prefWidth="971.0" styleClass="window-header" stylesheets="@../css/Style.css">
+            <Pane layoutX="-8.0" layoutY="-5.0" prefHeight="85.0" prefWidth="971.0"
+                  styleClass="window-header" stylesheets="@../css/Style.css">
                   <children>
-                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="309.0" layoutY="25.0" styleClass="window-title" stylesheets="@../css/Style.css" text="Detalles de Solicitud de Cambio" textAlignment="CENTER" />
-                        <ImageView fitHeight="49.0" fitWidth="43.0" layoutX="35.0" layoutY="23.0" onMouseClicked="#clickImageReturn" pickOnBounds="true" preserveRatio="true">
+                        <Label alignment="CENTER" contentDisplay="CENTER" layoutX="309.0"
+                              layoutY="25.0" styleClass="window-title"
+                              stylesheets="@../css/Style.css" text="Detalles de Solicitud de Cambio"
+                              textAlignment="CENTER" />
+                        <ImageView fitHeight="49.0" fitWidth="43.0" layoutX="35.0" layoutY="23.0"
+                              onMouseClicked="#clickImageReturn" pickOnBounds="true"
+                              preserveRatio="true">
                               <image>
                                     <Image url="@../images/ReturnIcon2.png" />
                               </image>
@@ -25,9 +33,11 @@
             </Pane>
             <ScrollPane layoutX="-2.0" layoutY="79.0" prefHeight="627.0" prefWidth="966.0">
                   <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="621.0" prefWidth="959.0">
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="621.0"
+                              prefWidth="959.0">
                               <children>
-                                    <Label layoutX="82.0" layoutY="218.0" stylesheets="@../css/Style.css" text="Solicitado Por:">
+                                    <Label layoutX="82.0" layoutY="218.0"
+                                          stylesheets="@../css/Style.css" text="Solicitado Por:">
                                           <font>
                                                 <Font name="System Bold" size="23.0" />
                                           </font>
@@ -42,19 +52,30 @@
                                                 <Font name="System Bold" size="23.0" />
                                           </font>
                                     </Label>
-                                    <TextField fx:id="tfJustification" editable="false" layoutX="81.0" layoutY="118.0" prefHeight="54.0" prefWidth="810.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css">
+                                    <TextField fx:id="tfJustification" editable="false"
+                                          layoutX="81.0" layoutY="118.0" prefHeight="54.0"
+                                          prefWidth="810.0" styleClass="lower-gray-text-field"
+                                          stylesheets="@../css/Style.css">
                                           <font>
                                                 <Font size="18.0" />
                                           </font>
                                     </TextField>
-                                    <TextField fx:id="tfRequestedBy" editable="false" layoutX="81.0" layoutY="255.0" prefHeight="37.0" prefWidth="554.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" />
-                                    <DatePicker fx:id="dpDate" editable="false" layoutX="657.0" layoutY="252.0" prefHeight="39.0" prefWidth="229.0" />
-                                    <Label layoutX="82.0" layoutY="335.0" text="Descripción del Cambio">
+                                    <TextField fx:id="tfRequestedBy" editable="false" layoutX="81.0"
+                                          layoutY="255.0" prefHeight="37.0" prefWidth="554.0"
+                                          styleClass="lower-gray-text-field"
+                                          stylesheets="@../css/Style.css" />
+                                    <DatePicker fx:id="dpDate" editable="false" layoutX="657.0"
+                                          layoutY="252.0" prefHeight="39.0" prefWidth="229.0" />
+                                    <Label layoutX="82.0" layoutY="335.0"
+                                          text="Descripción del Cambio">
                                           <font>
                                                 <Font name="System Bold" size="23.0" />
                                           </font>
                                     </Label>
-                                    <TextArea fx:id="taChangeDescription" editable="false" layoutX="82.0" layoutY="373.0" prefHeight="166.0" prefWidth="805.0" styleClass="lower-gray-text-field" stylesheets="@../css/Style.css" wrapText="true">
+                                    <TextArea fx:id="taChangeDescription" editable="false"
+                                          layoutX="82.0" layoutY="373.0" prefHeight="166.0"
+                                          prefWidth="805.0" styleClass="lower-gray-text-field"
+                                          stylesheets="@../css/Style.css" wrapText="true">
                                           <font>
                                                 <Font size="16.0" />
                                           </font>

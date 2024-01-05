@@ -5,8 +5,6 @@
  */
 package projectmanagementlisof.controller;
 
-
-
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -50,7 +48,7 @@ public class FXMLRegisterChangeController implements Initializable
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-          System.out.println(types);
+            System.out.println(types);
             utilities.setItemsInComboBox(types, cbChangeType);
             btnRegisterChange.setDisable(true);
             taDescription.textProperty().addListener(
@@ -65,8 +63,8 @@ public class FXMLRegisterChangeController implements Initializable
             Utilities.closeWindow(currentStage);
 
             Utilities.loadFXMLInAnchorPaneAndCloseCurrentForDeveloper(currentStage,
-                      "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
-                      "/projectmanagementlisof/gui/FXMLDeveloperChangesOption.fxml");
+                "/projectmanagementlisof/gui/FXMLDeveloperLanding.fxml",
+                "/projectmanagementlisof/gui/FXMLDeveloperChangesOption.fxml");
       }
 
       @FXML private void btnRegisterChange(ActionEvent event)

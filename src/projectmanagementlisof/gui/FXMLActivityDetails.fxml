@@ -9,10 +9,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="projectmanagementlisof.controller.FXMLActivityDetailsController">
-    <stylesheets>
-        <URL value="@/projectmanagementlisof/css/Style.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" styleClass="mainFxmlClass"
+   xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+   fx:controller="projectmanagementlisof.controller.FXMLActivityDetailsController">
+   <stylesheets>
+      <URL value="@/projectmanagementlisof/css/Style.css" />
+   </stylesheets>
    <children>
       <Pane prefHeight="91.0" prefWidth="954.0" style="-fx-background-color: Black;">
          <children>
@@ -21,7 +23,9 @@
                   <Font name="System Bold" size="46.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgBackButton" fitHeight="68.0" fitWidth="65.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#goBackToLanding" onMouseEntered="#changeToHandCursor" onMouseExited="#changeToDefaultCursor" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgBackButton" fitHeight="68.0" fitWidth="65.0" layoutX="14.0"
+               layoutY="14.0" onMouseClicked="#goBackToLanding" onMouseEntered="#changeToHandCursor"
+               onMouseExited="#changeToDefaultCursor" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/ReturnIcon2.png" />
                </image>
@@ -55,27 +59,35 @@
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
-            <TextField fx:id="tfStartDate" editable="false" focusTraversable="false" layoutX="90.0" layoutY="178.0" prefHeight="44.0" prefWidth="224.0" promptText="Fecha de inicio">
+            <TextField fx:id="tfStartDate" editable="false" focusTraversable="false" layoutX="90.0"
+               layoutY="178.0" prefHeight="44.0" prefWidth="224.0" promptText="Fecha de inicio">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="tfActivityName" editable="false" focusTraversable="false" layoutX="90.0" layoutY="73.0" prefHeight="44.0" prefWidth="774.0" promptText="Nombre de la Actividad" styleClass="lower-gray-text-area" stylesheets="@../css/Style.css">
+            <TextField fx:id="tfActivityName" editable="false" focusTraversable="false"
+               layoutX="90.0" layoutY="73.0" prefHeight="44.0" prefWidth="774.0"
+               promptText="Nombre de la Actividad" styleClass="lower-gray-text-area"
+               stylesheets="@../css/Style.css">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="tfStatus" editable="false" focusTraversable="false" layoutX="365.0" layoutY="178.0" prefHeight="44.0" prefWidth="224.0" promptText="Estado">
+            <TextField fx:id="tfStatus" editable="false" focusTraversable="false" layoutX="365.0"
+               layoutY="178.0" prefHeight="44.0" prefWidth="224.0" promptText="Estado">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="tfEndDate" editable="false" focusTraversable="false" layoutX="640.0" layoutY="178.0" prefHeight="44.0" prefWidth="224.0" promptText="Fecha de Fin">
+            <TextField fx:id="tfEndDate" editable="false" focusTraversable="false" layoutX="640.0"
+               layoutY="178.0" prefHeight="44.0" prefWidth="224.0" promptText="Fecha de Fin">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextArea fx:id="taDescription" editable="false" focusTraversable="false" layoutX="90.0" layoutY="282.0" prefHeight="200.0" prefWidth="774.0" promptText="Descripcion de la actividad">
+            <TextArea fx:id="taDescription" editable="false" focusTraversable="false" layoutX="90.0"
+               layoutY="282.0" prefHeight="200.0" prefWidth="774.0"
+               promptText="Descripcion de la actividad">
                <font>
                   <Font size="20.0" />
                </font>

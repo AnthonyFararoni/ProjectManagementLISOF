@@ -116,7 +116,6 @@ public class FXMLDeveloperChangeRequestsOptionController implements Initializabl
                         if (obj instanceof ChangeRequest)
                         {
                               list.add((ChangeRequest) obj);
-                              System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ ChangeRequest: " + obj);
                         }
                   }
 

@@ -414,18 +414,18 @@ public class Utilities
       {
             field.setStyle(null);
       }
-      
-      public static void restrictDates(DatePicker datePicker, LocalDate date) {        
 
-        Callback<DatePicker, DateCell> dayCellFactory = dp -> new DateCell() {
-            @Override
-            public void updateItem(LocalDate item, boolean empty) {
-                super.updateItem(item, empty);
-                setDisable(item.isBefore(date));
-            }
-        };
-         datePicker.setDayCellFactory(dayCellFactory);
-    }
+      public static void restrictDates(DatePicker datePicker, LocalDate date)
+      {
+            Callback<DatePicker, DateCell> dayCellFactory = dp -> new DateCell() {
+                  @Override public void updateItem(LocalDate item, boolean empty)
+                  {
+                        super.updateItem(item, empty);
+                        setDisable(item.isBefore(date));
+                  }
+            };
+            datePicker.setDayCellFactory(dayCellFactory);
+      }
 
       public static void backToLogIn(MouseEvent event)
       {

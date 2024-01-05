@@ -59,41 +59,37 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
 
       @Override public void initialize(URL location, ResourceBundle resources)
       {
-          SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
-          idProjectSelected = instance.getIdSelectedProject();  
-          configureUnassignedActivitiesTable();
-          getUnassignedActivitiesForTable();
+            SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+            idProjectSelected = instance.getIdSelectedProject();
+            configureUnassignedActivitiesTable();
+            getUnassignedActivitiesForTable();
       }
 
       @FXML private void btnShowCreateActivity(ActionEvent event)
       {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        Utilities.<FXMLChangeRequestDetailsController>closeCurrentWindowAndOpenAnotherOne(
-        "/projectmanagementlisof/gui/FXMLCreateActivity.fxml", stage, event);
-            
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            Utilities.<FXMLChangeRequestDetailsController>closeCurrentWindowAndOpenAnotherOne(
+                "/projectmanagementlisof/gui/FXMLCreateActivity.fxml", stage, event);
       }
 
       @FXML private void btnEditActivity(ActionEvent event)
       {
-          Activity selectedActivity =
+            Activity selectedActivity =
                 tvUnassignedActivities.getSelectionModel().getSelectedItem();
-          if (selectedActivity != null)
+            if (selectedActivity != null)
             {
                   Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
 
                   FXMLUpdateActivityController updateController =
-                      Utilities
-                          .<FXMLUpdateActivityController>closeCurrentWindowAndOpenAnotherOne(
-                              "/projectmanagementlisof/gui/FXMLUpdateActivity.fxml", stage,
-                              event);
+                      Utilities.<FXMLUpdateActivityController>closeCurrentWindowAndOpenAnotherOne(
+                          "/projectmanagementlisof/gui/FXMLUpdateActivity.fxml", stage, event);
                   updateController.initializeInformation(idActivity, this, selectedActivity);
             }
             else
             {
-                  Utilities.showSimpleAlert("Error de selección",
-                      "Debe seleccionar una Actividad.", Alert.AlertType.ERROR);
-            }   
-            
+                  Utilities.showSimpleAlert("Error de selección", "Debe seleccionar una Actividad.",
+                      Alert.AlertType.ERROR);
+            }
       }
 
       @FXML private void btnSearchActivity(MouseEvent event)
@@ -164,7 +160,8 @@ public class FXMLActivitiesOptionController implements Initializable, DeveloperO
             String searchActivity = tfSearchActivity.getText();
             if (Utilities.validateStringsFields(searchActivity))
             {
-                  HashMap<String, Object> answer = ActivityDAO.searchActivity(searchActivity, idProjectSelected);
+                  HashMap<String, Object> answer =
+                      ActivityDAO.searchActivity(searchActivity, idProjectSelected);
                   if (!(boolean) answer.get("error"))
                   {
                         activities = FXCollections.observableArrayList();

@@ -7,22 +7,33 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLChangeRequestOptionController">
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/21"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="projectmanagementlisof.controller.FXMLChangeRequestOptionController">
       <children>
-            <TextField fx:id="tfSearchChangeRequest" alignment="CENTER" layoutX="125.0" layoutY="41.0" onKeyPressed="#clickSearchChangeRequest" prefHeight="43.0" prefWidth="479.0" promptText="Justificación" styleClass="search-text-field" stylesheets="@../css/Style.css">
+            <TextField fx:id="tfSearchChangeRequest" alignment="CENTER" layoutX="125.0"
+                  layoutY="41.0" onKeyPressed="#clickSearchChangeRequest" prefHeight="43.0"
+                  prefWidth="479.0" promptText="Justificación" styleClass="search-text-field"
+                  stylesheets="@../css/Style.css">
                   <font>
                         <Font name="System Bold" size="16.0" />
                   </font>
             </TextField>
-            <TableView fx:id="tvChangeRequest" layoutX="31.0" layoutY="116.0" prefHeight="408.0" prefWidth="671.0" stylesheets="@../css/Style.css">
+            <TableView fx:id="tvChangeRequest" layoutX="31.0" layoutY="116.0" prefHeight="408.0"
+                  prefWidth="671.0" stylesheets="@../css/Style.css">
                   <columns>
-                        <TableColumn fx:id="colJustification" maxWidth="450.0000114440918" prefWidth="450.0000114440918" text="Justificación" />
-                        <TableColumn fx:id="colCreationDate" maxWidth="310.0000305175781" prefWidth="122.66665649414062" text="Fecha de creación" />
-                        <TableColumn fx:id="colStatus" maxWidth="341.5999755859375" prefWidth="97.33331298828125" text="Estado" />
+                        <TableColumn fx:id="colJustification" maxWidth="450.0000114440918"
+                              prefWidth="450.0000114440918" text="Justificación" />
+                        <TableColumn fx:id="colCreationDate" maxWidth="310.0000305175781"
+                              prefWidth="122.66665649414062" text="Fecha de creación" />
+                        <TableColumn fx:id="colStatus" maxWidth="341.5999755859375"
+                              prefWidth="97.33331298828125" text="Estado" />
 
                   </columns>
             </TableView>
-            <Button layoutX="307.0" layoutY="549.0" mnemonicParsing="false" onAction="#loadFXMLChangeRequestDetails" stylesheets="@../css/Style.css" text="Ver detalles">
+            <Button layoutX="307.0" layoutY="549.0" mnemonicParsing="false"
+                  onAction="#loadFXMLChangeRequestDetails" stylesheets="@../css/Style.css"
+                  text="Ver detalles">
                   <font>
                         <Font name="System Bold" size="17.0" />
                   </font>

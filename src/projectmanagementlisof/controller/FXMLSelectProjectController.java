@@ -1,6 +1,7 @@
 /*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this
+ * license Click nbfs://nbhost/SystemFileSystem/Templates/javafx/FXMLController.java to edit this
+ * template
  */
 package projectmanagementlisof.controller;
 
@@ -33,51 +34,47 @@ import projectmanagementlisof.utils.Utilities;
  *
  * @author edmun
  */
-public class FXMLSelectProjectController implements Initializable {
+public class FXMLSelectProjectController implements Initializable
+{
+      @FXML private TableView<Project> tvProjects;
+      @FXML private TableColumn colProjectName;
+      @FXML private TableColumn colProjectDescription;
+      @FXML private Button btnSelectProject;
 
-    @FXML
-    private TableView<Project> tvProjects;
-    @FXML
-    private TableColumn colProjectName;
-    @FXML
-    private TableColumn colProjectDescription;
-    @FXML
-    private Button btnSelectProject;
-    
-    private int idManager;
-    private ObservableList<Project> projects;
-    private int projectId;
-    
+      private int idManager;
+      private ObservableList<Project> projects;
+      private int projectId;
 
-    /**
-     * Initializes the controller class.
-     */
-    @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        getData();
-        configureTable();
-        getProjects();
-         
-    }
+      /**
+       * Initializes the controller class.
+       */
+      @Override public void initialize(URL url, ResourceBundle rb)
+      {
+            getData();
+            configureTable();
+            getProjects();
+      }
 
-    @FXML
-    private void backToLogIn(MouseEvent event) {
-        Utilities.backToLogIn(event);
-    }
+      @FXML private void backToLogIn(MouseEvent event)
+      {
+            Utilities.backToLogIn(event);
+      }
 
-    @FXML
-    private void access(ActionEvent event) {
-        Stage currentStage = (Stage) btnSelectProject.getScene().getWindow();
-        Utilities.goTolandingFromAProject(currentStage, projectId, "gui/FXMLProjectManagerLanding.fxml", "Inicio");
-    }
-    
-    private void getData(){
-        LoggedUserSingleton singleton = LoggedUserSingleton.getInstance();
-        idManager = singleton.getUserId();
-        System.out.println(idManager);
-    }
-    
-    private void getProjects()
+      @FXML private void access(ActionEvent event)
+      {
+            Stage currentStage = (Stage) btnSelectProject.getScene().getWindow();
+            Utilities.goTolandingFromAProject(
+                currentStage, projectId, "gui/FXMLProjectManagerLanding.fxml", "Inicio");
+      }
+
+      private void getData()
+      {
+            LoggedUserSingleton singleton = LoggedUserSingleton.getInstance();
+            idManager = singleton.getUserId();
+            System.out.println(idManager);
+      }
+
+      private void getProjects()
       {
             HashMap<String, Object> answer = ProjectDAO.getManagerProjects(idManager);
             if (!(boolean) answer.get("error"))
@@ -93,19 +90,21 @@ public class FXMLSelectProjectController implements Initializable {
                       "Error de carga", (String) answer.get("message"), Alert.AlertType.ERROR);
             }
       }
-    
-    private void configureTable()
+
+      private void configureTable()
       {
             this.colProjectName.setCellValueFactory(new PropertyValueFactory("name"));
             this.colProjectDescription.setCellValueFactory(new PropertyValueFactory("description"));
             showSelectedProject();
       }
-    
-    private void showSelectedProject(){
-                    tvProjects.getSelectionModel().selectedItemProperty().addListener(
+
+      private void showSelectedProject()
+      {
+            tvProjects.getSelectionModel().selectedItemProperty().addListener(
                 new ChangeListener<Project>() {
                       @Override
-                      public void changed(ObservableValue<? extends Project> observable, Project oldValue, Project newValue)
+                      public void changed(ObservableValue<? extends Project> observable,
+                          Project oldValue, Project newValue)
                       {
                             if (newValue != null)
                             {
@@ -117,6 +116,5 @@ public class FXMLSelectProjectController implements Initializable {
                             }
                       }
                 });
-    }
-    
-}   
+      }
+}

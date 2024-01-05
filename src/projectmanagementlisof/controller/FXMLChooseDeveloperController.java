@@ -1,4 +1,4 @@
-    package projectmanagementlisof.controller;
+package projectmanagementlisof.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -47,8 +47,8 @@ public class FXMLChooseDeveloperController implements Initializable
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-          SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
-          idProjectSelected = instance.getIdSelectedProject(); 
+            SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+            idProjectSelected = instance.getIdSelectedProject();
             configureDevelopersTable();
             getDevelopersForTable();
       }

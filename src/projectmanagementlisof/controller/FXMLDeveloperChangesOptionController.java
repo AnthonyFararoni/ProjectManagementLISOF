@@ -72,7 +72,7 @@ public class FXMLDeveloperChangesOptionController implements Initializable
       {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Utilities.<FXMLChangeRequestDetailsController>closeCurrentWindowAndOpenAnotherOne(
-            "/projectmanagementlisof/gui/FXMLRegisterChange.fxml", stage,event);
+                "/projectmanagementlisof/gui/FXMLRegisterChange.fxml", stage, event);
       }
 
       private String convertTypeToString(int type)

@@ -75,8 +75,8 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-          SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
-          idProjectSelected = instance.getIdSelectedProject(); 
+            SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+            idProjectSelected = instance.getIdSelectedProject();
             configureChangeRequestTable();
             getChangeRequestForTable();
       }
@@ -141,7 +141,6 @@ public class FXMLChangeRequestOptionController implements Initializable, Develop
                         if (obj instanceof ChangeRequest)
                         {
                               list.add((ChangeRequest) obj);
-                              System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@ ChangeRequest: " + obj);
                         }
                   }
 

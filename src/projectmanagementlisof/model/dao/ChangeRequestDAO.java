@@ -73,7 +73,8 @@ public class ChangeRequestDAO
             return answer;
       }
 
-      public static HashMap<String, Object> getChangeRequestsAccordingIdProjectSelected(Integer idProject)
+      public static HashMap<String, Object> getChangeRequestsAccordingIdProjectSelected(
+          Integer idProject)
       {
             HashMap<String, Object> answer = new LinkedHashMap<>();
             ArrayList<ChangeRequest> changeRequests = new ArrayList<>();
@@ -84,16 +85,16 @@ public class ChangeRequestDAO
                   try
                   {
                         String query = "SELECT cr.idChangeRequest, cr.justification, cr.status, "
-                                + "crs.status AS statusName, cr.creationDate, cr.reviewDate, cr.idDeveloper, "
-                                + "cr.idProjectManager, cr.idDefect, cr.description "
-                                + "FROM changeRequest cr "
-                                + "JOIN Developer d ON cr.idDeveloper = d.idDeveloper "
-                                + "INNER JOIN changerequeststatus crs on crs.idChangeRequestStatus = cr.status "
-                                + "WHERE d.idProject = ?";
+                            + "crs.status AS statusName, cr.creationDate, cr.reviewDate, cr.idDeveloper, "
+                            + "cr.idProjectManager, cr.idDefect, cr.description "
+                            + "FROM changeRequest cr "
+                            + "JOIN Developer d ON cr.idDeveloper = d.idDeveloper "
+                            + "INNER JOIN changerequeststatus crs on crs.idChangeRequestStatus = cr.status "
+                            + "WHERE d.idProject = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idProject);
                         ResultSet resultSet = preparedStatement.executeQuery();
-                        
+
                         while (resultSet.next())
                         {
                               ChangeRequest changeRequest = new ChangeRequest();
@@ -101,7 +102,7 @@ public class ChangeRequestDAO
                               changeRequest.setJustification(resultSet.getString("justification"));
                               changeRequest.setDescription(resultSet.getString("description"));
                               changeRequest.setStatus(resultSet.getString("statusName"));
-                              changeRequest.setCreationDate(resultSet.getString("creationDate"));                             
+                              changeRequest.setCreationDate(resultSet.getString("creationDate"));
                               changeRequest.setReviewDate(resultSet.getString("reviewDate"));
                               changeRequest.setIdDeveloper(resultSet.getInt("idDeveloper"));
                               changeRequests.add(changeRequest);
