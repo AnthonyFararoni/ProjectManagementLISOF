@@ -76,7 +76,6 @@ public class FXMLActivitiesInLogController implements Initializable, DeveloperOb
             receiveData();
             configureActivitiesTable();
             getAssignedActivitiesForTable();
-            System.out.println(idDeveloper);
       }
 
       @FXML private void btnShowAssignedActivityDetailsclick(ActionEvent event)
