@@ -81,7 +81,6 @@ public class FXMLRegisterChangeController implements Initializable
             change.setIdDeveloper(1);
             LocalDate date = LocalDate.now();
             change.setDateCreated(date.toString());
-            System.out.println(date);
 
             HashMap<String, Object> answer = ChangeDAO.registerChange(change);
             if (!(boolean) answer.get("error"))

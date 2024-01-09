@@ -50,7 +50,6 @@ public class ChangeDAO
                   }
                   catch (SQLException e)
                   {
-                        System.out.println(e.getMessage());
                         answer.put("message", "Error: " + e.getMessage());
                   }
             }
@@ -70,12 +69,13 @@ public class ChangeDAO
             {
                   try
                   {
-                        String query = "SELECT ch.idChange, ch.type, ch.description, ch.dateCreated, "
-                                     + "t.idType AS typeId, t.type AS typeName, "
-                                     + "ch.idDeveloper "
-                                     + "FROM `Change` ch "
-                                     + "INNER JOIN `Type` t ON ch.type = t.idType "
-                                     + "WHERE ch.idDeveloper = ?";
+                        String query =
+                            "SELECT ch.idChange, ch.type, ch.description, ch.dateCreated, "
+                            + "t.idType AS typeId, t.type AS typeName, "
+                            + "ch.idDeveloper "
+                            + "FROM `Change` ch "
+                            + "INNER JOIN `Type` t ON ch.type = t.idType "
+                            + "WHERE ch.idDeveloper = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idDeveloper);
                         ResultSet activitiesList = preparedStatement.executeQuery();
@@ -118,12 +118,13 @@ public class ChangeDAO
             {
                   try
                   {
-                        String query = "SELECT ch.idChange, ch.type, ch.description, ch.dateCreated, "
-                                     + "t.idType AS typeId, t.type AS typeName, "
-                                     + "ch.idDeveloper "
-                                     + "FROM `Change` ch "
-                                     + "INNER JOIN `Type` t ON ch.type = t.idType "
-                                     + "WHERE ch.idChange = ?";
+                        String query =
+                            "SELECT ch.idChange, ch.type, ch.description, ch.dateCreated, "
+                            + "t.idType AS typeId, t.type AS typeName, "
+                            + "ch.idDeveloper "
+                            + "FROM `Change` ch "
+                            + "INNER JOIN `Type` t ON ch.type = t.idType "
+                            + "WHERE ch.idChange = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idChange);
                         ResultSet changeResult = preparedStatement.executeQuery();

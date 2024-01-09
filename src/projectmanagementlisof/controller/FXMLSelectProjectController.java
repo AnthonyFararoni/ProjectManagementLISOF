@@ -71,7 +71,6 @@ public class FXMLSelectProjectController implements Initializable
       {
             LoggedUserSingleton singleton = LoggedUserSingleton.getInstance();
             idManager = singleton.getUserId();
-            System.out.println(idManager);
       }
 
       private void getProjects()

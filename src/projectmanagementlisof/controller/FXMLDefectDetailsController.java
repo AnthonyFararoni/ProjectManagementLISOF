@@ -43,7 +43,6 @@ public class FXMLDefectDetailsController implements Initializable
       @Override public void initialize(URL url, ResourceBundle rb)
       {
             receiveData();
-            System.out.println(idDefect);
             fillDefectDetails();
       }
       public void receiveData()
@@ -82,7 +81,6 @@ public class FXMLDefectDetailsController implements Initializable
             }
             else
             {
-                  System.out.println("No jalo");
                   String errorMessage = (String) result.get("message");
             }
       }

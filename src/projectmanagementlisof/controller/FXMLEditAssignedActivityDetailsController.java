@@ -241,6 +241,5 @@ public class FXMLEditAssignedActivityDetailsController implements Initializable,
       @Override public void developerSelected(Integer idDeveloper, String developerName)
       {
             loadDeveloper(idDeveloper, developerName);
-            System.out.println(idDeveloper);
       }
 }

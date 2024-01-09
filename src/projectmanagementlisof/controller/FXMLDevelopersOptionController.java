@@ -58,12 +58,6 @@ public class FXMLDevelopersOptionController implements Initializable
 
       private void initializeInformation() {}
 
-      private void btnRefreshTableDevelopers(MouseEvent event)
-      {
-            getDevelopersForTable();
-            tfSearchDeveloper.setText("");
-      }
-
       private void configureDevelopersTable()
       {
             this.colDeveloperLogin.setCellValueFactory(new PropertyValueFactory("developerLogin"));
@@ -217,7 +211,7 @@ public class FXMLDevelopersOptionController implements Initializable
             }
       }
 
-      private void btnSearchDeveloper(MouseEvent event)
+      @FXML private void btnSearchDeveloper(MouseEvent event)
       {
             searchDeveloper();
       }

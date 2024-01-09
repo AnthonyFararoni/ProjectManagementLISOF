@@ -71,45 +71,43 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
                   Utilities.loadFXMLInAnchorPaneAndCloseCurrentForProjectManager(stage,
                       "/projectmanagementlisof/gui/FXMLProjectManagerLanding.fxml",
                       "/projectmanagementlisof/gui/FXMLChangeRequestsOption.fxml");
-            }  
+            }
             else
             {
                   Utilities.showSimpleAlert("Error de actualización",
                       "Debe seleccionar un estado para la solicitud de cambio",
                       Alert.AlertType.ERROR);
             }
-            
       }
 
       private void updateChangeRequestStatusFromComboBox()
       {
-            
-                  ChangeRequestStatus changeRequestStatus =
-                      cbStatus.getSelectionModel().getSelectedItem();
+            ChangeRequestStatus changeRequestStatus =
+                cbStatus.getSelectionModel().getSelectedItem();
 
-                  ChangeRequest changeRequest = new ChangeRequest();
-                  changeRequest.setReviewDate(LocalDate.now().toString());
-                  changeRequest.setIdProjectManager(LoggedUserSingleton.getInstance().getUserId());
-                  changeRequest.setIdChangeRequest(this.idChangeRequest);
+            ChangeRequest changeRequest = new ChangeRequest();
+            changeRequest.setReviewDate(LocalDate.now().toString());
+            changeRequest.setIdProjectManager(LoggedUserSingleton.getInstance().getUserId());
+            changeRequest.setIdChangeRequest(this.idChangeRequest);
 
-                  HashMap<String, Object> answerChangeRequest =
-                      ChangeRequestDAO.updateIdProjectManagerAndReviewDate(changeRequest);
+            HashMap<String, Object> answerChangeRequest =
+                ChangeRequestDAO.updateIdProjectManagerAndReviewDate(changeRequest);
 
-                  HashMap<String, Object> answer = ChangeRequestDAO.updateChangeRequestStatus(
-                      this.idChangeRequest, changeRequestStatus.getIdChangeRequestStatus());
+            HashMap<String, Object> answer = ChangeRequestDAO.updateChangeRequestStatus(
+                this.idChangeRequest, changeRequestStatus.getIdChangeRequestStatus());
 
-                  if (!(boolean) answer.get("error") && !(boolean) answerChangeRequest.get("error"))
-                  {
-                        Utilities.showSimpleAlert("Éxito",
-                            "El estado de la solicitud de cambio ha sido actualizado exitosamente.",
-                            Alert.AlertType.INFORMATION);
-                  }
-                  else
-                  {
-                        Utilities.showSimpleAlert("Error de actualización",
-                            "Ha ocurrido un error al tratar de actualizar el estado de la solicitud de cambio.",
-                            Alert.AlertType.ERROR);
-                  }
+            if (!(boolean) answer.get("error") && !(boolean) answerChangeRequest.get("error"))
+            {
+                  Utilities.showSimpleAlert("Éxito",
+                      "El estado de la solicitud de cambio ha sido actualizado exitosamente.",
+                      Alert.AlertType.INFORMATION);
+            }
+            else
+            {
+                  Utilities.showSimpleAlert("Error de actualización",
+                      "Ha ocurrido un error al tratar de actualizar el estado de la solicitud de cambio.",
+                      Alert.AlertType.ERROR);
+            }
       }
 
       private void loadChangeRequestInformation()
@@ -165,15 +163,15 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
                         else
                         {
                               Utilities.showSimpleAlert("Error de carga",
-                      "Ha ocurrido un error al cargar el nombre del responsable de proyecto.",
-                      Alert.AlertType.ERROR);
+                                  "Ha ocurrido un error al cargar el nombre del responsable de proyecto.",
+                                  Alert.AlertType.ERROR);
                         }
                   }
                   else
                   {
                         Utilities.showSimpleAlert("Error de carga",
-                      "Ha ocurrido un error al cargar informacion del responsable de proyecto.",
-                      Alert.AlertType.ERROR);
+                            "Ha ocurrido un error al cargar informacion del responsable de proyecto.",
+                            Alert.AlertType.ERROR);
                   }
             }
             catch (Exception e)
@@ -192,7 +190,6 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
       @Override public void developerSelected(Integer idDeveloper, String developerName)
       {
             loadDeveloper(idDeveloper, developerName);
-            System.out.println(idDeveloper);
       }
 
       @FXML private void btnReturn(MouseEvent event)

@@ -89,7 +89,6 @@ public class FXMLDeveloperChangeRequestDetailsController implements Initializabl
       @Override public void developerSelected(Integer idDeveloper, String developerName)
       {
             loadDeveloper(idDeveloper, developerName);
-            System.out.println(idDeveloper);
       }
 
       @FXML private void clickImageReturn(MouseEvent event)
