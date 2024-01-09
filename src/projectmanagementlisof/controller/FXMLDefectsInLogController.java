@@ -20,6 +20,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Modality;
@@ -47,11 +48,13 @@ public class FXMLDefectsInLogController implements Initializable
       private Utilities utilities = new Utilities();
       private ObservableList<Defect> defects;
       private int idDeveloper;
+      private Label emptyLabel = new Label("El desarrollador no ha registrado ningún Defecto");
       /**
        * Initializes the controller class.
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
+            tvLogDefects.setPlaceholder(emptyLabel);
             receiveData();
             configureDefectsTable();
             getDefectsForTable();

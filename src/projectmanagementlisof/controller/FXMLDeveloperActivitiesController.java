@@ -178,9 +178,9 @@ public class FXMLDeveloperActivitiesController implements Initializable
                   Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
                   confirmationAlert.setTitle("Confirmación");
                   confirmationAlert.setHeaderText(
-                      "¿Estás seguro de cambiar el estado de la actividad?");
+                      "Estás por concluir la actividad");
                   confirmationAlert.setContentText(
-                      "Esta acción cambiará el estado de la actividad. ¿Deseas continuar?");
+                      "Esta acción cambiará el estado de la actividad permanentemente. ¿Deseas continuar?");
                   Optional<ButtonType> result = confirmationAlert.showAndWait();
 
                   if (result.isPresent() && result.get() == ButtonType.OK)
@@ -190,15 +190,15 @@ public class FXMLDeveloperActivitiesController implements Initializable
 
                         if (!(boolean) changeResult.get("error"))
                         {
-                              showAlert(Alert.AlertType.INFORMATION, "Éxito",
-                                  "Estado de la actividad cambiado",
-                                  "El estado de la actividad se cambió correctamente.");
+                              Utilities.showSpecificAlert(Alert.AlertType.INFORMATION, "Éxito",
+                                  "Actividad conluida",
+                                  "El estado de la actividad se concluyó correctamente.");
                               fillAssignedActivitiesToDeveloper();
                         }
                         else
                         {
-                              String errorMessage = (String) changeResult.get("message");
-                              showAlert(Alert.AlertType.ERROR, "Error",
+                              String errorMessage = (String) changeResult.get("Ha ocurrido un error al concluir la actividad. Por favor intentelo más tarde");
+                              Utilities.showSpecificAlert(Alert.AlertType.ERROR, "Error",
                                   "Error al cambiar el estado de la actividad", errorMessage);
                         }
                   }
