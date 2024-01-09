@@ -165,7 +165,7 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
                         else
                         {
                               Utilities.showSimpleAlert("Error de carga",
-                      "Ha ocurrido un error al cargar informacion del responsable de proyecto.",
+                      "Ha ocurrido un error al cargar el nombre del responsable de proyecto.",
                       Alert.AlertType.ERROR);
                         }
                   }
