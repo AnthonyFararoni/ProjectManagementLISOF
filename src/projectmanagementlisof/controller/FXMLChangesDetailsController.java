@@ -40,13 +40,11 @@ public class FXMLChangesDetailsController implements Initializable
       @Override public void initialize(URL url, ResourceBundle rb)
       {
             receiveData();
-            System.out.println(idChange);
             fillChangeDetails();
       }
       public void receiveData()
       {
             SelectedItemSingleton instance = SelectedItemSingleton.getInstance();
-            System.out.println(instance.getIdSelected());
             idChange = instance.getIdSelected();
       }
 
@@ -58,7 +56,7 @@ public class FXMLChangesDetailsController implements Initializable
             {
                   Change change = (Change) result.get("change");
                   tfFoundDate.setText(change.getDateCreated());
-                  tfChangeType.setText(String.valueOf(change.getType()));
+                  tfChangeType.setText(change.getTypeName());
                   taDescription.setText(change.getDescription());
             }
             else

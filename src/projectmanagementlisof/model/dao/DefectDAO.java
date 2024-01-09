@@ -93,7 +93,13 @@ public class DefectDAO
             {
                   try
                   {
-                        String query = "SELECT * FROM defect WHERE idDeveloper = ?";
+                        String query =
+                        "SELECT d.idDefect, d.type, d.description, d.timeCost, d.dateFound, " +
+                        "t.idType AS typeId, t.type AS typeName, " +
+                        "d.idDeveloper " +
+                        "FROM Defect d " +
+                        "INNER JOIN Type t ON d.type = t.idType " +
+                        "WHERE d.idDeveloper = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idDeveloper);
                         ResultSet defectsList = preparedStatement.executeQuery();
@@ -104,6 +110,7 @@ public class DefectDAO
                               Defect defect = new Defect();
                               defect.setIdDeveloper(defectsList.getInt("idDeveloper"));
                               defect.setType(defectsList.getInt("type"));
+                              defect.setDescription(defectsList.getString("typeName"));
                               defect.setDescription(defectsList.getString("description"));
                               defect.setTimeCost(defectsList.getInt("timecost"));
                               defect.setDate(defectsList.getString("dateFound"));
@@ -137,7 +144,14 @@ public class DefectDAO
             {
                   try
                   {
-                        String query = "SELECT * FROM defect WHERE idDefect = ?";
+                        String query =
+                            "SELECT d.idDefect, d.type, d.description, d.timeCost, d.dateFound, " +
+                            "       t.idType AS typeId, t.type AS typeName, " +
+                            "       d.idDeveloper " +
+                            "FROM Defect d " +
+                            "INNER JOIN Type t ON d.type = t.idType " +
+                            "WHERE d.idDefect = ?";
+
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idDefect);
                         ResultSet defectResult = preparedStatement.executeQuery();
@@ -147,6 +161,7 @@ public class DefectDAO
                               Defect defect = new Defect();
                               defect.setIdDefect(defectResult.getInt("idDefect"));
                               defect.setType(defectResult.getInt("type"));
+                              defect.setTypeName(defectResult.getString("typeName"));
                               defect.setDescription(defectResult.getString("description"));
                               defect.setTimeCost(defectResult.getInt("timecost"));
                               defect.setDate(defectResult.getString("dateFound"));

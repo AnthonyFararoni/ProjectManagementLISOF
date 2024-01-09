@@ -38,7 +38,7 @@ import projectmanagementlisof.utils.Utilities;
 public class FXMLChangesInLogController implements Initializable
 {
       @FXML private TableView<Change> tvLogChanges;
-      @FXML private TableColumn<Change, Integer> colType;
+      @FXML private TableColumn<Change, String> colType;
       @FXML private TableColumn<Change, String> colDescription;
       @FXML private TableColumn<Change, String> colDate;
       @FXML private Button btnDetails;
@@ -78,7 +78,7 @@ public class FXMLChangesInLogController implements Initializable
 
       private void configureChangesTable()
       {
-            colType.setCellValueFactory(new PropertyValueFactory<>("type"));
+            colType.setCellValueFactory(new PropertyValueFactory<>("typeName"));
             colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
             colDate.setCellValueFactory(new PropertyValueFactory<>("dateCreated"));
       }

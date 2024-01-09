@@ -70,10 +70,12 @@ public class ChangeDAO
             {
                   try
                   {
-                        String query = "SELECT *\n"
-                            + "FROM `change` c\n"
-                            + "INNER JOIN type t ON c.type = t.idtype\n"
-                            + "WHERE c.idDeveloper = ?";
+                        String query = "SELECT ch.idChange, ch.type, ch.description, ch.dateCreated, "
+                                     + "t.idType AS typeId, t.type AS typeName, "
+                                     + "ch.idDeveloper "
+                                     + "FROM `Change` ch "
+                                     + "INNER JOIN `Type` t ON ch.type = t.idType "
+                                     + "WHERE ch.idDeveloper = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idDeveloper);
                         ResultSet activitiesList = preparedStatement.executeQuery();
@@ -83,6 +85,7 @@ public class ChangeDAO
                               Change change = new Change();
                               change.setIdChange(activitiesList.getInt("idChange"));
                               change.setType(activitiesList.getInt("type"));
+                              change.setTypeName(activitiesList.getString("typeName"));
                               change.setDescription(activitiesList.getString("description"));
                               change.setDateCreated(activitiesList.getString("dateCreated"));
 
@@ -115,7 +118,12 @@ public class ChangeDAO
             {
                   try
                   {
-                        String query = "SELECT * FROM `change` WHERE idChange = ?";
+                        String query = "SELECT ch.idChange, ch.type, ch.description, ch.dateCreated, "
+                                     + "t.idType AS typeId, t.type AS typeName, "
+                                     + "ch.idDeveloper "
+                                     + "FROM `Change` ch "
+                                     + "INNER JOIN `Type` t ON ch.type = t.idType "
+                                     + "WHERE ch.idChange = ?";
                         PreparedStatement preparedStatement = connectionBD.prepareStatement(query);
                         preparedStatement.setInt(1, idChange);
                         ResultSet changeResult = preparedStatement.executeQuery();
@@ -125,6 +133,7 @@ public class ChangeDAO
                               Change change = new Change();
                               change.setIdChange(changeResult.getInt("idChange"));
                               change.setType(changeResult.getInt("type"));
+                              change.setTypeName(changeResult.getString("typeName"));
                               change.setDescription(changeResult.getString("description"));
                               change.setDateCreated(changeResult.getString("dateCreated"));
                               change.setIdDeveloper(changeResult.getInt("idDeveloper"));

@@ -67,25 +67,6 @@ public class FXMLDefectDetailsController implements Initializable
             utilities.closeWindow(currentStage);
       }
 
-      private String getTypeName(int type)
-      {
-            switch (type)
-            {
-                  case 1:
-                        return "JavaScript";
-                  case 2:
-                        return "Base de Datos";
-                  case 3:
-                        return "Interfaz Gráfica";
-                  case 4:
-                        return "Código";
-                  case 5:
-                        return "Otro";
-                  default:
-                        return "Desconocido";
-            }
-      }
-
       private void fillDefectDetails()
       {
             HashMap<String, Object> result = DefectDAO.getDefectById(idDefect);
@@ -94,7 +75,7 @@ public class FXMLDefectDetailsController implements Initializable
             {
                   Defect defect = (Defect) result.get("defect");
                   tfIdDefect.setText(String.valueOf(defect.getIdDefect()));
-                  tfType.setText(getTypeName(defect.getType()));
+                  tfType.setText(defect.getTypeName());
                   taDescription.setText(defect.getDescription());
                   tfTimeCost.setText(String.valueOf(defect.getTimeCost()));
                   tfFoundDate.setText(defect.getDate());

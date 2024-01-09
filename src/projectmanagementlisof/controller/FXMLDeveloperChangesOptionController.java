@@ -53,16 +53,7 @@ public class FXMLDeveloperChangesOptionController implements Initializable
       {
             colDescription.setCellValueFactory(new PropertyValueFactory<>("description"));
             colDateCreated.setCellValueFactory(new PropertyValueFactory<>("dateCreated"));
-            colType.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Change, String>,
-                ObservableValue<String>>() {
-                  @Override
-                  public ObservableValue<String> call(
-                      TableColumn.CellDataFeatures<Change, String> param)
-                  {
-                        return new SimpleStringProperty(
-                            convertTypeToString(param.getValue().getType()));
-                  }
-            });
+            colType.setCellValueFactory(new PropertyValueFactory<>("typeName"));
             fillAssignedActivitiesToDeveloper();
       }
 
@@ -73,23 +64,6 @@ public class FXMLDeveloperChangesOptionController implements Initializable
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             Utilities.<FXMLChangeRequestDetailsController>closeCurrentWindowAndOpenAnotherOne(
                 "/projectmanagementlisof/gui/FXMLRegisterChange.fxml", stage, event);
-      }
-
-      private String convertTypeToString(int type)
-      {
-            switch (type)
-            {
-                  case 1:
-                        return "Base de datos";
-                  case 2:
-                        return "Controladores";
-                  case 3:
-                        return "Vistas";
-                  case 4:
-                        return "Archivos JavaScript";
-                  default:
-                        return "Otros Archivos";
-            }
       }
 
       private void fillAssignedActivitiesToDeveloper()

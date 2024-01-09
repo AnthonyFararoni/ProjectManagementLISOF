@@ -14,12 +14,14 @@ public class Defect
       private Integer timeCost;
       private String date;
       private Integer type;
+      private String typeName;
       private Integer idDeveloper;
       private Integer idDefect;
 
       public Defect() {}
 
       public Defect(
+              
           String description, Integer timeCost, String date, Integer type, Integer idDeveloper)
       {
             this.description = description;
@@ -28,6 +30,16 @@ public class Defect
             this.type = type;
             this.idDeveloper = idDeveloper;
       }
+
+    public Defect(String description, Integer timeCost, String date, Integer type, String typeName, Integer idDeveloper, Integer idDefect) {
+        this.description = description;
+        this.timeCost = timeCost;
+        this.date = date;
+        this.type = type;
+        this.typeName = typeName;
+        this.idDeveloper = idDeveloper;
+        this.idDefect = idDefect;
+    }
 
       public Defect(String description, Integer timeCost, String date, Integer type,
           Integer idDeveloper, Integer idDefect)
@@ -97,4 +109,12 @@ public class Defect
       {
             this.idDefect = idDefect;
       }
+
+    public String getTypeName() {
+        return typeName;
+    }
+
+    public void setTypeName(String typeName) {
+        this.typeName = typeName;
+    }
 }
