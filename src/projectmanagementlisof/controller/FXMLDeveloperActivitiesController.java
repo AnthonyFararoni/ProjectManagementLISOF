@@ -34,6 +34,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import projectmanagementlisof.model.dao.ActivityDAO;
 import projectmanagementlisof.model.pojo.Activity;
+import projectmanagementlisof.utils.LoggedUserSingleton;
 import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
@@ -53,26 +54,15 @@ public class FXMLDeveloperActivitiesController implements Initializable
       @FXML private TableColumn<Activity, String> colStatus;
       @FXML private Button btnViewDetails;
       @FXML private Button btnEndActivity;
+      private int idDeveloperLogged;
 
       /**
        * Initializes the controller class.
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-            colActivityName.setCellValueFactory(new PropertyValueFactory<>("name"));
-            colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-            colEndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-            colStatus.setCellValueFactory(
-                new Callback<TableColumn.CellDataFeatures<Activity, String>,
-                    ObservableValue<String>>() {
-                      @Override
-                      public ObservableValue<String> call(
-                          TableColumn.CellDataFeatures<Activity, String> param)
-                      {
-                            return new SimpleStringProperty(
-                                convertStatusToString(param.getValue().getStatus()));
-                      }
-                });
+            receiveData();
+            setDataColumns();
             fillAssignedActivitiesToDeveloper();
 
             btnViewDetails.setDisable(true);
@@ -98,20 +88,18 @@ public class FXMLDeveloperActivitiesController implements Initializable
                       }
                 });
       }
-      private String convertStatusToString(int status)
+    public void receiveData()
       {
-            switch (status)
-            {
-                  case 1:
-                        return "No asignada";
-                  case 2:
-                        return "Pendiente";
-                  case 3:
-                        return "Concluida";
-                  default:
-                        return "Desconocido";
-            }
+            LoggedUserSingleton instance = LoggedUserSingleton.getInstance();
+            idDeveloperLogged = instance.getUserId();
       }
+    public void setDataColumns(){
+            colActivityName.setCellValueFactory(new PropertyValueFactory<>("name"));
+            colStartDate.setCellValueFactory(new PropertyValueFactory<>("startDate"));
+            colEndDate.setCellValueFactory(new PropertyValueFactory<>("endDate"));
+            colStatus.setCellValueFactory(new PropertyValueFactory<>("statusName"));
+    }
+      
       @FXML private void btnSearchActivity(MouseEvent event) {}
 
       @FXML private void btnViewDetailsClick(ActionEvent event)
@@ -143,7 +131,7 @@ public class FXMLDeveloperActivitiesController implements Initializable
       }
       private void fillAssignedActivitiesToDeveloper()
       {
-            HashMap<String, Object> result = ActivityDAO.getAssignedActivities(1);
+            HashMap<String, Object> result = ActivityDAO.getAssignedActivities(idDeveloperLogged);
             if (!(boolean) result.get("error"))
             {
                   ArrayList<Activity> activities = (ArrayList<Activity>) result.get("activities");
