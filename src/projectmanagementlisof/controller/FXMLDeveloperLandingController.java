@@ -20,7 +20,10 @@ public class FXMLDeveloperLandingController implements Initializable
 
       @Override public void initialize(URL url, ResourceBundle rb) {}
 
-      @FXML private void btnLogOut(MouseEvent event) {}
+      @FXML private void btnLogOut(MouseEvent event)
+      {
+            Utilities.backToLogIn(event);
+      }
 
       @FXML private void btnShowActivies(ActionEvent event)
       {
