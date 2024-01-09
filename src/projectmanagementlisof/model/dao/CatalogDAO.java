@@ -110,4 +110,15 @@ public class CatalogDAO
             }
             return statusList;
       }
+
+      public static Boolean checkConnection()
+      {
+            Boolean connection = false;
+            Connection connectionBD = ConnectionDB.getConnection();
+            if (connectionBD != null)
+            {
+                  connection = true;
+            }
+            return connection;
+      }
 }
