@@ -25,6 +25,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -467,4 +468,19 @@ public class Utilities
                   return true;
             }
       }
+      
+      public static <T> void addTextFilter(TableView<T> tableView, TextField filterField, ObservableList<T> data) {
+        filterField.setOnKeyReleased(event -> {
+            String filter = filterField.getText().toLowerCase().trim();
+
+            if (filter.isEmpty()) {
+                tableView.setItems(data);
+            } else {
+                ObservableList<T> filteredList = data.filtered(item ->
+                        item.toString().toLowerCase().contains(filter)
+                );
+                tableView.setItems(filteredList);
+            }
+        });
+    }
 }

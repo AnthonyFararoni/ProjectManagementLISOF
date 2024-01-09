@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +23,9 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.DefectDAO;
@@ -42,6 +47,9 @@ public class FXMLDeveloperDefectsOptionController implements Initializable
       @FXML private TableColumn<Defect, String> colFoundDate;
       @FXML private TableColumn<Defect, String> colDescription;
       @FXML private Button btnViewDetails;
+    @FXML
+    private TextField tfSeachDefect;
+    private ArrayList<Defect> defects;
       /**
        * Initializes the controller class.
        */
@@ -100,7 +108,7 @@ public class FXMLDeveloperDefectsOptionController implements Initializable
 
             if (!(boolean) result.get("error"))
             {
-                  ArrayList<Defect> defects = (ArrayList<Defect>) result.get("defects");
+                  defects = (ArrayList<Defect>) result.get("defects");
                   tvDeveloperDefects.getItems().setAll(defects);
             }
             else
@@ -136,4 +144,27 @@ public class FXMLDeveloperDefectsOptionController implements Initializable
                   }
             }
       }
+
+    @FXML
+    private void searchDefect(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER) {
+            String filter = tfSeachDefect.getText().toLowerCase().trim();
+            if (filter.isEmpty()) {
+                tvDeveloperDefects.getItems().setAll(defects);
+            } else {
+                ObservableList<Defect> filteredList = FXCollections.observableArrayList();
+
+                for (Defect defect : defects) {
+                    if (String.valueOf(defect.getIdDefect()).toLowerCase().contains(filter) ||
+                        String.valueOf(defect.getTimeCost()).contains(filter) ||
+                        defect.getDate().toLowerCase().contains(filter) ||
+                        defect.getDescription().toLowerCase().contains(filter)) {
+
+                        filteredList.add(defect);
+                    }
+                }
+                tvDeveloperDefects.setItems(filteredList);
+            }
+        }
+    }
 }
