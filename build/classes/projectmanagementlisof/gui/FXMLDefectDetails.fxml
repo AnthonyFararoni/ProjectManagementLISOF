@@ -9,7 +9,9 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLDefectDetailsController">
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" styleClass="mainFxmlClass"
+   xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+   fx:controller="projectmanagementlisof.controller.FXMLDefectDetailsController">
    <children>
       <Pane prefHeight="91.0" prefWidth="954.0" style="-fx-background-color: Black;">
          <children>
@@ -18,7 +20,9 @@
                   <Font name="System Bold" size="46.0" />
                </font>
             </Label>
-            <ImageView fx:id="imgBackButton" fitHeight="68.0" fitWidth="65.0" layoutX="14.0" layoutY="14.0" onMouseClicked="#goBackToLanding" onMouseEntered="#changeToHandCursor" onMouseExited="#changeToDefaultCursor" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgBackButton" fitHeight="68.0" fitWidth="65.0" layoutX="14.0"
+               layoutY="14.0" onMouseClicked="#goBackToLanding" onMouseEntered="#changeToHandCursor"
+               onMouseExited="#changeToDefaultCursor" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/ReturnIcon2.png" />
                </image>
@@ -52,27 +56,34 @@
                   <Font name="System Bold" size="25.0" />
                </font>
             </Label>
-            <TextField fx:id="tfFoundDate" editable="false" focusTraversable="false" layoutX="244.0" layoutY="126.0" prefHeight="44.0" prefWidth="216.0" promptText="Fecha de hallazgo">
+            <TextField fx:id="tfFoundDate" editable="false" focusTraversable="false" layoutX="244.0"
+               layoutY="126.0" prefHeight="44.0" prefWidth="216.0" promptText="Fecha de hallazgo">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="tfIdDefect" editable="false" focusTraversable="false" layoutX="93.0" layoutY="126.0" prefHeight="44.0" prefWidth="141.0" promptText="No. Defecto" styleClass="lower-gray-text-area" stylesheets="@../css/Style.css">
+            <TextField fx:id="tfIdDefect" editable="false" focusTraversable="false" layoutX="93.0"
+               layoutY="126.0" prefHeight="44.0" prefWidth="141.0" promptText="No. Defecto"
+               styleClass="lower-gray-text-area" stylesheets="@../css/Style.css">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="tfTimeCost" editable="false" focusTraversable="false" layoutX="467.0" layoutY="126.0" prefHeight="44.0" prefWidth="155.0" promptText="Esfuerzo">
+            <TextField fx:id="tfTimeCost" editable="false" focusTraversable="false" layoutX="467.0"
+               layoutY="126.0" prefHeight="44.0" prefWidth="155.0" promptText="Esfuerzo">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextField fx:id="tfType" editable="false" focusTraversable="false" layoutX="627.0" layoutY="126.0" prefHeight="44.0" prefWidth="234.0" promptText="Tipo">
+            <TextField fx:id="tfType" editable="false" focusTraversable="false" layoutX="627.0"
+               layoutY="126.0" prefHeight="44.0" prefWidth="234.0" promptText="Tipo">
                <font>
                   <Font size="20.0" />
                </font>
             </TextField>
-            <TextArea fx:id="taDescription" editable="false" focusTraversable="false" layoutX="93.0" layoutY="219.0" prefHeight="200.0" prefWidth="774.0" promptText="Descripcion del defecto">
+            <TextArea fx:id="taDescription" editable="false" focusTraversable="false" layoutX="93.0"
+               layoutY="219.0" prefHeight="200.0" prefWidth="774.0"
+               promptText="Descripcion del defecto">
                <font>
                   <Font size="20.0" />
                </font>

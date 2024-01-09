@@ -7,30 +7,41 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" fx:id="apActivitiesLogAnchorPane" prefHeight="367.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLActivitiesInLogController">
-    <stylesheets>
-        <URL value="@/projectmanagementlisof/css/Style.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" fx:id="apActivitiesLogAnchorPane" prefHeight="367.0" prefWidth="952.0"
+   styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/21"
+   xmlns:fx="http://javafx.com/fxml/1"
+   fx:controller="projectmanagementlisof.controller.FXMLActivitiesInLogController">
+   <stylesheets>
+      <URL value="@/projectmanagementlisof/css/Style.css" />
+   </stylesheets>
    <children>
-      <TableView fx:id="tvAssignedActivities" layoutX="64.0" layoutY="14.0" prefHeight="275.0" prefWidth="854.0" stylesheets="@../css/Style.css">
-        <columns>
-          <TableColumn fx:id="colActivityName" prefWidth="433.7777099609375" text="Nombre de la actividad" />
-          <TableColumn fx:id="colStartDate" prefWidth="155.55557250976562" text="Fecha de inicio" />
+      <TableView fx:id="tvAssignedActivities" layoutX="64.0" layoutY="14.0" prefHeight="275.0"
+         prefWidth="854.0" stylesheets="@../css/Style.css">
+         <columns>
+            <TableColumn fx:id="colActivityName" prefWidth="433.7777099609375"
+               text="Nombre de la actividad" />
+            <TableColumn fx:id="colStartDate" prefWidth="155.55557250976562" text="Fecha de inicio" />
             <TableColumn fx:id="colEndDate" prefWidth="147.33331298828125" text="Fecha de fin" />
             <TableColumn fx:id="colStatus" prefWidth="117.7777099609375" text="Estado" />
-        </columns>
+         </columns>
       </TableView>
-      <Button fx:id="btnShowAssignedActivityDetails" disable="true" layoutX="670.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnShowAssignedActivityDetailsclick" stylesheets="@../css/Style.css" text="Ver detalles">
+      <Button fx:id="btnShowAssignedActivityDetails" disable="true" layoutX="670.0" layoutY="310.0"
+         mnemonicParsing="false" onAction="#btnShowAssignedActivityDetailsclick"
+         stylesheets="@../css/Style.css" text="Ver detalles">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Button>
-      <Button fx:id="btnEditAssignedActivity" disable="true" layoutX="442.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnEditAssignedActivity" stylesheets="@../css/Style.css" text="Editar actividad">
+      <Button fx:id="btnEditAssignedActivity" disable="true" layoutX="442.0" layoutY="310.0"
+         mnemonicParsing="false" onAction="#btnEditAssignedActivity" stylesheets="@../css/Style.css"
+         text="Editar actividad">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
       </Button>
-      <Button fx:id="btnDeleteAssignedActivity" disable="true" layoutX="198.0" layoutY="310.0" mnemonicParsing="false" onAction="#btnDeleteAssignedActivity" stylesheets="@../css/Style.css" text="Eliminar actividad">
+      <Button fx:id="btnDeleteAssignedActivity" disable="true" layoutX="198.0" layoutY="310.0"
+         mnemonicParsing="false" onAction="#btnDeleteAssignedActivity"
+         stylesheets="@../css/Style.css" text="Eliminar actividad">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>

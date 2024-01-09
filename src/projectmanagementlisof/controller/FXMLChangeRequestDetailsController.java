@@ -5,21 +5,24 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-import javafx.collections.ListChangeListener.Change;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import projectmanagementlisof.model.dao.ChangeRequestDAO;
-import projectmanagementlisof.model.dao.ProjectDAO;
 import projectmanagementlisof.model.dao.ProjectManagerDAO;
 import projectmanagementlisof.model.pojo.ChangeRequest;
+import projectmanagementlisof.model.pojo.ChangeRequestStatus;
 import projectmanagementlisof.model.pojo.Developer;
-import projectmanagementlisof.model.pojo.Project;
 import projectmanagementlisof.model.pojo.ProjectManager;
 import projectmanagementlisof.observer.DeveloperObserver;
 import projectmanagementlisof.utils.LoggedUserSingleton;
@@ -33,107 +36,144 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
       @FXML private TextArea taChangeDescription;
       @FXML private TextField tfDateReviewed;
       @FXML private TextField tfReviewedBy;
+      @FXML private ComboBox<ChangeRequestStatus> cbStatus;
+      private ObservableList<ChangeRequestStatus> statuses = FXCollections.observableArrayList();
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
       private DeveloperObserver observer;
       private Integer idChangeRequest;
-      private ChangeRequest updateChangeRequest;
+      private ChangeRequest selectedChangeRequest;
       private Integer idDeveloper;
       private String developerNameString;
       private Integer idProjectManager;
 
       @Override public void initialize(URL url, ResourceBundle rb)
       {
-            // TODO
+            Utilities.setItemsInComboBoxStatuses(statuses, cbStatus);
       }
 
-      public void initializeInformation(
-          Integer idChangeRequest, DeveloperObserver observer, ChangeRequest updateChangeRequest)
+      public void setSelectedChangeRequest(ChangeRequest selectedChangeRequest)
       {
-            this.observer = observer;
-            this.updateChangeRequest = updateChangeRequest;
-            this.idChangeRequest = this.updateChangeRequest.getIdChangeRequest();
+            this.selectedChangeRequest = selectedChangeRequest;
+            this.idChangeRequest = selectedChangeRequest.getIdChangeRequest();
 
             loadChangeRequestInformation();
       }
 
+      @FXML private void btnSaveChanges(ActionEvent event)
+      {
+            if (cbStatus.getSelectionModel().getSelectedItem() != null)
+            {
+                  updateChangeRequestStatusFromComboBox();
+                  Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                  Utilities.closeWindow(stage);
+
+                  Utilities.loadFXMLInAnchorPaneAndCloseCurrentForProjectManager(stage,
+                      "/projectmanagementlisof/gui/FXMLProjectManagerLanding.fxml",
+                      "/projectmanagementlisof/gui/FXMLChangeRequestsOption.fxml");
+            }  
+            else
+            {
+                  Utilities.showSimpleAlert("Error de actualización",
+                      "Debe seleccionar un estado para la solicitud de cambio",
+                      Alert.AlertType.ERROR);
+            }
+            
+      }
+
+      private void updateChangeRequestStatusFromComboBox()
+      {
+            
+                  ChangeRequestStatus changeRequestStatus =
+                      cbStatus.getSelectionModel().getSelectedItem();
+
+                  ChangeRequest changeRequest = new ChangeRequest();
+                  changeRequest.setReviewDate(LocalDate.now().toString());
+                  changeRequest.setIdProjectManager(LoggedUserSingleton.getInstance().getUserId());
+                  changeRequest.setIdChangeRequest(this.idChangeRequest);
+
+                  HashMap<String, Object> answerChangeRequest =
+                      ChangeRequestDAO.updateIdProjectManagerAndReviewDate(changeRequest);
+
+                  HashMap<String, Object> answer = ChangeRequestDAO.updateChangeRequestStatus(
+                      this.idChangeRequest, changeRequestStatus.getIdChangeRequestStatus());
+
+                  if (!(boolean) answer.get("error") && !(boolean) answerChangeRequest.get("error"))
+                  {
+                        Utilities.showSimpleAlert("Éxito",
+                            "El estado de la solicitud de cambio ha sido actualizado exitosamente.",
+                            Alert.AlertType.INFORMATION);
+                  }
+                  else
+                  {
+                        Utilities.showSimpleAlert("Error de actualización",
+                            "Ha ocurrido un error al tratar de actualizar el estado de la solicitud de cambio.",
+                            Alert.AlertType.ERROR);
+                  }
+      }
+
       private void loadChangeRequestInformation()
       {
+            tfJustification.setText(this.selectedChangeRequest.getJustification());
+            taChangeDescription.setText(this.selectedChangeRequest.getDescription());
+            this.idDeveloper = this.selectedChangeRequest.getIdDeveloper();
+
+            HashMap<String, Object> changeRequestInformation =
+                ChangeRequestDAO.getCompleteDeveloperName(
+                    this.selectedChangeRequest.getIdDeveloper());
+
+            LocalDate date2 = LocalDate.parse(this.selectedChangeRequest.getCreationDate());
+            String formattedDate2 = date2.format(formatter);
+            tfDateCreated.setText(formattedDate2);
+
+            if (this.selectedChangeRequest.getReviewDate() != null)
+            {
+                  LocalDate date = LocalDate.parse(this.selectedChangeRequest.getReviewDate());
+                  String formattedDate = date.format(formatter);
+                  tfDateReviewed.setText(formattedDate);
+            }
+
+            if (!(boolean) changeRequestInformation.get("error"))
+            {
+                  Developer developer = (Developer) changeRequestInformation.get("developer");
+                  developerNameString = developer.getFullName();
+                  tfRequestedBy.setText(developerNameString);
+            }
+            else
+            {
+                  Utilities.showSimpleAlert("Error de carga",
+                      "Ha ocurrido un error al cargar el nombre del desarrollador o la información de la solcitud",
+                      Alert.AlertType.ERROR);
+            }
+
             try
             {
-                  tfJustification.setText(this.updateChangeRequest.getJustification());
-                  taChangeDescription.setText(this.updateChangeRequest.getDescription());
+                  HashMap<String, Object> projectManagerInformation =
+                      ProjectManagerDAO.getProjectManagerById(
+                          LoggedUserSingleton.getInstance().getUserId());
 
-                  this.idDeveloper = this.updateChangeRequest.getIdDeveloper();
-
-                  HashMap<String, Object> changeRequestInformation =
-                      ChangeRequestDAO.getCompleteDeveloperName(
-                          this.updateChangeRequest.getIdDeveloper());
-
-                  tfDateCreated.setText(this.updateChangeRequest.getCreationDate().toString());
-
-                  if (this.updateChangeRequest.getReviewDate() != null)
+                  if (projectManagerInformation != null
+                      && projectManagerInformation.containsKey("projectManager")
+                      && projectManagerInformation.get("projectManager") instanceof ProjectManager)
                   {
-                        tfDateReviewed.setText(this.updateChangeRequest.getReviewDate().toString());
-                  }
-
-                  if (!(boolean) changeRequestInformation.get("error"))
-                  {
-                        Developer developer = (Developer) changeRequestInformation.get("developer");
-                        developerNameString = developer.getFullName();
-                        tfRequestedBy.setText(developerNameString);
+                        ProjectManager projectManager =
+                            (ProjectManager) projectManagerInformation.get("projectManager");
+                        if (projectManager != null)
+                        {
+                              tfReviewedBy.setText(projectManager.getFullName());
+                        }
+                        else
+                        {
+                              Utilities.showSimpleAlert("Error de carga",
+                      "Ha ocurrido un error al cargar informacion del responsable de proyecto.",
+                      Alert.AlertType.ERROR);
+                        }
                   }
                   else
                   {
                         Utilities.showSimpleAlert("Error de carga",
-                            (String) changeRequestInformation.get("message"),
-                            Alert.AlertType.ERROR);
-                  }
-
-                  try
-                  {
-                        HashMap<String, Object> changeRequest2 =
-                            ChangeRequestDAO.getChangeRequestsById(this.idChangeRequest);
-
-                        if (changeRequest2 != null && changeRequest2.containsKey("changeRequest")
-                            && changeRequest2.get("changeRequest") instanceof ChangeRequest)
-                        {
-                              ChangeRequest changeRequestObject =
-                                  (ChangeRequest) changeRequest2.get("changeRequest");
-
-                              HashMap<String, Object> projectManagerInformation =
-                                  ProjectManagerDAO.getProjectManagerById(
-                                      changeRequestObject.getIdProjectManager());
-
-                              if (projectManagerInformation != null
-                                  && projectManagerInformation.containsKey("projectManager")
-                                  && projectManagerInformation.get("projectManager")
-                                          instanceof ProjectManager)
-                              {
-                                    ProjectManager projectManager =
-                                        (ProjectManager) projectManagerInformation.get(
-                                            "projectManager");
-                                    if (projectManager != null)
-                                    {
-                                          tfReviewedBy.setText(projectManager.getFullName());
-                                    }
-                                    else
-                                    {
-                                          System.out.println("Project Manager is null");
-                                    }
-                              }
-                              else
-                              {
-                                    System.out.println("Project Manager Information is null");
-                              }
-                        }
-                        else
-                        {
-                              System.out.println("Change Request Information is null");
-                        }
-                  }
-                  catch (Exception e)
-                  {
-                        System.out.println("Error: " + e.getMessage());
+                      "Ha ocurrido un error al cargar informacion del responsable de proyecto.",
+                      Alert.AlertType.ERROR);
                   }
             }
             catch (Exception e)
@@ -155,75 +195,12 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
             System.out.println(idDeveloper);
       }
 
-      @FXML private void clickImageReturn(MouseEvent event)
-      {
-            Stage currentStage = (Stage) tfJustification.getScene().getWindow();
-            Utilities.closeWindow(currentStage);
-      }
-
-      @FXML private void btnAproveChangeRequest(ActionEvent event)
-      {
-            HashMap<String, Object> answer2 =
-                ChangeRequestDAO.getChangeRequestsById(this.idChangeRequest);
-
-            ChangeRequest changeRequestAnswer = (ChangeRequest) answer2.get("changeRequest");
-
-            changeRequestAnswer.setIdProjectManager(LoggedUserSingleton.getInstance().getUserId());
-            changeRequestAnswer.setReviewDate(LocalDate.now().toString());
-
-            ChangeRequestDAO.updateIdProjectManagerAndReviewDate(changeRequestAnswer);
-
-            HashMap<String, Object> answer =
-                ChangeRequestDAO.approveChangeRequest(this.idChangeRequest);
-
-            if (!(boolean) answer.get("error"))
-            {
-                  Utilities.showSimpleAlert("Solicitud de cambio aprobada",
-                      (String) answer.get("message"), Alert.AlertType.INFORMATION);
-                  this.observer.developerSelected(this.idDeveloper, this.developerNameString);
-                  Stage currentStage = (Stage) tfJustification.getScene().getWindow();
-                  Utilities.closeWindow(currentStage);
-            }
-            else
-            {
-                  Utilities.showSimpleAlert("Error al aprobar la solicitud de cambio",
-                      (String) answer.get("message"), Alert.AlertType.ERROR);
-            }
-      }
-
-      @FXML private void btnRejectChangeRequest(ActionEvent event)
-      {
-            HashMap<String, Object> answer2 =
-                ChangeRequestDAO.getChangeRequestsById(this.idChangeRequest);
-
-            ChangeRequest changeRequestAnswer = (ChangeRequest) answer2.get("changeRequest");
-
-            changeRequestAnswer.setIdProjectManager(LoggedUserSingleton.getInstance().getUserId());
-            changeRequestAnswer.setReviewDate(LocalDate.now().toString());
-
-            ChangeRequestDAO.updateIdProjectManagerAndReviewDate(changeRequestAnswer);
-
-            HashMap<String, Object> answer =
-                ChangeRequestDAO.rejectChangeRequest(this.idChangeRequest);
-
-            if (!(boolean) answer.get("error"))
-            {
-                  Utilities.showSimpleAlert("Solicitud de cambio rechazada",
-                      (String) answer.get("message"), Alert.AlertType.INFORMATION);
-                  this.observer.developerSelected(this.idDeveloper, this.developerNameString);
-                  Stage currentStage = (Stage) tfJustification.getScene().getWindow();
-                  Utilities.closeWindow(currentStage);
-            }
-            else
-            {
-                  Utilities.showSimpleAlert("Error al rechazar la solicitud de cambio",
-                      (String) answer.get("message"), Alert.AlertType.ERROR);
-            }
-      }
-
       @FXML private void btnReturn(MouseEvent event)
       {
-            Stage currentStage = (Stage) tfJustification.getScene().getWindow();
-            Utilities.closeWindow(currentStage);
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+
+            Utilities.loadFXMLInAnchorPaneAndCloseCurrentForProjectManager(stage,
+                "/projectmanagementlisof/gui/FXMLProjectManagerLanding.fxml",
+                "/projectmanagementlisof/gui/FXMLChangeRequestsOption.fxml");
       }
 }

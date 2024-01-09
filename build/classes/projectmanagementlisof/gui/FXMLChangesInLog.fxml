@@ -8,19 +8,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="367.0" prefWidth="952.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLChangesInLogController">
-    <stylesheets>
-        <URL value="@/projectmanagementlisof/css/Style.css" />
-    </stylesheets>
+<AnchorPane id="AnchorPane" prefHeight="367.0" prefWidth="952.0" styleClass="mainFxmlClass"
+   xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+   fx:controller="projectmanagementlisof.controller.FXMLChangesInLogController">
+   <stylesheets>
+      <URL value="@/projectmanagementlisof/css/Style.css" />
+   </stylesheets>
    <children>
-      <TableView fx:id="tvLogChanges" layoutX="97.0" layoutY="25.0" prefHeight="275.0" prefWidth="758.0" stylesheets="@../css/Style.css">
+      <TableView fx:id="tvLogChanges" layoutX="97.0" layoutY="25.0" prefHeight="275.0"
+         prefWidth="758.0" stylesheets="@../css/Style.css">
          <columns>
             <TableColumn fx:id="colType" prefWidth="162.0" text="Tipo" />
             <TableColumn fx:id="colDescription" prefWidth="451.0" text="Descripción" />
             <TableColumn fx:id="colDate" prefWidth="144.0" text="Fecha de Registro" />
          </columns>
       </TableView>
-      <Button fx:id="btnDetails" layoutX="417.0" layoutY="307.0" mnemonicParsing="false" onAction="#btnDetailsclick" stylesheets="@../css/Style.css" text="Ver detalles">
+      <Button fx:id="btnDetails" layoutX="417.0" layoutY="307.0" mnemonicParsing="false"
+         onAction="#btnDetailsclick" stylesheets="@../css/Style.css" text="Ver detalles">
          <font>
             <Font name="System Bold" size="17.0" />
          </font>
