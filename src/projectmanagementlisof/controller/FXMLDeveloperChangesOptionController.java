@@ -22,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -30,6 +31,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import projectmanagementlisof.model.dao.ChangeDAO;
 import projectmanagementlisof.model.pojo.Change;
+import projectmanagementlisof.utils.SelectedItemSingleton;
 import projectmanagementlisof.utils.Utilities;
 
 /**
@@ -45,7 +47,8 @@ public class FXMLDeveloperChangesOptionController implements Initializable
       @FXML private TableColumn<Change, String> colDescription;
       @FXML private TableColumn<Change, String> colDateCreated;
       @FXML private TableView<Change> tvDeveloperChanges;
-
+    @FXML
+    private Button btnChangeDetails;
       /**
        * Initializes the controller class.
        */
@@ -55,9 +58,31 @@ public class FXMLDeveloperChangesOptionController implements Initializable
             colDateCreated.setCellValueFactory(new PropertyValueFactory<>("dateCreated"));
             colType.setCellValueFactory(new PropertyValueFactory<>("typeName"));
             fillAssignedActivitiesToDeveloper();
+            
+            btnChangeDetails.setDisable(true);
+            tvDeveloperChanges.getSelectionModel().selectedItemProperty().addListener(
+                (obs, oldSelection, newSelection) -> {
+                      if (newSelection != null)
+                      {
+                            btnChangeDetails.setDisable(false);
+                      }
+                      else
+                      {
+                            btnChangeDetails.setDisable(true);
+                      }
+                });
+            
       }
 
-      @FXML private void btnViewDetails(ActionEvent event) {}
+      @FXML private void btnViewDetails(ActionEvent event) {
+            Change selectedChange = tvDeveloperChanges.getSelectionModel().getSelectedItem();
+            if (selectedChange != null)
+            {
+                  int idChange = selectedChange.getIdChange();
+                  Utilities.showDetails(
+                      idChange, "gui/FXMLChangesDetails.fxml", "Detalles del cambio");
+            }
+      }
 
       @FXML private void btnRegisterChange(ActionEvent event)
       {
