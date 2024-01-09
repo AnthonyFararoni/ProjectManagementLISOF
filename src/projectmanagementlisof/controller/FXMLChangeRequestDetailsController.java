@@ -62,12 +62,7 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
 
       @FXML private void btnSaveChanges(ActionEvent event)
       {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION,
-                "¿Está seguro de actualizar el estado de la solicitud de cambio?", ButtonType.YES,
-                ButtonType.NO);
-            alert.showAndWait();
-
-            if (alert.getResult() == ButtonType.YES)
+            if (cbStatus.getSelectionModel().getSelectedItem() != null)
             {
                   updateChangeRequestStatusFromComboBox();
                   Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
@@ -76,13 +71,19 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
                   Utilities.loadFXMLInAnchorPaneAndCloseCurrentForProjectManager(stage,
                       "/projectmanagementlisof/gui/FXMLProjectManagerLanding.fxml",
                       "/projectmanagementlisof/gui/FXMLChangeRequestsOption.fxml");
+            }  
+            else
+            {
+                  Utilities.showSimpleAlert("Error de actualización",
+                      "Debe seleccionar un estado para la solicitud de cambio",
+                      Alert.AlertType.ERROR);
             }
+            
       }
 
       private void updateChangeRequestStatusFromComboBox()
       {
-            if (cbStatus.getSelectionModel().getSelectedItem() != null)
-            {
+            
                   ChangeRequestStatus changeRequestStatus =
                       cbStatus.getSelectionModel().getSelectedItem();
 
@@ -109,13 +110,6 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
                             "Ha ocurrido un error al tratar de actualizar el estado de la solicitud de cambio.",
                             Alert.AlertType.ERROR);
                   }
-            }
-            else
-            {
-                  Utilities.showSimpleAlert("Error de actualización",
-                      "Debe seleccionar un estado para la solicitud de cambio",
-                      Alert.AlertType.ERROR);
-            }
       }
 
       private void loadChangeRequestInformation()
@@ -148,7 +142,7 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
             else
             {
                   Utilities.showSimpleAlert("Error de carga",
-                      "Ha ocurrido un error al cargar el nombre del desarrollador la información de la solcitud",
+                      "Ha ocurrido un error al cargar el nombre del desarrollador o la información de la solcitud",
                       Alert.AlertType.ERROR);
             }
 
@@ -170,12 +164,16 @@ public class FXMLChangeRequestDetailsController implements Initializable, Develo
                         }
                         else
                         {
-                              System.out.println("Project Manager is null");
+                              Utilities.showSimpleAlert("Error de carga",
+                      "Ha ocurrido un error al cargar informacion del responsable de proyecto.",
+                      Alert.AlertType.ERROR);
                         }
                   }
                   else
                   {
-                        System.out.println("Project Manager Information is null");
+                        Utilities.showSimpleAlert("Error de carga",
+                      "Ha ocurrido un error al cargar informacion del responsable de proyecto.",
+                      Alert.AlertType.ERROR);
                   }
             }
             catch (Exception e)
