@@ -25,6 +25,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -64,12 +65,14 @@ public class FXMLActivitiesInLogController implements Initializable, DeveloperOb
       @FXML private Button btnShowAssignedActivityDetails;
       @FXML private Button btnEditAssignedActivity;
       @FXML private Button btnDeleteAssignedActivity;
+      private Label emptyLabel = new Label("No se han sido asignadas actividades para este desarrollador");
 
       /**
        * Initializes the controller class.
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
+            tvAssignedActivities.setPlaceholder(emptyLabel);
             receiveData();
             configureActivitiesTable();
             getAssignedActivitiesForTable();

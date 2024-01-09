@@ -34,7 +34,8 @@ public class FXMLLogInController implements Initializable
       @FXML private Label lbEmptyFields;
       private String user;
       private String password;
-
+      SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance(); 
+      
       @Override public void initialize(URL url, ResourceBundle rb)
       {
             pswPassword.setOnKeyPressed(event -> {
@@ -63,6 +64,13 @@ public class FXMLLogInController implements Initializable
                   {
                         lbUserDontExist.setVisible(true);
                   }
+            }
+
+            if (Utilities.checkConnection() == false)
+            {
+                  Utilities.showSimpleAlert("Error",
+                      "No se ha podido establecer conexión con la base de datos, inténtelo de nuevo más tarde.",
+                      Alert.AlertType.ERROR);
             }
       }
 
@@ -139,6 +147,7 @@ public class FXMLLogInController implements Initializable
             HashMap<String, Object> daoResponse = new HashMap<>();
             daoResponse = ProjectDAO.isInMoreProjects(idManager);
             int projects = (int) daoResponse.get("projects");
+            instance.setNumberOfProjects(projects);
             switch (projects)
             {
                   case 0:
@@ -167,7 +176,8 @@ public class FXMLLogInController implements Initializable
             ArrayList<Project> list = (ArrayList<Project>) daoProject.get("projects");
             Project project = list.get(0);
             int projectId = project.getIdProject();
-            SelectedProjectSingleton instance = SelectedProjectSingleton.getInstance();
+            
             instance.setIdSelectedProject(projectId);
+            
       }
 }

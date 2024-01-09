@@ -18,6 +18,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -44,11 +45,13 @@ public class FXMLChangesInLogController implements Initializable
       private ObservableList<Change> changes;
       private int idDeveloper;
       private Utilities utilities = new Utilities();
+      private Label emptyLabel = new Label("El desarrollador no ha registrado ningún cambio");
       /**
        * Initializes the controller class.
        */
       @Override public void initialize(URL url, ResourceBundle rb)
       {
+            tvLogChanges.setPlaceholder(emptyLabel);
             receiveData();
             configureChangesTable();
             getDeveloperChanges();

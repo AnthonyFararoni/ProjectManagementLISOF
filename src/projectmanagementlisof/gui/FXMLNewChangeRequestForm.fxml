@@ -67,8 +67,8 @@
                                           styleClass="button-rounded"
                                           stylesheets="@../css/Style.css"
                                           text="Registrar Solicitud de Cambio" />
-                                    <TextField fx:id="tfRequestedBy" layoutX="81.0" layoutY="187.0"
-                                          prefHeight="37.0" prefWidth="554.0"
+                                    <TextField fx:id="tfRequestedBy" editable="false" layoutX="81.0"
+                                          layoutY="187.0" prefHeight="37.0" prefWidth="554.0"
                                           styleClass="lower-gray-text-field"
                                           stylesheets="@../css/Style.css" />
                                     <DatePicker fx:id="dpDate" layoutX="657.0" layoutY="184.0"

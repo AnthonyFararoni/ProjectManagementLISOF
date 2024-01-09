@@ -16,12 +16,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
 
 .button:hover {
   -fx-background-color: #666666;
-  /*Color morado : #9200D7*/
 }
-
-/*.button:pressed  {
-    -fx-background-color: #9200D7;
-}*/
 
 .button:armed{
     -fx-background-color: #9200D7;
@@ -49,8 +44,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to ed
     
 .table-view .column-header .label {
     -fx-text-fill: white ;
-    -fx-padding: center;
-        
 }
      
 .search-text-field {

@@ -9,17 +9,12 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/19"
-   xmlns:fx="http://javafx.com/fxml/1"
-   fx:controller="projectmanagementlisof.controller.FXMLProjectManagerLandingController">
+<AnchorPane id="AnchorPane" prefHeight="622.0" prefWidth="952.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="projectmanagementlisof.controller.FXMLProjectManagerLandingController">
    <children>
-      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-         AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <GridPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="469.7777404785156" minWidth="10.0"
-               prefWidth="222.66665649414062" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="729.3333435058594" minWidth="10.0"
-               prefWidth="729.3333435058594" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="469.7777404785156" minWidth="10.0" prefWidth="222.66665649414062" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="729.3333435058594" minWidth="10.0" prefWidth="729.3333435058594" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -27,58 +22,49 @@
          <children>
             <AnchorPane prefHeight="632.0" prefWidth="198.0" style="-fx-background-color: #000000;">
                <children>
-                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="33.0" layoutY="40.0"
-                     pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="33.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../images/UserIcon.png" />
                      </image>
                   </ImageView>
-                  <Button layoutX="20.0" layoutY="214.0" mnemonicParsing="false"
-                     onAction="#btnShowDevelopers" prefHeight="46.0" prefWidth="179.0"
-                     stylesheets="@../css/Style.css" text="Desarrollador">
+                  <Button layoutX="20.0" layoutY="214.0" mnemonicParsing="false" onAction="#btnShowDevelopers" prefHeight="46.0" prefWidth="179.0" stylesheets="@../css/Style.css" text="Desarrollador">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Button>
-                  <Button layoutX="20.0" layoutY="275.0" mnemonicParsing="false"
-                     onAction="#btnShowActivities" prefHeight="46.0" prefWidth="179.0"
-                     stylesheets="@../css/Style.css" text="Actividades">
+                  <Button layoutX="20.0" layoutY="275.0" mnemonicParsing="false" onAction="#btnShowActivities" prefHeight="46.0" prefWidth="179.0" stylesheets="@../css/Style.css" text="Actividades">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Button>
-                  <Button layoutX="20.0" layoutY="335.0" mnemonicParsing="false"
-                     onAction="#btnShowChanges" prefHeight="46.0" prefWidth="179.0"
-                     stylesheets="@../css/Style.css" text="Cambios">
+                  <Button layoutX="20.0" layoutY="335.0" mnemonicParsing="false" onAction="#btnShowChanges" prefHeight="46.0" prefWidth="179.0" stylesheets="@../css/Style.css" text="Cambios">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Button>
-                  <Button layoutX="20.0" layoutY="395.0" mnemonicParsing="false"
-                     onAction="#btnShowChangeRequests" prefHeight="46.0" prefWidth="179.0"
-                     stylesheets="@../css/Style.css" text="Solicitud de cambio">
+                  <Button layoutX="20.0" layoutY="395.0" mnemonicParsing="false" onAction="#btnShowChangeRequests" prefHeight="46.0" prefWidth="179.0" stylesheets="@../css/Style.css" text="Solicitud de cambio">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Button>
-                  <Button layoutX="20.0" layoutY="455.0" mnemonicParsing="false"
-                     onAction="#btnShowDefects" prefHeight="46.0" prefWidth="179.0"
-                     stylesheets="@../css/Style.css" text="Defectos">
+                  <Button layoutX="20.0" layoutY="455.0" mnemonicParsing="false" onAction="#btnShowDefects" prefHeight="46.0" prefWidth="179.0" stylesheets="@../css/Style.css" text="Defectos">
                      <font>
                         <Font name="System Bold" size="17.0" />
                      </font>
                   </Button>
-                  <ImageView fitHeight="49.0" fitWidth="47.0" layoutX="81.0" layoutY="552.0"
-                     onMouseClicked="#btnLogOut" pickOnBounds="true" preserveRatio="true"
-                     style="-fx-cursor: hand;">
+                  <ImageView fitHeight="38.0" fitWidth="42.0" layoutX="120.0" layoutY="540.0" onMouseClicked="#btnLogOut" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                      <image>
                         <Image url="@../images/LogOutIcon.png" />
                      </image>
                   </ImageView>
+                  <ImageView fx:id="ivChangeProjects" fitHeight="38.0" fitWidth="42.0" layoutX="50.0" layoutY="540.0" onMouseClicked="#btnChangeProject" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                     <image>
+                        <Image url="@../images/ChangeProjectIcon.png" />
+                     </image>
+                  </ImageView>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apBackground" prefHeight="622.0" prefWidth="686.0"
-               GridPane.columnIndex="1" />
+            <AnchorPane fx:id="apBackground" prefHeight="622.0" prefWidth="686.0" GridPane.columnIndex="1" />
          </children>
       </GridPane>
    </children>
