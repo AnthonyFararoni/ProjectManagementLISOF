@@ -12,6 +12,7 @@ public class SelectedProjectSingleton
 {
       private final static SelectedProjectSingleton INSTANCE = new SelectedProjectSingleton();
       private Integer idSelectedProject;
+      private Integer numberOfProjects;
 
       private SelectedProjectSingleton() {}
 
@@ -29,4 +30,13 @@ public class SelectedProjectSingleton
       {
             this.idSelectedProject = idSelected;
       }
+
+    public Integer getNumberOfProjects() {
+        return numberOfProjects;
+    }
+
+    public void setNumberOfProjects(Integer numberOfProjects) {
+        this.numberOfProjects = numberOfProjects;
+    }
+      
 }
