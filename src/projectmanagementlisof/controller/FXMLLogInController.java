@@ -64,6 +64,13 @@ public class FXMLLogInController implements Initializable
                         lbUserDontExist.setVisible(true);
                   }
             }
+
+            if (Utilities.checkConnection() == false)
+            {
+                  Utilities.showSimpleAlert("Error",
+                      "No se ha podido establecer conexión con la base de datos, inténtelo de nuevo más tarde.",
+                      Alert.AlertType.ERROR);
+            }
       }
 
       private int checkDeveloperInDB()
